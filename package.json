@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Map acties voor OpenLayers",
   "scripts": {
+    "test": "grunt",
     "release": "np",
     "release:testless": "np --yolo"
   },
