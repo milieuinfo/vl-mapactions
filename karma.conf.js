@@ -15,9 +15,9 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-			"dist/openlayers/dist/ol.js",
+			"lib/openlayers/dist/ol.js",
 			"node_modules/proj4/dist/proj4.js",
-			"dist/jsts/dist/jsts.min.js",
+			"lib/jsts/dist/jsts.min.js",
 			'src/main/javascript/acd/ol/acd.ol.js',
 			'src/main/javascript/acd/ol/ol.mapwithactions.js',
 			'src/main/javascript/acd/ol/*.js',
