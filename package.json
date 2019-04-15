@@ -11,7 +11,7 @@
     "release:testless": "np --yolo"
   },
   "dependencies": {
-    "bootstrap-sass": "^3.3.4",
+    "bootstrap-sass": "3.3.4",
     "jsts": "1.1.1",
     "proj4": "2.2.1"
   },
