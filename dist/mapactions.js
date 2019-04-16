@@ -111,16 +111,16 @@ acd.ol.CustomMap = function (options) {
 	
 	function getTarget() {
 		if (typeof self.getTarget() === 'string' || self.getTarget() instanceof String) {
-			return $('#' + self.getTarget());
+			return document.querySelector$('#' + self.getTarget());
 		} else {
-			return $(self.getTarget());
+			return self.getTarget();
 		}
 	}
 	
 	// add the overlay container with zoom buttons, scale, overviewmap, ... to it's parent, otherwise it inherits the relative positioning and will be rendered left under the project tree
 	if (this.getTargetElement()) {
-		$(this.getTargetElement().getElementsByClassName('ol-overlaycontainer')).first().appendTo(getTarget().parent());
-		$(this.getTargetElement().getElementsByClassName('ol-overlaycontainer-stopevent')).first().appendTo(getTarget().parent());
+		getTarget().parentNode.appendChild(this.getTargetElement().querySelector('.ol-overlaycontainer'));
+		getTarget().parentNode.appendChild(this.getTargetElement().querySelector('.ol-overlaycontainer-stopevent'));
 	}
 	
 	this.maxZoomViewToExtent = options.maxZoomViewToExtent || 16;
