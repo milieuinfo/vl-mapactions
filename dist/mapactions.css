@@ -801,13 +801,6 @@
 .glyphicon-menu-up:before {
   content: "\e260"; }
 
-.ol-overlaycontainer > div, .ol-overlaycontainer-stopevent > div {
-  left: 20px;
-  margin-right: 20px; }
-
-.ol-control {
-  margin-top: 60px; }
-
 .ol-zoom .ol-zoom-out {
   margin-top: 204px; }
 

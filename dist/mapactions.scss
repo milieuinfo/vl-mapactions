@@ -6,17 +6,6 @@ $color-text: #333 !default;
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss';
 @import '../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_glyphicons.scss';
 
-.ol-overlaycontainer, .ol-overlaycontainer-stopevent {
-	> div {
-		left: 20px;
-		margin-right: 20px;
-	}
-}
-
-.ol-control {
-	margin-top: 60px;
-}
-
 .ol-zoom .ol-zoom-out {
 	margin-top: 204px;
 }
