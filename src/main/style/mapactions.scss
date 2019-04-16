@@ -12,14 +12,12 @@ $color-text: #333 !default;
 
 .ol-zoomslider {
 	background-color: transparent;
+	top: 2.3em;
+	left: 0.55em;
 }
 
 .ol-touch .ol-zoom .ol-zoom-out {
 	margin-top: 212px;
-}
-
-.ol-touch .ol-zoomslider {
-	top: 2.75em;
 }
 
 .ol-zoom-in.ol-has-tooltip:hover [role=tooltip],
