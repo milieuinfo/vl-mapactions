@@ -6,7 +6,8 @@
     "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
   },
   "scripts": {
-    "test": "grunt",
+    "test": "grunt test",
+    "build": "grunt",
     "release": "np",
     "release:testless": "np --yolo"
   },
