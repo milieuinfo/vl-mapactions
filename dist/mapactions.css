@@ -829,7 +829,9 @@
   .ol-overviewmap .ol-overviewmap-map {
     cursor: pointer;
     height: 100px;
-    width: 100px; }
+    width: 100px;
+    box-sizing: border-box;
+    margin: 0px; }
   .ol-overviewmap button {
     display: none; }
 
