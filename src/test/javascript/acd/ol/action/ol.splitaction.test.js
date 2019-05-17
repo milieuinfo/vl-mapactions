@@ -4,12 +4,16 @@ describe('split action', function() {
 	var optionsSpy = {
 		filter: jasmine.createSpy()
 	};
+	var feature = new ol.Feature({id: 1});
 	
 	var layer = {
 		getSource: function() {
 			return {
 				getFeatures: function() {
 					return [];
+				},
+				getFeatureById: function(id) {
+					return (id == 1) ? feature : null;
 				}
 			};
 		}
@@ -80,7 +84,6 @@ describe('split action', function() {
 	
 	it('zal na het selecteren de select action deactiveren en de draw action activeren', function() {
 		var splitAction = createSplitAction();
-		var feature = new ol.Feature({id: 1});
 		
 		spyOn(splitAction.selectAction, 'deactivate');
 		spyOn(acd.ol.action.MapAction.prototype.activate, 'call');

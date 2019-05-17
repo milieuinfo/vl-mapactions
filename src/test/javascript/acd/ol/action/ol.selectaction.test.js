@@ -153,7 +153,17 @@ describe('select action', function() {
     		   return {
     			   getFeatures: function() {
     				   return [feature, feature2, feature3];
-    			   }
+				   },
+				   getFeatureById: function(id) {
+					   switch (id) {
+						   case 1:
+								return feature;
+							case 2:
+								return feature2;
+							case 3:
+								return feature3;
+					   }
+				   }
     		   }
     	   }
 		}], onSelect);
@@ -173,19 +183,32 @@ describe('select action', function() {
 
 	it('als er gevraagd wordt om de laatst geselecteerde feature te vergeten wordt daarna bij een klik op meerdere terug de 1e genomen', function() {
 		var onSelect = jasmine.createSpy('onSelect');
-		var feature = new ol.Feature({id: 1});
-		var feature2 = new ol.Feature({id: 2});
-		var feature3 = new ol.Feature({id: 3});
-		var selectAction = new acd.ol.action.SelectAction([{
+		var feature = new ol.Feature();
+		var feature2 = new ol.Feature();
+		var feature3 = new ol.Feature();
+		feature.setId(1);
+		feature2.setId(2);
+		feature3.setId(3);
+		var selectAction = new acd.ol.action.SelectAction({
     	   id: 'layer1',
     	   getSource: function() {
     		   return {
     			   getFeatures: function() {
     				   return [feature, feature2, feature3];
-    			   }
+				   },
+				   getFeatureById: function(id) {
+					   switch (id) {
+						   case 1:
+							   return feature;
+							case 2:
+								return feature2;
+							case 3:
+								return feature3;
+					   }
+				   }
     		   }
     	   }
-		}], onSelect);
+		}, onSelect);
 		
 		selectAction.selectInteraction.getFeatures().push(feature);
 		selectAction.selectInteraction.getFeatures().push(feature2);
@@ -274,7 +297,9 @@ describe('select action', function() {
 	});
 	
 	it('zal bij activatie de functie activeren om na het zoomen de selectie bij clustering goed te zetten', function() {
-		var selectAction = new acd.ol.action.SelectAction([{}]);
+		var selectAction = new acd.ol.action.SelectAction([{}], null, {
+			cluster: true
+		});
 		var on = jasmine.createSpy();
 		selectAction.map = {
 			on: on
@@ -284,7 +309,9 @@ describe('select action', function() {
 	});
 	
 	it('zal bij deactivate de functie deactiveren om na het zoomen de selectie bij clustering goed te zetten', function() {
-		var selectAction = new acd.ol.action.SelectAction([{}]);
+		var selectAction = new acd.ol.action.SelectAction([{}], null, {
+			cluster: true
+		});
 		var un = jasmine.createSpy();
 		selectAction.map = {
 			un: un
@@ -309,13 +336,23 @@ describe('select action', function() {
 				}
 			}
 		};
-		var selectAction = new acd.ol.action.SelectAction(layer);
+		var selectAction = new acd.ol.action.SelectAction(layer, null, {
+			cluster: true
+		});
+		selectAction.map = {
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
+		};
+		selectAction.activate();
 		
 		selectAction.selectInteraction.getFeatures().push(feature);
-		var event = {type: 'select'};
-		selectAction.selectInteraction.dispatchEvent(event);
 		expect(selectAction.selectInteraction.getFeatures().getLength()).toBe(1);
 		expect(selectAction.markInteraction.getFeatures().getLength()).toBe(0);
+		expect(selectAction.hoverInteraction.getFeatures().getLength()).toBe(0);
+		var event = {type: 'select'};
+		selectAction.selectInteraction.dispatchEvent(event);
+		expect(selectAction.selectInteraction.getFeatures().getLength()).toBe(0);
+		expect(selectAction.markInteraction.getFeatures().getLength()).toBe(1);
 		expect(selectAction.hoverInteraction.getFeatures().getLength()).toBe(0);
 		selectAction.fixClusterBehavior();
 		expect(selectAction.selectInteraction.getFeatures().getLength()).toBe(0);

@@ -1,6 +1,7 @@
 acd.ol.action.SelectAction = function(layer, onSelect, options) {
 	var self = this;
 	
+	this.cluster = options && options.cluster;
 	this.filter = options && options.filter ? options.filter : function() { return true; };
 	this.layer = layer;
 	this.style = options ? options.style : null;
@@ -61,16 +62,15 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 		if (self.selectInteraction.getFeatures().getLength() > 0) {
 			var selectedFeature = null;
 			if (self.selectInteraction.getFeatures().getLength() == 1) {
-				selectedFeature = self.selectInteraction.getFeatures().getArray()[0];
+				self.selectedFeature = self.selectInteraction.getFeatures().getArray()[0];
 			} else {
-				selectedFeature = nextFeature(self.selectInteraction.getFeatures());
+				self.selectedFeature = nextFeature(self.selectInteraction.getFeatures());
 			}
-			self.selectedFeature = selectedFeature;
 			if (onSelect) {
 				onSelect(self.selectedFeature, event, self.getLayer(selectedFeature));
 			}
 		} else {
-			this.selectedFeature = null;
+			self.selectedFeature = null;
 			if (onSelect) {
 				onSelect();
 			}
@@ -78,13 +78,15 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 	});
 
 	this.fixClusterBehavior = function() {
-		if (this.selectedFeature) {
-			var features = this.selectedFeature.get('features') || [this.selectedFeature];
-			this.selectInteraction.getFeatures().clear();
-			this.markInteraction.getFeatures().clear();
+		if (self.selectedFeature) {
+			var features = self.selectedFeature.get('features') || [self.selectedFeature];
+			self.selectInteraction.getFeatures().clear();
+			self.markInteraction.getFeatures().clear();
 			features.forEach(function(feature) {
-				this.markFeatureWithId(feature.getId());
-			}, this);
+				if (feature.getId()) {
+					self.markFeatureWithId(feature.getId());
+				}
+			}, self);
 		}
 	};
 	
@@ -119,15 +121,17 @@ acd.ol.action.SelectAction.prototype.clearFeatures = function() {
 };
 
 acd.ol.action.SelectAction.prototype.activate = function() {
-	if (this.map) {
+	if (this.cluster && this.map) {
 		this.map.on('moveend', this.fixClusterBehavior);
+		this.selectInteraction.on('select', this.fixClusterBehavior);
 	}
 	acd.ol.action.MapAction.prototype.activate.call(this);
 };
 
 acd.ol.action.SelectAction.prototype.deactivate = function() {
-	if (this.map) {
+	if (this.cluster && this.map) {
 		this.map.un('moveend', this.fixClusterBehavior);
+		this.selectInteraction.un('select', this.fixClusterBehavior);
 	}
 	this.clearFeatures();
 	acd.ol.action.MapAction.prototype.deactivate.call(this);
