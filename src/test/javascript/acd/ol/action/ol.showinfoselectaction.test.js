@@ -30,7 +30,9 @@ describe('show info select action', function() {
 			},
             render: function() {
                 mapWasRerendered = true;
-            }
+			},
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
 		};
 		feature = new ol.Feature();
 		feature.setGeometry(new ol.geom.Point([0, 0]));

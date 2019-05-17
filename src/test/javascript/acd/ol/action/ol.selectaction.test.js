@@ -27,7 +27,7 @@ describe('select action', function() {
 		expect(selectAction.hoverStyle).toBeNull();
 	});
 	
-	it('kan features hoveren en dehoveren', function() {
+	it('kan features markeren en demarkeren', function() {
 		var feature1 = new ol.Feature();
 		var feature2 = new ol.Feature();
 		feature1.setId(1);
@@ -43,26 +43,25 @@ describe('select action', function() {
 			}
 		});
 		
-		selectAction.hoverFeatureWithId(1);
-		expect(selectAction.isHovered(feature1)).toBe(true);
-		expect(selectAction.hoverInteraction.getFeatures().getLength()).toBe(1);
-		selectAction.hoverFeatureWithId(2);
-		expect(selectAction.isHovered(feature2)).toBe(true);
-		expect(selectAction.hoverInteraction.getFeatures().getLength()).toBe(2);
-		selectAction.dehoverAllFeatures();
-		expect(selectAction.hoverInteraction.getFeatures().getLength()).toBe(0);
-		expect(selectAction.isHovered(feature1)).toBe(false);
-		expect(selectAction.isHovered(feature2)).toBe(false);
+		selectAction.markFeatureWithId(1);
+		expect(selectAction.isMarked(feature1)).toBe(true);
+		expect(selectAction.markInteraction.getFeatures().getLength()).toBe(1);
+		selectAction.markFeatureWithId(2);
+		expect(selectAction.isMarked(feature2)).toBe(true);
+		expect(selectAction.markInteraction.getFeatures().getLength()).toBe(2);
+		selectAction.demarkAllFeatures();
+		expect(selectAction.markInteraction.getFeatures().getLength()).toBe(0);
+		expect(selectAction.isMarked(feature1)).toBe(false);
+		expect(selectAction.isMarked(feature2)).toBe(false);
 	});
 
-	it('kan clusters hoveren en dehoveren', function() {
+	it('kan clusters markeren en demarkeren', function() {
 		var feature1 = new ol.Feature();
 		feature1.setId(1);
 		var feature2 = new ol.Feature();
 		feature2.setId(2);
 		var feature3 = new ol.Feature();
 		feature3.setId(3);
-		var features = [feature1, feature2, feature3];
 		var cluster1 = new ol.Feature();
 		var cluster2 = new ol.Feature();
 		cluster1.set('features', [feature1, feature2]);
@@ -74,20 +73,20 @@ describe('select action', function() {
 		});
 		var selectAction = new acd.ol.action.SelectAction(layer);
 		
-		selectAction.hoverFeatureWithId(1);
-		expect(selectAction.isHovered(cluster1)).toBe(true);
-		expect(selectAction.isHovered(cluster2)).toBe(false);
-		expect(selectAction.hoverInteraction.getFeatures().getLength()).toBe(1);
-		selectAction.hoverFeatureWithId(2);
-		expect(selectAction.isHovered(cluster1)).toBe(true);
-		expect(selectAction.isHovered(cluster2)).toBe(false);
-		selectAction.dehoverAllFeatures();
-		expect(selectAction.isHovered(cluster1)).toBe(false);
-		expect(selectAction.isHovered(cluster2)).toBe(false);
+		selectAction.markFeatureWithId(1);
+		expect(selectAction.isMarked(cluster1)).toBe(true);
+		expect(selectAction.isMarked(cluster2)).toBe(false);
+		expect(selectAction.markInteraction.getFeatures().getLength()).toBe(1);
+		selectAction.markFeatureWithId(2);
+		expect(selectAction.isMarked(cluster1)).toBe(true);
+		expect(selectAction.isMarked(cluster2)).toBe(false);
+		selectAction.demarkAllFeatures();
+		expect(selectAction.isMarked(cluster1)).toBe(false);
+		expect(selectAction.isMarked(cluster2)).toBe(false);
 	});
 	
 	it('zal de onselect functie oproepen als een feature geselecteerd wordt', function() {
-		var layer = [{
+		var layer = {
 			id: 'layer1',
 			getSource: function() {
 				return {
@@ -96,7 +95,7 @@ describe('select action', function() {
 					}
 				}
 			}
-		}];
+		};
 		var onSelect = jasmine.createSpy('onSelect');
 		var feature = new ol.Feature({id: 1});
 		var selectAction = new acd.ol.action.SelectAction(layer, onSelect);
@@ -204,6 +203,10 @@ describe('select action', function() {
 	it('zal de onselect functie oproepen met lege argumenten als er een select wordt gedaan niet op een feature', function() {
 		var onSelect = jasmine.createSpy('onSelect');
 		var selectAction = new acd.ol.action.SelectAction([{}], onSelect);
+		selectAction.map = {
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
+		};
 		selectAction.activate();
 		
 		selectAction.selectInteraction.dispatchEvent('select');
@@ -213,6 +216,10 @@ describe('select action', function() {
 	
 	it('zal bij een deactivate de selectie features clearen', function() {
 		var selectAction = new acd.ol.action.SelectAction([{}]);
+		selectAction.map = {
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
+		};
 		var feature = new ol.Feature({id: 1});
 		
 		selectAction.selectInteraction.getFeatures().push(feature);
@@ -264,5 +271,55 @@ describe('select action', function() {
 		var filter = selectAction.selectInteractionFilter(feature);
 		
 		expect(filter).toBe(false);
+	});
+	
+	it('zal bij activatie de functie activeren om na het zoomen de selectie bij clustering goed te zetten', function() {
+		var selectAction = new acd.ol.action.SelectAction([{}]);
+		var on = jasmine.createSpy();
+		selectAction.map = {
+			on: on
+		};
+		selectAction.activate();
+		expect(on).toHaveBeenCalledWith('moveend', selectAction.fixClusterBehavior);
+	});
+	
+	it('zal bij deactivate de functie deactiveren om na het zoomen de selectie bij clustering goed te zetten', function() {
+		var selectAction = new acd.ol.action.SelectAction([{}]);
+		var un = jasmine.createSpy();
+		selectAction.map = {
+			un: un
+		};
+		selectAction.deactivate();
+		expect(un).toHaveBeenCalledWith('moveend', selectAction.fixClusterBehavior);
+	});
+
+	it('zal na het zoomen de geselecteerde feature verplaatsen naar de markeer selecteer interactie om visuele problemen met geselecteerde feature en cluster te voorkomen', function() {
+		var feature = new ol.Feature();
+		feature.setId(1);
+		var layer = {
+			id: 'layer1',
+			getSource: function() {
+				return {
+					getFeatures: function() {
+						return [feature];
+					},
+					getFeatureById: function(id) {
+						return (id == 1 ? feature : null);
+					}
+				}
+			}
+		};
+		var selectAction = new acd.ol.action.SelectAction(layer);
+		
+		selectAction.selectInteraction.getFeatures().push(feature);
+		var event = {type: 'select'};
+		selectAction.selectInteraction.dispatchEvent(event);
+		expect(selectAction.selectInteraction.getFeatures().getLength()).toBe(1);
+		expect(selectAction.markInteraction.getFeatures().getLength()).toBe(0);
+		expect(selectAction.hoverInteraction.getFeatures().getLength()).toBe(0);
+		selectAction.fixClusterBehavior();
+		expect(selectAction.selectInteraction.getFeatures().getLength()).toBe(0);
+		expect(selectAction.markInteraction.getFeatures().getLength()).toBe(1);
+		expect(selectAction.hoverInteraction.getFeatures().getLength()).toBe(0);
 	});
 });

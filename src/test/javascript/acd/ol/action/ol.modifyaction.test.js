@@ -19,6 +19,10 @@ describe('modify action', function() {
 	
 	it('na het deactiveren wordt de selectie verwijderd', function() {
 		var modifyAction = new acd.ol.action.ModifyAction({});
+		modifyAction.map = {
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
+		};
 		var feature = new ol.Feature({
 			geometry: new ol.geom.Point([0, 0])
 		});
@@ -63,8 +67,8 @@ describe('modify action', function() {
 		expect(acd.ol.interaction.SnapInteraction).toHaveBeenCalledWith(layer);
 
 		expect(acd.ol.action.MapAction.prototype.addInteraction).toHaveBeenCalled();
-		expect(acd.ol.action.MapAction.prototype.addInteraction.calls.argsFor(2)).toContain(fakeModifyInteraction);
-		expect(acd.ol.action.MapAction.prototype.addInteraction.calls.argsFor(3)).toContain(fakeSnapInteraction);
+		expect(acd.ol.action.MapAction.prototype.addInteraction.calls.argsFor(3)).toContain(fakeModifyInteraction);
+		expect(acd.ol.action.MapAction.prototype.addInteraction.calls.argsFor(4)).toContain(fakeSnapInteraction);
 
 		var otherLayer = createLayer();
 		acd.ol.interaction.SnapInteraction.calls.reset();
@@ -74,7 +78,7 @@ describe('modify action', function() {
 		};
 		var modifyAction = new acd.ol.action.ModifyAction(layer, callback, options);
 		expect(acd.ol.action.MapAction.prototype.addInteraction).toHaveBeenCalled();
-		expect(acd.ol.action.MapAction.prototype.addInteraction.calls.argsFor(2)).toContain(fakeModifyInteraction);
-		expect(acd.ol.action.MapAction.prototype.addInteraction.calls.argsFor(3)).toContain(fakeSnapInteraction);
+		expect(acd.ol.action.MapAction.prototype.addInteraction.calls.argsFor(3)).toContain(fakeModifyInteraction);
+		expect(acd.ol.action.MapAction.prototype.addInteraction.calls.argsFor(4)).toContain(fakeSnapInteraction);
 	});
 });

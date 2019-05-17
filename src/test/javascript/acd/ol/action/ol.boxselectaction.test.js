@@ -22,6 +22,10 @@ describe('box select action', function() {
 	
 	it('kan op actief gezet worden, zodat de selectie, hover en dragbox interacties op actief gezet worden', function() {
 		var boxSelectAction = createBoxSelectAction();
+		boxSelectAction.map = {
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
+		};
 		expect(boxSelectAction.hoverInteraction.getActive()).toBe(false);
 		expect(boxSelectAction.selectInteraction.getActive()).toBe(false);
 		expect(boxSelectAction.dragBoxInteraction.getActive()).toBe(false);
@@ -35,6 +39,10 @@ describe('box select action', function() {
 	
 	it('kan terug op deactief gezet worden, zodat de selectie, hover en dragbox interacties op deactief gezet worden', function() {
 		var boxSelectAction = createBoxSelectAction();
+		boxSelectAction.map = {
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
+		};
 		boxSelectAction.activate();
 		
 		boxSelectAction.deactivate();
@@ -46,6 +54,10 @@ describe('box select action', function() {
 	
 	it('zal de callback functie nog niet gebeurd zijn na het actief maken van de box selectie', function() {
 		var boxSelectAction = createBoxSelectAction();
+		boxSelectAction.map = {
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
+		};
 		
 		boxSelectAction.activate();
 		

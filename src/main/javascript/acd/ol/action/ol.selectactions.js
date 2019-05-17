@@ -60,13 +60,13 @@ acd.ol.action.SelectActions = function(layerConfiguraties, onSelect, options) {
 
 acd.ol.action.SelectActions.prototype = Object.create(acd.ol.action.SelectAction.prototype);
 
-acd.ol.action.SelectActions.prototype.hoverFeatureWithId = function(id, layer) {
+acd.ol.action.SelectActions.prototype.markFeatureWithId = function(id, layer) {
 	if (layer) {
-		acd.ol.action.SelectAction.prototype.hoverFeatureWithId.call(this, id, layer);
+		acd.ol.action.SelectAction.prototype.markFeatureWithId.call(this, id, layer);
 	} else {
 		var self = this;
 		this.layers.forEach(function(layer) {
-			acd.ol.action.SelectAction.prototype.hoverFeatureWithId.call(self, id, layer);
+			acd.ol.action.SelectAction.prototype.markFeatureWithId.call(self, id, layer);
 		});
 		//todo refactor! : this is wrong: what if multiple features have same id but different layer?
 	}

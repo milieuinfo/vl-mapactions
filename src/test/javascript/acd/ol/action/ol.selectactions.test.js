@@ -136,7 +136,7 @@ describe('select actions', function() {
 		expect(selectActions.hoverStyle(feature)).toBeNull();
 	});
 	
-	it('kan features hoveren en dehoveren', function() {
+	it('kan features markeren en demarkeren', function() {
 		var feature1 = new ol.Feature();
 		var feature2 = new ol.Feature();
 		var feature3 = new ol.Feature();
@@ -158,22 +158,22 @@ describe('select actions', function() {
 			})
 		}]);
 		
-		selectActions.hoverFeatureWithId(1);
-		expect(selectActions.isHovered(feature1)).toBe(true);
-		expect(selectActions.hoverInteraction.getFeatures().getLength()).toBe(1);
-		selectActions.hoverFeatureWithId(2);
-		expect(selectActions.isHovered(feature2)).toBe(true);
-		expect(selectActions.hoverInteraction.getFeatures().getLength()).toBe(2);
-		selectActions.hoverFeatureWithId(3);
-		expect(selectActions.isHovered(feature3)).toBe(true);
-		expect(selectActions.hoverInteraction.getFeatures().getLength()).toBe(3);
-		selectActions.dehoverAllFeatures();
-		expect(selectActions.hoverInteraction.getFeatures().getLength()).toBe(0);
-		expect(selectActions.isHovered(feature1)).toBe(false);
-		expect(selectActions.isHovered(feature2)).toBe(false);
+		selectActions.markFeatureWithId(1);
+		expect(selectActions.isMarked(feature1)).toBe(true);
+		expect(selectActions.markInteraction.getFeatures().getLength()).toBe(1);
+		selectActions.markFeatureWithId(2);
+		expect(selectActions.isMarked(feature2)).toBe(true);
+		expect(selectActions.markInteraction.getFeatures().getLength()).toBe(2);
+		selectActions.markFeatureWithId(3);
+		expect(selectActions.isMarked(feature3)).toBe(true);
+		expect(selectActions.markInteraction.getFeatures().getLength()).toBe(3);
+		selectActions.demarkAllFeatures();
+		expect(selectActions.markInteraction.getFeatures().getLength()).toBe(0);
+		expect(selectActions.isMarked(feature1)).toBe(false);
+		expect(selectActions.isMarked(feature2)).toBe(false);
 	});
 
-	it('kan clusters hoveren en dehoveren', function() {
+	it('kan clusters markeren en demarkeren', function() {
 		var feature1 = new ol.Feature();
 		var feature2 = new ol.Feature();
 		var feature3 = new ol.Feature();
@@ -205,22 +205,22 @@ describe('select actions', function() {
 			layer: layer2
 		}]);
 		
-		selectActions.hoverFeatureWithId(1);
-		expect(selectActions.isHovered(cluster1)).toBe(true);
-		expect(selectActions.isHovered(cluster2)).toBe(false);
-		expect(selectActions.isHovered(cluster3)).toBe(false);
-		expect(selectActions.hoverInteraction.getFeatures().getLength()).toBe(1);
-		selectActions.hoverFeatureWithId(2);
-		expect(selectActions.isHovered(cluster1)).toBe(true);
-		expect(selectActions.isHovered(cluster2)).toBe(false);
-		expect(selectActions.isHovered(cluster3)).toBe(false);
-		selectActions.hoverFeatureWithId(4);
-		expect(selectActions.isHovered(cluster1)).toBe(true);
-		expect(selectActions.isHovered(cluster2)).toBe(false);
-		expect(selectActions.isHovered(cluster3)).toBe(true);
-		selectActions.dehoverAllFeatures();
-		expect(selectActions.isHovered(cluster1)).toBe(false);
-		expect(selectActions.isHovered(cluster2)).toBe(false);
-		expect(selectActions.isHovered(cluster3)).toBe(false);
+		selectActions.markFeatureWithId(1);
+		expect(selectActions.isMarked(cluster1)).toBe(true);
+		expect(selectActions.isMarked(cluster2)).toBe(false);
+		expect(selectActions.isMarked(cluster3)).toBe(false);
+		expect(selectActions.markInteraction.getFeatures().getLength()).toBe(1);
+		selectActions.markFeatureWithId(2);
+		expect(selectActions.isMarked(cluster1)).toBe(true);
+		expect(selectActions.isMarked(cluster2)).toBe(false);
+		expect(selectActions.isMarked(cluster3)).toBe(false);
+		selectActions.markFeatureWithId(4);
+		expect(selectActions.isMarked(cluster1)).toBe(true);
+		expect(selectActions.isMarked(cluster2)).toBe(false);
+		expect(selectActions.isMarked(cluster3)).toBe(true);
+		selectActions.demarkAllFeatures();
+		expect(selectActions.isMarked(cluster1)).toBe(false);
+		expect(selectActions.isMarked(cluster2)).toBe(false);
+		expect(selectActions.isMarked(cluster3)).toBe(false);
 	});
 });

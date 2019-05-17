@@ -18,7 +18,9 @@ describe('split action', function() {
 	function createSplitAction() {
 		var splitAction = new acd.ol.action.SplitAction(layer, callbackSpy, optionsSpy);
 		splitAction.map = {
-			addAction: mapAddActionSpy
+			addAction: mapAddActionSpy,
+			on: jasmine.createSpy(),
+			un: jasmine.createSpy()
 		};
 		return splitAction;
 	}
@@ -121,6 +123,7 @@ describe('split action', function() {
 	
 	it('zal na het selecteren en tekenen de laatst geselecteerde feature deselecteren, de map action deactiveren en de select action activeren', function() {
 		var splitAction = createSplitAction();
+		
 		spyOn(splitAction.selectAction, 'clearFeatures');
 		spyOn(splitAction.selectAction, 'activate');
 		spyOn(splitAction.drawAction, 'deactivate');
