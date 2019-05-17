@@ -334,13 +334,16 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 		style: this.hoverStyle
 	});
 	
+	this.markInteraction = new ol.interaction.Select({
+		style: this.style,
+	});
+	
 	this.selectInteraction = new ol.interaction.Select({
 		filter: this.selectInteractionFilter,
-		style: this.style,
 		multi: true
 	});
 	
-	acd.ol.action.MapAction.call(this, [this.selectInteraction, this.hoverInteraction]);
+	acd.ol.action.MapAction.call(this, [this.markInteraction, this.selectInteraction, this.hoverInteraction]);
 	
 	this.hoverInteraction.on('select', function() {
 		var element = self.map.getTargetElement();
@@ -353,28 +356,41 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 	
 	this.selectedFeature = null;
 	
-	this.getLayer = function(feature) {
+	this.getLayer = function() {
 		return layer;
 	};
 	
 	this.selectInteraction.on('select', function(event) {
-		self.hoverInteraction.getFeatures().clear();
-		if (onSelect) {
-			if (self.selectInteraction.getFeatures().getLength() > 0) {
-				var selectedFeature = null;
-				if (self.selectInteraction.getFeatures().getLength() == 1) {
-					selectedFeature = self.selectInteraction.getFeatures().getArray()[0];
-				} else {
-					selectedFeature = nextFeature(self.selectInteraction.getFeatures());
-				}
-				self.selectedFeature = selectedFeature;
-				onSelect(self.selectedFeature, event, self.getLayer(selectedFeature));
+		self.markInteraction.getFeatures().clear();
+		if (self.selectInteraction.getFeatures().getLength() > 0) {
+			var selectedFeature = null;
+			if (self.selectInteraction.getFeatures().getLength() == 1) {
+				selectedFeature = self.selectInteraction.getFeatures().getArray()[0];
 			} else {
-				this.selectedFeature = null;
+				selectedFeature = nextFeature(self.selectInteraction.getFeatures());
+			}
+			self.selectedFeature = selectedFeature;
+			if (onSelect) {
+				onSelect(self.selectedFeature, event, self.getLayer(selectedFeature));
+			}
+		} else {
+			this.selectedFeature = null;
+			if (onSelect) {
 				onSelect();
 			}
 		}
 	});
+
+	this.fixClusterBehavior = function() {
+		if (this.selectedFeature) {
+			var features = this.selectedFeature.get('features') || [this.selectedFeature];
+			this.selectInteraction.getFeatures().clear();
+			this.markInteraction.getFeatures().clear();
+			features.forEach(function(feature) {
+				this.markFeatureWithId(feature.getId());
+			}, this);
+		}
+	};
 	
 	function isSelected(feature) {
 		return self.selectInteraction.getFeatures().getArray().indexOf(feature) !== -1;
@@ -402,10 +418,21 @@ acd.ol.action.SelectAction.prototype = Object.create(acd.ol.action.MapAction.pro
 
 acd.ol.action.SelectAction.prototype.clearFeatures = function() {
 	this.selectInteraction.getFeatures().clear();
+	this.markInteraction.getFeatures().clear();
 	this.hoverInteraction.getFeatures().clear();
 };
 
+acd.ol.action.SelectAction.prototype.activate = function() {
+	if (this.map) {
+		this.map.on('moveend', this.fixClusterBehavior);
+	}
+	acd.ol.action.MapAction.prototype.activate.call(this);
+};
+
 acd.ol.action.SelectAction.prototype.deactivate = function() {
+	if (this.map) {
+		this.map.un('moveend', this.fixClusterBehavior);
+	}
 	this.clearFeatures();
 	acd.ol.action.MapAction.prototype.deactivate.call(this);
 };
@@ -426,28 +453,28 @@ acd.ol.action.SelectAction.prototype.vergeetLaatstGeselecteerdeFeature = functio
 	this.selectedFeature = null;
 };
 
-acd.ol.action.SelectAction.prototype.hoverFeatureWithId = function(id, layer) {
+acd.ol.action.SelectAction.prototype.markFeatureWithId = function(id, layer) {
 	layer = layer || this.layer;
 	var feature = layer.getSource().getFeatureById(id) || this.getClusterWithFeatureId(layer.getSource().getFeatures(), id);
 	if (feature) {
-		if (this.hoverInteraction.getFeatures().getArray().indexOf(feature) == -1) {
-			this.hoverInteraction.getFeatures().push(feature);
+		if (this.markInteraction.getFeatures().getArray().indexOf(feature) == -1) {
+			this.markInteraction.getFeatures().push(feature);
 		}
 	}
 };
 
-acd.ol.action.SelectAction.prototype.isHovered = function(feature) {
-	var hovered = false;
-	this.hoverInteraction.getFeatures().forEach(function(selectedFeature) {
+acd.ol.action.SelectAction.prototype.isMarked = function(feature) {
+	var marked = false;
+	this.markInteraction.getFeatures().forEach(function(selectedFeature) {
 		if (selectedFeature === feature) {
-			hovered = true;
+			marked = true;
 		}
 	});
-	return hovered;
+	return marked;
 };
 
-acd.ol.action.SelectAction.prototype.dehoverAllFeatures = function() {
-	this.hoverInteraction.getFeatures().clear();
+acd.ol.action.SelectAction.prototype.demarkAllFeatures = function() {
+	this.markInteraction.getFeatures().clear();
 };
 acd.ol.action.BoxSelectAction = function(layer, onSelect, options) {
 	var self = this;
@@ -926,13 +953,13 @@ acd.ol.action.SelectActions = function(layerConfiguraties, onSelect, options) {
 
 acd.ol.action.SelectActions.prototype = Object.create(acd.ol.action.SelectAction.prototype);
 
-acd.ol.action.SelectActions.prototype.hoverFeatureWithId = function(id, layer) {
+acd.ol.action.SelectActions.prototype.markFeatureWithId = function(id, layer) {
 	if (layer) {
-		acd.ol.action.SelectAction.prototype.hoverFeatureWithId.call(this, id, layer);
+		acd.ol.action.SelectAction.prototype.markFeatureWithId.call(this, id, layer);
 	} else {
 		var self = this;
 		this.layers.forEach(function(layer) {
-			acd.ol.action.SelectAction.prototype.hoverFeatureWithId.call(self, id, layer);
+			acd.ol.action.SelectAction.prototype.markFeatureWithId.call(self, id, layer);
 		});
 		//todo refactor! : this is wrong: what if multiple features have same id but different layer?
 	}
