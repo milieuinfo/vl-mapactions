@@ -373,8 +373,9 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 			if (onSelect) {
 				onSelect(self.selectedFeature, event, self.getLayer(selectedFeature));
 			}
+			self.fixClusterBehavior();
 		} else {
-			this.selectedFeature = null;
+			self.selectedFeature = null;
 			if (onSelect) {
 				onSelect();
 			}
@@ -382,13 +383,13 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 	});
 
 	this.fixClusterBehavior = function() {
-		if (this.selectedFeature) {
-			var features = this.selectedFeature.get('features') || [this.selectedFeature];
-			this.selectInteraction.getFeatures().clear();
-			this.markInteraction.getFeatures().clear();
+		if (self.selectedFeature) {
+			var features = self.selectedFeature.get('features') || [self.selectedFeature];
+			self.selectInteraction.getFeatures().clear();
+			self.markInteraction.getFeatures().clear();
 			features.forEach(function(feature) {
-				this.markFeatureWithId(feature.getId());
-			}, this);
+				self.markFeatureWithId(feature.getId());
+			}, self);
 		}
 	};
 	
