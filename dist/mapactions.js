@@ -312,7 +312,9 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 	this.hoverStyle = options ? options.hoverStyle || this.style : this.style;
 	
 	this.selectInteractionFilter = function(feature, layer) {
-		self.selectInteraction.getFeatures().clear();
+		if (self.selectInteraction.getFeatures()) {
+			self.selectInteraction.getFeatures().clear();
+		}
 		return self.filter(feature, layer);
 	};
 	
@@ -386,11 +388,13 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 			var features = self.selectedFeature.get('features') || [self.selectedFeature];
 			self.selectInteraction.getFeatures().clear();
 			self.markInteraction.getFeatures().clear();
-			features.forEach(function(feature) {
-				if (feature.getId()) {
-					self.markFeatureWithId(feature.getId());
-				}
-			}, self);
+			if (features) {
+				features.forEach(function(feature) {
+					if (feature.getId()) {
+						self.markFeatureWithId(feature.getId());
+					}
+				}, self);
+			}
 		}
 	};
 	
