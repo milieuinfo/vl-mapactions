@@ -1,6 +1,6 @@
 {
   "name": "vl-mapactions",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Map acties voor OpenLayers",
   "publishConfig": {
     "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
