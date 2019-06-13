@@ -82,11 +82,13 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 			var features = self.selectedFeature.get('features') || [self.selectedFeature];
 			self.selectInteraction.getFeatures().clear();
 			self.markInteraction.getFeatures().clear();
-			features.forEach(function(feature) {
-				if (feature.getId()) {
-					self.markFeatureWithId(feature.getId());
-				}
-			}, self);
+			if (features) {
+				features.forEach(function(feature) {
+					if (feature.getId()) {
+						self.markFeatureWithId(feature.getId());
+					}
+				}, self);
+			}
 		}
 	};
 	
