@@ -8,9 +8,7 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 	this.hoverStyle = options ? options.hoverStyle || this.style : this.style;
 	
 	this.selectInteractionFilter = function(feature, layer) {
-		if (self.selectInteraction.getFeatures().getLength() > 0) {
-			self.selectInteraction.getFeatures().clear();
-		}
+		self.selectInteraction.getFeatures().clear();
 		return self.filter(feature, layer);
 	};
 	
@@ -38,8 +36,7 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 	});
 	
 	this.selectInteraction = new ol.interaction.Select({
-		filter: this.selectInteractionFilter,
-		multi: true
+		filter: this.selectInteractionFilter
 	});
 	
 	acd.ol.action.MapAction.call(this, [this.markInteraction, this.selectInteraction, this.hoverInteraction]);
