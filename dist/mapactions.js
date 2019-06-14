@@ -312,7 +312,7 @@ acd.ol.action.SelectAction = function(layer, onSelect, options) {
 	this.hoverStyle = options ? options.hoverStyle || this.style : this.style;
 	
 	this.selectInteractionFilter = function(feature, layer) {
-		if (self.selectInteraction.getFeatures()) {
+		if (self.selectInteraction.getFeatures().getLength() > 0) {
 			self.selectInteraction.getFeatures().clear();
 		}
 		return self.filter(feature, layer);
