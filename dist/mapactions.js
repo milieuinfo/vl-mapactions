@@ -200,7 +200,6 @@ acd.ol.CustomMap.prototype.addBaseLayerAndOverlayMapLayer = function(baseLayer, 
 												overviewMapLayers: [overlayMapLayer]
 											}
 										});
-		this.addControl(this.overviewMapControl); 
 	}
 	overlayMapLayer.setVisible(this.overviewMapControl.getOverviewMap().getLayers().getArray().length == 2)
 }
