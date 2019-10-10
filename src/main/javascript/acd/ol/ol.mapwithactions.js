@@ -1,7 +1,14 @@
 acd.ol.MapWithActions = function (options) {
 	var self = this;
 	this.actions = [];
-	
+
+	if (options.disableRotation) {
+		if(!options.interactions){
+			options.interactions = ol.interaction.defaults(
+					{altShiftDragRotate: false, pinchRotate: false});
+		}
+	}
+
 	ol.Map.call(this, options);
 	
 	options.actions.forEach(function(action) {
