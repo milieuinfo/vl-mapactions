@@ -117,7 +117,7 @@ acd.ol.CustomMap.prototype.addBaseLayerAndOverlayMapLayer = function(baseLayer, 
 											}
 										});
 	}
-	overlayMapLayer.setVisible(this.overviewMapControl.getOverviewMap().getLayers().getArray().length == 2)
+	overlayMapLayer.setVisible(this.overviewMapControl.getOverviewMap().getLayers().getArray().length == 2);
 }
 
 acd.ol.CustomMap.prototype.getBaseLayers = function() {
