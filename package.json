@@ -6,6 +6,8 @@
     "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
   },
   "scripts": {
+    "prepare": "npm update --dev vl-ui-util && npm run prepare:util",
+    "prepare:util": "npm explore vl-ui-util -- npm run install:utils",
     "test": "grunt test",
     "build": "grunt",
     "release": "npm run build && np",
@@ -53,7 +55,8 @@
     "requirejs": "2.3.5",
     "time-grunt": "1.4.0",
     "zeparser": "0.0.7",
-    "np": "3.0.4"
+    "np": "3.0.4",
+    "vl-ui-util": "^2.0.4"
   },
   "engines": {
     "node": ">=0.10.0"
