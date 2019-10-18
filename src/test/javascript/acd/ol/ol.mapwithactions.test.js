@@ -26,11 +26,8 @@ describe('map with actions', function () {
 
     return new acd.ol.MapWithActions({
       actions: [
-        action1 = new acd.ol.action.MapAction(
-            [createFakeInteraction(), createFakeInteraction()]),
-        action2 = new acd.ol.action.MapAction(
-            [createFakeInteraction(), createFakeInteraction(),
-              createFakeInteraction()])
+        action1 = new acd.ol.action.MapAction([createFakeInteraction(), createFakeInteraction()]),
+        action2 = new acd.ol.action.MapAction([createFakeInteraction(), createFakeInteraction(), createFakeInteraction()])
       ]
     });
   }
@@ -48,24 +45,23 @@ describe('map with actions', function () {
     expect(map.interactions.length).toEqual(5);
   });
 
-  it('kan maar één actie tegelijkertijd activeren, waarbij enkel deze actie zijn interacties op actief staan',
-      function (done) {
-        var map = createMapWithActions();
-        map.activateAction(action1);
-        expect(map.currentAction).toBe(action1);
+  it('kan maar één actie tegelijkertijd activeren, waarbij enkel deze actie zijn interacties op actief staan', function (done) {
+    var map = createMapWithActions();
+    map.activateAction(action1);
+    expect(map.currentAction).toBe(action1);
 
-        map.activateAction(action2);
+    map.activateAction(action2);
 
-        expect(map.currentAction).toBe(action2);
-        action1.interactions.forEach(function (interaction) {
-          expect(interaction.getActive()).toBe(false);
-        });
-        afterActivation(function () {
-          action2.interactions.forEach(function (interaction) {
-            expect(interaction.getActive()).toBe(true);
-          });
-        }, done);
+    expect(map.currentAction).toBe(action2);
+    action1.interactions.forEach(function (interaction) {
+      expect(interaction.getActive()).toBe(false);
+    });
+    afterActivation(function () {
+      action2.interactions.forEach(function (interaction) {
+        expect(interaction.getActive()).toBe(true);
       });
+    }, done);
+  });
 
   it('heeft als default actie de eerste actie', function () {
     var map = createMapWithActions();
@@ -79,8 +75,7 @@ describe('map with actions', function () {
     expect(map.interactions.length).toEqual(5);
     expect(map.currentAction).toBe(action1);
 
-    var nieuweAction = new acd.ol.action.MapAction(
-        [createFakeInteraction(), createFakeInteraction()])
+    var nieuweAction = new acd.ol.action.MapAction([createFakeInteraction(), createFakeInteraction()])
     map.addAction(nieuweAction);
 
     expect(map.actions.length).toEqual(3);
@@ -91,8 +86,7 @@ describe('map with actions', function () {
 
   it('kan een actie verwijderen van de map', function () {
     var map = createMapWithActions();
-    var nieuweAction = new acd.ol.action.MapAction(
-        [createFakeInteraction(), createFakeInteraction()])
+    var nieuweAction = new acd.ol.action.MapAction([createFakeInteraction(), createFakeInteraction()])
     map.addAction(nieuweAction);
 
     map.removeAction(nieuweAction);
@@ -102,101 +96,95 @@ describe('map with actions', function () {
     expect(map.currentAction).toBe(action1);
   });
 
-  it('als de te verwijderen actie de current actie wordt de default geactiveerd',
-      function () {
-        var map = createMapWithActions();
-        var nieuweAction = new acd.ol.action.MapAction(
-            [createFakeInteraction(), createFakeInteraction()])
-        map.addAction(nieuweAction);
+  it('als de te verwijderen actie de current actie wordt de default geactiveerd', function () {
+    var map = createMapWithActions();
+    var nieuweAction = new acd.ol.action.MapAction([createFakeInteraction(), createFakeInteraction()])
+    map.addAction(nieuweAction);
 
-        map.activateAction(nieuweAction);
-        expect(map.currentAction).toBe(nieuweAction);
-        map.removeAction(nieuweAction);
-        expect(map.currentAction).toBe(map.actions[0]);
-      });
+    map.activateAction(nieuweAction);
+    expect(map.currentAction).toBe(nieuweAction);
+    map.removeAction(nieuweAction);
+    expect(map.currentAction).toBe(map.actions[0]);
+  });
 
-  it('bij het activeren van een actie, zullen we eerst controleren of deze actie al niet actief stond vooraleer we de vorige actie gaan deactiveren en de nieuwe actie gaan activeren',
-      function (done) {
-        var map = createMapWithActions();
-        spyOn(action1, 'activate');
-        spyOn(action1, 'deactivate');
-        spyOn(action2, 'activate');
-        spyOn(action2, 'deactivate');
+  it('bij het activeren van een actie, zullen we eerst controleren of deze actie al niet actief stond vooraleer we de vorige actie gaan deactiveren en de nieuwe actie gaan activeren', function (done) {
+    var map = createMapWithActions();
+    spyOn(action1, 'activate');
+    spyOn(action1, 'deactivate');
+    spyOn(action2, 'activate');
+    spyOn(action2, 'deactivate');
 
-        map.activateAction(action1);
+    map.activateAction(action1);
 
-        map.activateAction(action1);
-        map.activateAction(action2);
-        afterActivation(function () {
-          expect(action1.activate).not.toHaveBeenCalled();
-          expect(action2.activate).toHaveBeenCalled();
-          expect(action1.deactivate).toHaveBeenCalled();
-        }, done);
-      });
+    map.activateAction(action1);
+    map.activateAction(action2);
+    afterActivation(function () {
+      expect(action1.activate).not.toHaveBeenCalled();
+      expect(action2.activate).toHaveBeenCalled();
+      expect(action1.deactivate).toHaveBeenCalled();
+    }, done);
+  });
 
-  it('Wanneer de default actie wordt geactiveerd, zal de huidige actie gedeactiveerd worden en is de nieuwe default actie de eerst gedefinieerde actie',
-      function (done) {
-        var map = createMapWithActions();
+  it('Wanneer de default actie wordt geactiveerd, zal de huidige actie gedeactiveerd worden en is de nieuwe default actie de eerst gedefinieerde actie', function (done) {
+    var map = createMapWithActions();
 
-        map.activateAction(action2);
-        expect(map.currentAction).toBe(action2);
+    map.activateAction(action2);
+    expect(map.currentAction).toBe(action2);
 
-        spyOn(action1, 'activate');
-        spyOn(action2, 'activate');
-        spyOn(action2, 'deactivate');
+    spyOn(action1, 'activate');
+    spyOn(action2, 'activate');
+    spyOn(action2, 'deactivate');
 
-        map.activateDefaultAction();
 
-        afterActivation(function () {
-          expect(action2.deactivate).toHaveBeenCalled();
-          expect(action1.activate).toHaveBeenCalled();
-        }, done);
-      });
+    map.activateDefaultAction();
 
-  it('Wanneer de default actie wordt geactiveerd, zal de huidige actie gedeactiveerd worden en is de nieuwe default actie de eerst gedefinieerde actie, ook als de huidige actie de eerst gedefinieerde is',
-      function (done) {
-        var map = createMapWithActions();
+    afterActivation(function () {
+      expect(action2.deactivate).toHaveBeenCalled();
+      expect(action1.activate).toHaveBeenCalled();
+    }, done);
+  });
 
-        map.activateAction(action1);
-        expect(map.currentAction).toBe(action1);
+  it('Wanneer de default actie wordt geactiveerd, zal de huidige actie gedeactiveerd worden en is de nieuwe default actie de eerst gedefinieerde actie, ook als de huidige actie de eerst gedefinieerde is', function (done) {
+    var map = createMapWithActions();
 
-        spyOn(action1, 'activate');
-        spyOn(action1, 'deactivate');
+    map.activateAction(action1);
+    expect(map.currentAction).toBe(action1);
 
-        map.activateDefaultAction();
+    spyOn(action1, 'activate');
+    spyOn(action1, 'deactivate');
 
-        afterActivation(function () {
-          expect(action1.deactivate).toHaveBeenCalled();
-          expect(action1.activate).toHaveBeenCalled();
-        }, done);
-      });
+    map.activateDefaultAction();
 
-  it('bij het aanmaken van een kaart met acties wordt standaard functionaliteit toegevoegd aan de kaart dat bij escape de eerste kaart actie geactiveerd wordt',
-      function () {
-        var map = new acd.ol.MapWithActions({
-          actions: []
-        });
-        spyOn(map, 'activateDefaultAction');
-        expect(map.activateDefaultAction).not.toHaveBeenCalled();
-        var event = new Event('keydown');
-        event.keyCode = 27;
-        document.body.dispatchEvent(event);
-        expect(map.activateDefaultAction).toHaveBeenCalled();
-      });
+    afterActivation(function () {
+      expect(action1.deactivate).toHaveBeenCalled();
+      expect(action1.activate).toHaveBeenCalled();
+    }, done);
+  });
 
-  it('indien gewenst kan de standaard escape functionaliteit uitgeschakeld worden bij het aanmaken van een kaart met acties',
-      function () {
-        var map = new acd.ol.MapWithActions({
-          actions: [],
-          disableEscapeKey: true
-        });
-        spyOn(map, 'activateDefaultAction');
-        expect(map.activateDefaultAction).not.toHaveBeenCalled();
-        var event = new Event('keydown');
-        event.keyCode = 27;
-        document.body.dispatchEvent(event);
-        expect(map.activateDefaultAction).not.toHaveBeenCalled();
-      });
+  it('bij het aanmaken van een kaart met acties wordt standaard functionaliteit toegevoegd aan de kaart dat bij escape de eerste kaart actie geactiveerd wordt', function () {
+    var map = new acd.ol.MapWithActions({
+      actions: []
+    });
+    spyOn(map, 'activateDefaultAction');
+    expect(map.activateDefaultAction).not.toHaveBeenCalled();
+    var event = new Event('keydown');
+    event.keyCode = 27;
+    document.body.dispatchEvent(event);
+    expect(map.activateDefaultAction).toHaveBeenCalled();
+  });
+
+  it('indien gewenst kan de standaard escape functionaliteit uitgeschakeld worden bij het aanmaken van een kaart met acties', function () {
+    var map = new acd.ol.MapWithActions({
+      actions: [],
+      disableEscapeKey: true
+    });
+    spyOn(map, 'activateDefaultAction');
+    expect(map.activateDefaultAction).not.toHaveBeenCalled();
+    var event = new Event('keydown');
+    event.keyCode = 27;
+    document.body.dispatchEvent(event);
+    expect(map.activateDefaultAction).not.toHaveBeenCalled();
+  });
 
   it('er zijn 9 predefined interactions', function () {
     spyOn(ol.Map, 'call').and.callFake(function (map, options) {
@@ -208,16 +196,15 @@ describe('map with actions', function () {
     expect(ol.Map.call).toHaveBeenCalledTimes(1);
   });
 
-  it('indien gewenst kan de standaard rotation functionaliteit uitgeschaked worden bij het aanmaken van een kaart met acties',
-      function () {
-        spyOn(ol.Map, 'call').and.callFake(function (map, options) {
-          expect(options.interactions.getLength()).toBe(7);//9-2=7
-        });
-        var map = new acd.ol.MapWithActions({
-          actions: [],
-          disableRotation: true
-        });
-        expect(ol.Map.call).toHaveBeenCalledTimes(1);
+  it('indien gewenst kan de standaard rotation functionaliteit uitgeschaked worden bij het aanmaken van een kaart met acties', function () {
+    spyOn(ol.Map, 'call').and.callFake(function (map, options) {
+      expect(options.interactions.getLength()).toBe(7);//9-2=7
+    });
+    var map = new acd.ol.MapWithActions({
+      actions: [],
+      disableRotation: true
+    });
+    expect(ol.Map.call).toHaveBeenCalledTimes(1);
   });
 
   it('indien gewenst kan de extra interactions toegevoegd worden bij het aanmaken van een kaart met acties', function () {
@@ -226,11 +213,9 @@ describe('map with actions', function () {
     });
     var map = new acd.ol.MapWithActions({
       actions: [],
-      interactions: new ol.Collection([new ol.interaction.PinchZoom(),new ol.interaction.PinchRotate()]),
+      interactions: new ol.Collection([new ol.interaction.PinchZoom(), new ol.interaction.PinchRotate()]),
       disableRotation: true
     });
     expect(ol.Map.call).toHaveBeenCalledTimes(1);
   });
-
-
 });
