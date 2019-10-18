@@ -3,7 +3,7 @@ version: 2
 plan:
   project-key: WEBCO
   key: VLMAPACTIONS
-  name: webcomponent-vl-mapactions
+  name: vl-mapactions
 
 triggers:
   - polling: 130
