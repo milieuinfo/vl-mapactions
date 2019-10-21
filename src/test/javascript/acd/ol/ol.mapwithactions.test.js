@@ -189,6 +189,15 @@ describe('map with actions', function () {
   it('er zijn 9 predefined interactions', function () {
     spyOn(ol.Map, 'call').and.callFake(function (map, options) {
       expect(options.interactions.getLength()).toBe(9);//Standaard zijn er 9 interactions
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.DragRotate;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.DoubleClickZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.KeyboardPan;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.KeyboardZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.MouseWheelZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.PinchZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.PinchRotate;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.DragPan;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.DragZoom;}).length).toBe(1);
     });
     var map = new acd.ol.MapWithActions({
       actions: []
@@ -199,6 +208,15 @@ describe('map with actions', function () {
   it('indien gewenst kan de standaard rotation functionaliteit uitgeschaked worden bij het aanmaken van een kaart met acties', function () {
     spyOn(ol.Map, 'call').and.callFake(function (map, options) {
       expect(options.interactions.getLength()).toBe(7);//9-2=7
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.DoubleClickZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.KeyboardPan;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.KeyboardZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.MouseWheelZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.PinchZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.DragPan;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.DragZoom;}).length).toBe(1);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.DragRotate;}).length).toBe(0);
+      expect(options.interactions.getArray().filter(function (interaction) {return interaction instanceof ol.interaction.PinchRotate;}).length).toBe(0);
     });
     var map = new acd.ol.MapWithActions({
       actions: [],
