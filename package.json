@@ -1,6 +1,6 @@
 {
   "name": "vl-mapactions",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Map acties voor OpenLayers",
   "publishConfig": {
     "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
@@ -37,7 +37,7 @@
     "grunt-filerev": "2.3.1",
     "grunt-karma": "2.0.0",
     "grunt-ng-annotate": "3.0.0",
-    "grunt-sass": "2.1.0",
+    "grunt-sass": "^2.1.0",
     "grunt-shell": "2.1.0",
     "grunt-svgmin": "5.0.0",
     "grunt-usemin": "3.1.0",
@@ -51,12 +51,11 @@
     "karma-script-launcher": "1.0.0",
     "load-grunt-tasks": "3.5.2",
     "lodash": "4.17.5",
+    "np": "3.0.4",
     "phantomjs": "2.1.7",
     "requirejs": "2.3.5",
     "time-grunt": "1.4.0",
-    "zeparser": "0.0.7",
-    "np": "3.0.4",
-    "vl-ui-util": "^2.0.4"
+    "zeparser": "0.0.7"
   },
   "engines": {
     "node": ">=0.10.0"
