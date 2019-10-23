@@ -37,7 +37,7 @@
     "grunt-filerev": "2.3.1",
     "grunt-karma": "2.0.0",
     "grunt-ng-annotate": "3.0.0",
-    "grunt-sass": "^2.1.0",
+    "grunt-sass": "2.1.0",
     "grunt-shell": "2.1.0",
     "grunt-svgmin": "5.0.0",
     "grunt-usemin": "3.1.0",
