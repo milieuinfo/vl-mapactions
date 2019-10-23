@@ -11,6 +11,7 @@
     "test": "grunt test",
     "build": "grunt",
     "release": "npm run build && np",
+    "release:prepare": "echo 'no release prepare'",
     "release:testless": "np --yolo"
   },
   "dependencies": {
