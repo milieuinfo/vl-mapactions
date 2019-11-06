@@ -90,7 +90,7 @@ acd.ol.CustomMap = function (options) {
 	this.projection = options.projection;
 	
 	this.geoJSONFormat = new ol.format.GeoJSON({
-		defaultDataProjection: options.projection
+		dataProjection: options.projection
 	});
 	
 	options.layers = [
