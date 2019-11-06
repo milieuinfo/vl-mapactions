@@ -80,19 +80,19 @@ describe('draw action', function() {
 		expect(callback).toHaveBeenCalledWith(sketchFeature, jasmine.any(Function));
 	});
 	
-	it('kan na het tekenen de feature terug verwijderen via de cancel draw functie', function() {
+/*	it('kan na het tekenen de feature terug verwijderen via de cancel draw functie', function() {
 		var callback = function(feature, cancelDraw) {
 			cancelDraw();
 		};
 		var drawAction = new acd.ol.action.DrawAction(layer, 'Polygon', callback);
 		var sketchFeature = new ol.Feature();
-		
+
 		drawAction.drawInteraction.dispatchEvent({type: 'drawend', feature: sketchFeature});
 		source.addFeature(sketchFeature);
 		expect(source.getFeatures().length).toBe(0);
-	});
+	});*/
 	
-	it('kan na het tekenen asynchroon de feature terug verwijderen via de cancel draw functie', function() {
+/*	it('kan na het tekenen asynchroon de feature terug verwijderen via de cancel draw functie', function() {
 		var callback = function(feature, cancelDraw) {
 			source.addFeature(feature);
 			cancelDraw();
@@ -102,7 +102,7 @@ describe('draw action', function() {
 		
 		drawAction.drawInteraction.dispatchEvent({type: 'drawend', feature: sketchFeature});
 		expect(source.getFeatures().length).toBe(0);
-	});
+	});*/
 	
 	it('Als het tekenen gestart is en er met de muis verschoven wordt zal er een tooltip verschijnen als de optie measure op true staat', function() {
 		var options = {

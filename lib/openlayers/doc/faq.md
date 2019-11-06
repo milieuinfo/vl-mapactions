@@ -5,9 +5,9 @@ layout: doc.hbs
 
 # Frequently Asked Questions (FAQ)
 
-Certain questions arise more often than others when users ask for help. This 
+Certain questions arise more often than others when users ask for help. This
 document tries to list some of the common questions that frequently get asked,
-e.g. on [Stack Overflow](http://stackoverflow.com/questions/tagged/openlayers-3).
+e.g. on [Stack Overflow](http://stackoverflow.com/questions/tagged/openlayers).
 
 If you think a question (and naturally its answer) should be added here, feel
 free to ping us or to send a pull request enhancing this document.
@@ -20,10 +20,8 @@ Table of contents:
 * [Why is the order of a coordinate [lon,lat], and not [lat,lon]?](#why-is-the-order-of-a-coordinate-lon-lat-and-not-lat-lon-)
 * [Why aren't there any features in my source?](#why-aren-t-there-any-features-in-my-source-)
 * [How do I force a re-render of the map?](#how-do-i-force-a-re-render-of-the-map-)
-* [How do I create a custom build of OpenLayers?](#how-do-i-create-a-custom-build-of-openlayers-)
-* [Do I need to write my own code using Closure library?](#do-i-need-to-write-my-own-code-using-closure-library-)
-* [Do I need to compress my code with Closure compiler?](#do-i-need-to-compress-my-code-with-closure-compiler-)
-
+* [Why are my features not found?](#why-are-my-features-not-found-)
+* [Why is zooming or clicking off, inaccurate?](#user-content-why-is-zooming-or-clicking-off-inaccurate)
 
 ## What projection is OpenLayers using?
 
@@ -56,9 +54,12 @@ The projection of your map can be set through the `view`-property. Here are some
 examples:
 
 ```javascript
+import Map from 'ol/Map';
+import View from 'ol/View';
+
 // OpenLayers comes with support for the World Geodetic System 1984, EPSG:4326:
-var map = new ol.Map({
-  view: new ol.View({
+const map = new Map({
+  view: new View({
     projection: 'EPSG:4326'
     // other view properties like map center etc.
   })
@@ -67,24 +68,29 @@ var map = new ol.Map({
 ```
 
 ```javascript
-// To use other projections, you have to register the projection in OpenLayers:
+import Map from 'ol/Map';
+import View from 'ol/View';
+import proj4 from 'proj4';
+import {register} from 'ol/proj/proj4';
+import {get as getProjection} from 'ol/proj';
+
+// To use other projections, you have to register the projection in OpenLayers.
+// This can easily be done with [https://proj4js.org](proj4)
 //
 // By default OpenLayers does not know about the EPSG:21781 (Swiss) projection.
 // So we create a projection instance for EPSG:21781 and pass it to
-// ol.proj.addProjection to make it available to the library for lookup by its
+// register to make it available to the library for lookup by its
 // code.
-var swissProjection = new ol.proj.Projection({
-  code: 'EPSG:21781',
-  // The extent is used to determine zoom level 0. Recommended values for a
-  // projection's validity extent can be found at http://epsg.io/.
-  extent: [485869.5728, 76443.1884, 837076.5648, 299941.7864],
-  units: 'm'
-});
-ol.proj.addProjection(swissProjection);
+proj4.defs('EPSG:21781',
+  '+proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 ' +
+  '+x_0=600000 +y_0=200000 +ellps=bessel ' +
+  '+towgs84=660.077,13.551,369.344,2.484,1.783,2.939,5.66 +units=m +no_defs');
+register(proj4);
+const swissProjection = getProjection('EPSG:21781');
 
 // we can now use the projection:
-var map = new ol.Map({
-  view: new ol.View({
+const map = new Map({
+  view: new View({
     projection: swissProjection
     // other view properties like map center etc.
   })
@@ -93,7 +99,7 @@ var map = new ol.Map({
 ```
 
 We recommend to lookup parameters of your projection (like the validity extent)
-over at [epsg.io](http://epsg.io/).
+over at [epsg.io](https://epsg.io/).
 
 
 ## Why is my map centered on the gulf of guinea (or africa, the ocean, null-island)?
@@ -107,15 +113,20 @@ coordinates for the center have to be provided in that projection. Chances are
 that your map looks like this:
 
 ```javascript
-var washingtonLonLat = [-77.036667, 38.895];
-var map = new ol.Map({
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+
+const washingtonLonLat = [-77.036667, 38.895];
+const map = new Map({
   layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
+    new TileLayer({
+      source: new OSM()
     })
   ],
   target: 'map',
-  view: new ol.View({
+  view: new View({
     center: washingtonLonLat,
     zoom: 12
   })
@@ -131,36 +142,59 @@ The solution is easy: Provide the coordinates projected into Web Mercator.
 OpenLayers has some helpful utility methods to assist you:
 
 ```javascript
-var washingtonLonLat = [-77.036667, 38.895];
-var washingtonWebMercator = ol.proj.fromLonLat(washingtonLonLat);
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import {fromLonLat} from 'ol/proj';
 
-var map = new ol.Map({
+const washingtonLonLat = [-77.036667, 38.895];
+const washingtonWebMercator = fromLonLat(washingtonLonLat);
+
+const map = new Map({
   layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
+    new TileLayer({
+      source: new OSM()
     })
   ],
   target: 'map',
-  view: new ol.View({
+  view: new View({
     center: washingtonWebMercator,
     zoom: 8
   })
 });
 ```
 
-The method `ol.proj.fromLonLat()` is available from version 3.5 onwards.
+The method `fromLonLat()` is available from version 3.5 onwards.
 
 If you told OpenLayers about a custom projection (see above), you can use the
 following method to transform a coordinate from WGS84 to your projection:
 
 ```javascript
+import {transform} from 'ol/proj';
 // assuming that OpenLayers knows about EPSG:21781, see above
-var swissCoord = ol.proj.transform([8.23, 46.86], 'EPSG:4326', 'EPSG:21781');
+const swissCoord = transform([8.23, 46.86], 'EPSG:4326', 'EPSG:21781');
 ```
 
 
 ## Why is the order of a coordinate [lon,lat], and not [lat,lon]?
 
+Because of two different and incompatible conventions. Latitude and longitude
+are normally given in that order. Maps are 2D representations/projections
+of the earth's surface, with coordinates expressed in the `x,y` grid of the
+[Cartesian system](https://en.wikipedia.org/wiki/Cartesian_coordinate_system).
+As they are by convention drawn with west on the left and north at the top,
+this means that `x` represents longitude, and `y` latitude. As stated above,
+OpenLayers is designed to handle all projections, but the default view is in
+projected Cartesian coordinates. It would make no sense to have duplicate
+functions to handle coordinates in both the Cartesian `x,y` and `lat,lon`
+systems, so the degrees of latitude and longitude should be entered as though
+they were Cartesian, in other words, they are `lon,lat`.
+
+If you have difficulty remembering which way round it is, use the language code
+for English, `en`, as a mnemonic: East before North.
+
+#### A practical example
 So you want to center your map on a certain place on the earth and obviously you
 need to have its coordinates for this. Let's assume you want your map centered
 on Schladming, a beautiful place in Austria. Head over to the wikipedia
@@ -176,18 +210,24 @@ So the next step would be to put the decimal coordinates into an array and use
 it as center:
 
 ```javascript
-var schladming = [47.394167, 13.689167]; // caution partner, read on...
-// since we are using OSM, we have to transform the coordinates...
-var schladmingWebMercator = ol.proj.fromLonLat(schladming);
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import {fromLonLat} from 'ol/proj';
 
-var map = new ol.Map({
+const schladming = [47.394167, 13.689167]; // caution partner, read on...
+// since we are using OSM, we have to transform the coordinates...
+const schladmingWebMercator = fromLonLat(schladming);
+
+const map = new Map({
   layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
+    new TileLayer({
+      source: new OSM()
     })
   ],
   target: 'map',
-  view: new ol.View({
+  view: new View({
     center: schladmingWebMercator,
     zoom: 9
   })
@@ -206,18 +246,24 @@ e.g. try to change the map center.
 Ok, then let's flip the coordinates:
 
 ```javascript
-var schladming = [13.689167, 47.394167]; // longitude first, then latitude
-// since we are using OSM, we have to transform the coordinates...
-var schladmingWebMercator = ol.proj.fromLonLat(schladming);
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import OSM from 'ol/source/OSM';
+import {fromLonLat} from 'ol/proj';
 
-var map = new ol.Map({
+const schladming = [13.689167, 47.394167]; // longitude first, then latitude
+// since we are using OSM, we have to transform the coordinates...
+const schladmingWebMercator = fromLonLat(schladming);
+
+const map = new Map({
   layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
+    new TileLayer({
+      source: new OSM()
     })
   ],
   target: 'map',
-  view: new ol.View({
+  view: new View({
     center: schladmingWebMercator,
     zoom: 9
   })
@@ -231,7 +277,7 @@ first, and then the latitude. This behaviour is the same as we had in OpenLayers
 2, and it actually makes sense because of the natural axis order in WGS84.
 
 If you cannot remember the correct order, just have a look at the method name
-we used: `ol.proj.fromLonLat`; even there we hint that we expect longitude
+we used: `fromLonLat`; even there we hint that we expect longitude
 first, and then latitude.
 
 
@@ -241,8 +287,11 @@ Suppose you want to load a KML file and display the contained features on the
 map. Code like the following could be used:
 
 ```javascript
-var vector = new ol.layer.Vector({
-  source: new ol.source.KML({
+import VectorLayer from 'ol/layer/Vector';
+import KMLSource from 'ol/source/KML';
+
+const vector = new VectorLayer({
+  source: new KMLSource({
     projection: 'EPSG:3857',
     url: 'data/kml/2012-02-10.kml'
   })
@@ -253,13 +302,16 @@ You may ask yourself how many features are in that KML, and try something like
 the following:
 
 ```javascript
-var vector = new ol.layer.Vector({
-  source: new ol.source.KML({
+import VectorLayer from 'ol/layer/Vector';
+import KMLSource from 'ol/source/KML';
+
+const vector = new VectorLayer({
+  source: new KMLSource({
     projection: 'EPSG:3857',
     url: 'data/kml/2012-02-10.kml'
   })
 });
-var numFeatures = vector.getSource().getFeatures().length;
+const numFeatures = vector.getSource().getFeatures().length;
 console.log("Count right after construction: " + numFeatures);
 ```
 
@@ -271,9 +323,9 @@ been populated with features), you should use an event listener function on the
 
 ```javascript
 vector.getSource().on('change', function(evt){
-  var source = evt.target;
+  const source = evt.target;
   if (source.getState() === 'ready') {
-    var numFeatures = source.getFeatures().length; 
+    const numFeatures = source.getFeatures().length;
     console.log("Count after change: " + numFeatures);
   }
 });
@@ -300,37 +352,49 @@ map.render();
 map.renderSync();
 ```
 
+## Why are my features not found?
 
-## How do I create a custom build of OpenLayers?
+You are using `Map#forEachFeatureAtPixel` or `Map#hasFeatureAtPixel`, but
+it sometimes does not work for large icons or labels? The *hit detection* only
+checks features that are within a certain distance of the given position. For large
+icons, the actual geometry of a feature might be too far away and is not considered.
 
-Please refer to the [official create custom builds tutorial](tutorials/custom-builds.html)
-which explains how to create a custom build of OpenLayers with just those parts
-included that you want.
+In this case, set the `renderBuffer` property of `VectorLayer` (the default value is 100px):
 
+```javascript
+import VectorLayer from 'ol/layer/Vector';
 
-## Do I need to write my own code using Closure library?
+const vectorLayer = new VectorLayer({
+  ...
+  renderBuffer: 200
+});
+```
 
-OpenLayers is built on top of the [Google Closure JavaScript
-library](https://developers.google.com/closure/library/), but this
-does not mean that you must use that library in your application code.
+The recommended value is the size of the largest symbol, line width or label.
 
-OpenLayers should play well with all sorts of JavaScript libraries out there,
-and you are in no way forced to use a specific one. Choose one that looks
-right for you.
+## Why is zooming or clicking in the map off/inaccurate?
 
+OpenLayers does not update the map when the container element is resized. This can be caused by progressive updates
+to CSS styles or manually resizing the map. When that happens, any interaction will become inaccurate: the map would zoom in and out, and end up not being centered on the pointer. This makes it hard to do certain interactions, e.g. selecting the desired feature.
 
-## Do I need to compress my code with Closure compiler?
+There is currently no built-in way to react to element's size changes, as [Resize Observer API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver) is only implemented in Chrome.
 
-No, you don't need to do compress your code with the [Google Closure
-compiler](https://developers.google.com/closure/compiler/).
+There is however an easy to use [polyfill](https://github.com/que-etc/resize-observer-polyfill):
 
-It may be a good choice though, because when your application code and the
-OpenLayers source code is compiled together using closure compiler, the
-resulting build will most probably be the smallest in terms of byte-size. For
-more details refer to the
-[compile application and OpenLayers together tutorial](tutorials/closure.html).
+```javascript
+import Map from 'ol/Map';
+import ResizeObserver from 'resize-observer-polyfill';
 
-If you don't want to use the closure compiler, or you can't, you are not at all
-forced to use it.
+const mapElement = document.querySelector('#map')
+const map = new Map({
+  target: mapElement
+})
 
+const sizeObserver = new ResizeObserver(() => {
+  map.updateSize()
+})
+sizeObserver.observe(mapElement)
 
+// called when the map is destroyed
+// sizeObserver.disconnect()
+```

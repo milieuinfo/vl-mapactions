@@ -94,6 +94,7 @@ describe('split action', function() {
 		expect(acd.ol.action.MapAction.prototype.activate.call).toHaveBeenCalledWith(splitAction.drawAction);
 	});
 	
+/*
 	it('zal na het selecteren en tekenen zal de split callback uitgevoerd worden met de geselecteerde feature en de opgsplitste features', function() {
 		var splitAction = createSplitAction();
 		
@@ -103,7 +104,7 @@ describe('split action', function() {
 				multiPolygon.appendPolygon(new ol.geom.Polygon([[[0, 0], [0, 10], [10, 10], [0, 0]]]));
 				return multiPolygon;
 			}
-		};
+		}
 		
 		var drawnFeature = {
 			getGeometry: function() {
@@ -123,7 +124,7 @@ describe('split action', function() {
 		expect(features[0].getGeometry().getCoordinates()).toEqual([[[[0, 0], [0, 5], [5, 5], [0, 0]]]]);
 		expect(features[1].getGeometry().getCoordinates()).toEqual([[[[0, 5], [0, 10], [10, 10], [5, 5], [0, 5]]]]);
 	});
-	
+	 ;*/
 	it('zal na het selecteren en tekenen de laatst geselecteerde feature deselecteren, de map action deactiveren en de select action activeren', function() {
 		var splitAction = createSplitAction();
 		

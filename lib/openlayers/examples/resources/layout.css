@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400italic,700);
+@import url(https://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400italic,700);
 
 body {
   font-family: 'Quattrocento Sans', sans-serif;
@@ -25,6 +25,22 @@ body {
   vertical-align: middle;
   margin-right: 5px;
   display: inline-block;
+}
+.nav>li>a:hover, .nav>li>a:focus, .nav>li>a.active {
+  background-color: #268591;
+}
+.navbar-nav>li>a {
+  color: white;
+}
+.display-table {
+  display: table;
+}
+.version-form, .navbar-form {
+  display: table-cell;
+  vertical-align: middle;
+}
+.version-form {
+  color: #333;
 }
 
 #title {
@@ -58,13 +74,9 @@ ol.inline>li {
 .ol-attribution.ol-logo-only,
 .ol-attribution.ol-uncollapsible {
   max-width: calc(100% - 3em);
-  height: 1.5em;
 }
 .ol-attribution ul {
-  font-size: 1rem;
-}
-.ol-control button, .ol-attribution, .ol-scale-line-inner {
-  font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;
+  font-size: 14px;
 }
 .iframe-info iframe {
   width: 100%;
@@ -75,22 +87,27 @@ pre[class*="language-"] {
   background: #FFFFFF;
 }
 
-#source-controls {
+pre>legend {
+  font-size: 100%;
+  font-weight: bold;
+}
+
+.source-controls {
   position: absolute;
-  margin-top: 20px;
+  margin-top: 10px;
   right: 40px;
 }
 
-#source-controls a {
+.source-controls a {
   margin-left: 15px;
 }
 
-#copy-button {
+.copy-button {
   text-decoration: none;
   cursor: pointer;
 }
 
-#jsfiddle-button {
+.codepen-button {
   text-decoration: none;
   cursor: pointer;
 }
@@ -105,4 +122,8 @@ pre {
 }
 #api-links ul {
   display: inline;
+}
+#latest-check {
+  margin-top: -10px;
+  margin-bottom: 10px;
 }

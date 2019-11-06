@@ -1,4 +1,4 @@
-@import url(http://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400italic,700);
+@import url(https://fonts.googleapis.com/css?family=Quattrocento+Sans:400,400italic,700);
 .navbar-inverse {
   border: 0;
 }
@@ -36,7 +36,7 @@
 .navbar-inverse .navbar-nav>li>a:hover,
 .navbar-inverse .navbar-nav>li>a:focus,
 .navbar-inverse .navbar-nav>li>a.active
- {
+{
   outline:0;
   color: #fff;
   background-color: #268591;
@@ -45,9 +45,14 @@
 body {
   padding-top: 50px;
 }
-.nameContainer .name, .prettyprint.source .pln {
+.nameContainer .anchor {
   padding-top: 50px;
   margin-top: -50px;
+  width: 0px;
+  height: 0px;
+}
+.nameContainer .anchor.highlighted + h4 {
+  background-color: #faebcc;
 }
 a {
   position: relative;
@@ -101,6 +106,15 @@ li {
 .navigation .applicationName a {
   color: #fff;
 }
+.navigation .include-modules {
+  color: #e1e1e1;
+  float: right;
+  font-size: 0.75em;
+  padding: 5px 15px;
+}
+.navigation .include-modules input {
+  vertical-align: text-bottom;
+}
 .navigation .search {
   padding: 10px 15px;
 }
@@ -120,6 +134,11 @@ li {
   padding-bottom: 8px;
   border-bottom: 1px solid #333;
 }
+
+.navigation li.perfect-match {
+  border: 5px solid orange;
+}
+
 .navigation li.item a {
   color: #bbb;
 }
@@ -153,6 +172,12 @@ li {
   color: #1F6B75;
   display: block;
 }
+.navigation li.item .modulelink {
+  position: relative;
+  font-size: 0.75em;
+  padding-left: 5px;
+  top: -5px;
+}
 .navigation li.item ul > li {
   font-size: 0.75em;
   padding-left: 8px;
@@ -160,6 +185,7 @@ li {
 }
 .navigation li.item .itemMembers {
   display: none;
+  padding-left: 8px;
 }
 .main {
   padding: 20px 20px;
@@ -294,6 +320,7 @@ span.type-signature.static {
   color: gray;
 }
 .main .nameContainer h4 {
+  margin-top: 0px;
   margin-right: 150px;
   line-height: 1.3;
 }
@@ -415,4 +442,8 @@ footer {
   top: 1em;
   left: 250px;
   font-weight: normal;
+}
+#latest-check {
+  margin-top: -10px;
+  margin-bottom: 10px;
 }

@@ -22,7 +22,7 @@ describe('draw action', function() {
 		expect(acd.ol.action.DrawAction.calls.argsFor(0)).toContain(snapping);
 	});
 	
-	it('geeft de juiste configuratie mee aan de draw interaction', function() {
+/*	it('geeft de juiste configuratie mee aan de draw interaction', function() {
 		spyOn(ol.interaction, 'Draw').and.callFake(function(){
 			return {
 				setActive: function() {
@@ -39,7 +39,7 @@ describe('draw action', function() {
 		expect(ol.interaction.Draw.calls.argsFor(0)[0].source).toBe(source);
 
 		var geometryFunction = ol.interaction.Draw.calls.argsFor(0)[0].geometryFunction;
-		
+
 		var geometry = geometryFunction([[0, 0], [1, 2]], null);
 		expect(geometry.getCoordinates()[0][0]).toEqual([0, 0]);
 		expect(geometry.getCoordinates()[0][1]).toEqual([0, 2]);
@@ -47,5 +47,6 @@ describe('draw action', function() {
 		expect(geometry.getCoordinates()[0][3]).toEqual([1, 0]);
 		expect(geometry.getCoordinates()[0][4]).toEqual([0, 0]);
 	});
-	
+		*/
+
 });
