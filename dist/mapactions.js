@@ -690,7 +690,7 @@ acd.ol.action.DrawRectangleAction = function(layer, onDraw, options) {
 	options.maxPoints = 2;
 	options.geometryFunction = function(coordinates, geometry) {
 		if (!geometry) {
-			geometry = new ol.geom.Polygon(null);
+			geometry = new ol.geom.Polygon([]);
 		}
 		var start = coordinates[0];
 		var end = coordinates[1];
@@ -811,7 +811,7 @@ acd.ol.action.MeasureAction = function(layer, options) {
 	});
 	
 	this.cleanUp = function() {
-		this.map.unByKey(this.measurePointermoveHandler);
+		ol.Observable.unByKey(this.measurePointermoveHandler);
 		var tooltipsToRemove = [];
 		self.measureTooltips.forEach(function(value, index){
 			if (self.layer.getSource().getFeatureById(index) == undefined) {
