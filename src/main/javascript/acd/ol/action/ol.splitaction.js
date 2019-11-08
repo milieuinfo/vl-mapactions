@@ -22,7 +22,7 @@ acd.ol.action.SplitAction = function(layer, onSplit, options) {
 		var result = [];
 		var polygons = polygonizer.getPolygons();
 		for (var i = polygons.iterator(); i.hasNext();) {
-		    var multiPolygon = new ol.geom.MultiPolygon();
+		    var multiPolygon = new ol.geom.MultiPolygon([]);
 		    multiPolygon.appendPolygon(reader.write(i.next()));
 		    result.push(new ol.Feature({
 		    	geometry: multiPolygon

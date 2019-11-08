@@ -56,13 +56,13 @@ describe('custom map with actions', function() {
 		expect(map.getView().getZoom()).toBe(2);
 	});
 	
-/*	it('kan met een view geïnitialiseerd worden op een specifieke bounding box, zodat er sterk is ingezoomd (hoge zoom waarde)', function() {
+	it('kan met een view geïnitialiseerd worden op een specifieke bounding box, zodat er sterk is ingezoomd (hoge zoom waarde)', function() {
 		var map = createCustomMapWithActions();
 
-		map.initializeView([9928.000000, 66928.000000, 9930.000000, 66930.000000]);
+		map.initializeView([9929.000000, 66929.000000, 9930.000000, 66930.000000]);
 
 		expect(map.getView().getZoom()).toBe(16);
-	});*/
+	});
 	
 	it('kan met een view geïnitialiseerd worden op een kleine bounding box en een max zoom niveau, zodat het max niveau bereikt is', function() {
 		var map = createCustomMapWithActions();

@@ -1,6 +1,6 @@
 describe('modify and translate action', function() {
 	var fakeInteraction = getFakeInteraction();
-	var source = new ol.source.Vector();
+	var source = new ol.source.Vector({});
 	var layer = createLayer(source);
 	var callback = jasmine.createSpy('callback functie');
 	var filter = function(feature) {};

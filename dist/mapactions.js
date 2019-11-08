@@ -143,10 +143,6 @@ acd.ol.CustomMap.prototype.createOverviewMapControl = function(options) {
 	});
 	
 	this.overviewMapControl.element.addEventListener('click', function() {toggleBaseLayer();}, false);
-	var overlayElement = this.overviewMapControl.element.getElementsByClassName('ol-overlay-container')[0];
-	if (overlayElement) {
-		overlayElement.addEventListener('click', function() {toggleBaseLayer();}, false);
-	}
 	
 	if (options.view) {
 		options.controls.push(this.overviewMapControl);
@@ -651,7 +647,7 @@ acd.ol.action.DrawAction = function(layer, type, onDraw, options) {
 	
 	function unLoadHandlerAndRemoveTooltip() {
 		if (drawOptions.measure) {
-			self.map.unByKey(self.measurePointermoveHandler);
+			ol.Observable.unByKey(self.measurePointermoveHandler);
 			removeTooltip();
 		}
 	}
@@ -666,7 +662,7 @@ acd.ol.action.DrawAction = function(layer, type, onDraw, options) {
 			} catch(exception) {
 				var listener = layer.getSource().on('addfeature', function(event) {
 					layer.getSource().removeFeature(event.feature);
-					layer.getSource().unByKey(listener);
+					ol.Observable.unByKey(listener);
 				});
 			}
 		});
@@ -785,7 +781,7 @@ acd.ol.action.MeasureAction = function(layer, options) {
 	}
 	
 	acd.ol.action.DrawAction.call(this, layer, 'LineString', function() {
-		self.map.unByKey(self.measurePointermoveHandler);
+		ol.Observable.unByKey(self.measurePointermoveHandler);
 	}, options);
 	
 	this.drawInteraction.on('drawstart', function(event) {
@@ -1048,7 +1044,7 @@ acd.ol.action.SplitAction = function(layer, onSplit, options) {
 		var result = [];
 		var polygons = polygonizer.getPolygons();
 		for (var i = polygons.iterator(); i.hasNext();) {
-		    var multiPolygon = new ol.geom.MultiPolygon();
+		    var multiPolygon = new ol.geom.MultiPolygon([]);
 		    multiPolygon.appendPolygon(reader.write(i.next()));
 		    result.push(new ol.Feature({
 		    	geometry: multiPolygon

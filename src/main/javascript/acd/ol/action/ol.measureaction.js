@@ -14,7 +14,7 @@ acd.ol.action.MeasureAction = function(layer, options) {
 	}
 	
 	acd.ol.action.DrawAction.call(this, layer, 'LineString', function() {
-		self.map.unByKey(self.measurePointermoveHandler);
+		ol.Observable.unByKey(self.measurePointermoveHandler);
 	}, options);
 	
 	this.drawInteraction.on('drawstart', function(event) {
@@ -44,7 +44,7 @@ acd.ol.action.MeasureAction = function(layer, options) {
 	});
 	
 	this.cleanUp = function() {
-		this.map.unByKey(this.measurePointermoveHandler);
+		ol.Observable.unByKey(this.measurePointermoveHandler);
 		var tooltipsToRemove = [];
 		self.measureTooltips.forEach(function(value, index){
 			if (self.layer.getSource().getFeatureById(index) == undefined) {

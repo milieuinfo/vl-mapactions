@@ -1,7 +1,7 @@
 describe('draw action', function() {
 
 	var fakeInteraction = getFakeInteraction();
-	var source = new ol.source.Vector();
+	var source = new ol.source.Vector({features: []});
 	var layer = createLayer(source);
 	var callback = jasmine.createSpy('callback functie');
 	
@@ -80,29 +80,29 @@ describe('draw action', function() {
 		expect(callback).toHaveBeenCalledWith(sketchFeature, jasmine.any(Function));
 	});
 	
-/*	it('kan na het tekenen de feature terug verwijderen via de cancel draw functie', function() {
+	it('kan na het tekenen de feature terug verwijderen via de cancel draw functie', function() {
 		var callback = function(feature, cancelDraw) {
 			cancelDraw();
 		};
 		var drawAction = new acd.ol.action.DrawAction(layer, 'Polygon', callback);
-		var sketchFeature = new ol.Feature();
+		var sketchFeature = new ol.Feature({});
 
 		drawAction.drawInteraction.dispatchEvent({type: 'drawend', feature: sketchFeature});
 		source.addFeature(sketchFeature);
 		expect(source.getFeatures().length).toBe(0);
-	});*/
+	});
 	
-/*	it('kan na het tekenen asynchroon de feature terug verwijderen via de cancel draw functie', function() {
+	it('kan na het tekenen asynchroon de feature terug verwijderen via de cancel draw functie', function() {
 		var callback = function(feature, cancelDraw) {
 			source.addFeature(feature);
 			cancelDraw();
 		};
 		var drawAction = new acd.ol.action.DrawAction(layer, 'Polygon', callback);
-		var sketchFeature = new ol.Feature();
+		var sketchFeature = new ol.Feature({});
 		
 		drawAction.drawInteraction.dispatchEvent({type: 'drawend', feature: sketchFeature});
 		expect(source.getFeatures().length).toBe(0);
-	});*/
+	});
 	
 	it('Als het tekenen gestart is en er met de muis verschoven wordt zal er een tooltip verschijnen als de optie measure op true staat', function() {
 		var options = {
@@ -203,13 +203,13 @@ describe('draw action', function() {
 	function createDrawActionWithMap(type, options) {
 		setMeasureSpies();
 		var drawAction = new acd.ol.action.DrawAction(layer, type, callback, options);
+		ol.Observable.unByKey = unByKey;
 		drawAction.map = {
 			addOverlay: addOverlay,
 			removeOverlay: removeOverlay,
 			on: function(type, callback) {
 				drawAction[type] = callback;
-			},
-			unByKey: unByKey
+			}
 		};
 		return drawAction;
 	}

@@ -11,6 +11,7 @@ describe('measure action', function() {
 		addOverlay = jasmine.createSpy('addOverlay');
 		removeOverlay = jasmine.createSpy('removeOverlay');
 		unByKey = jasmine.createSpy('unByKey');
+		ol.Observable.unByKey = unByKey;
 		handler = 'handler';
 		measureAction.map = {
 			addOverlay: addOverlay,
@@ -18,8 +19,7 @@ describe('measure action', function() {
 			on: function(type, callback) {
 				moveMouse = callback;
 				return handler;
-			},
-			unByKey: unByKey
+			}
 		};
 	});
 	

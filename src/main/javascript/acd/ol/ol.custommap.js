@@ -58,10 +58,6 @@ acd.ol.CustomMap.prototype.createOverviewMapControl = function(options) {
 	});
 	
 	this.overviewMapControl.element.addEventListener('click', function() {toggleBaseLayer();}, false);
-	var overlayElement = this.overviewMapControl.element.getElementsByClassName('ol-overlay-container')[0];
-	if (overlayElement) {
-		overlayElement.addEventListener('click', function() {toggleBaseLayer();}, false);
-	}
 	
 	if (options.view) {
 		options.controls.push(this.overviewMapControl);

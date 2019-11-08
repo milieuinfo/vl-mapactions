@@ -75,7 +75,7 @@ acd.ol.action.DrawAction = function(layer, type, onDraw, options) {
 	
 	function unLoadHandlerAndRemoveTooltip() {
 		if (drawOptions.measure) {
-			self.map.unByKey(self.measurePointermoveHandler);
+			ol.Observable.unByKey(self.measurePointermoveHandler);
 			removeTooltip();
 		}
 	}
@@ -90,7 +90,7 @@ acd.ol.action.DrawAction = function(layer, type, onDraw, options) {
 			} catch(exception) {
 				var listener = layer.getSource().on('addfeature', function(event) {
 					layer.getSource().removeFeature(event.feature);
-					layer.getSource().unByKey(listener);
+					ol.Observable.unByKey(listener);
 				});
 			}
 		});

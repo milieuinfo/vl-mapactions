@@ -1,6 +1,6 @@
 describe('draw action', function() {
 
-	var source = new ol.source.Vector();
+	var source = new ol.source.Vector({});
 	
 	var layer = {
 		getSource: function() {
@@ -22,7 +22,7 @@ describe('draw action', function() {
 		expect(acd.ol.action.DrawAction.calls.argsFor(0)).toContain(snapping);
 	});
 	
-/*	it('geeft de juiste configuratie mee aan de draw interaction', function() {
+	it('geeft de juiste configuratie mee aan de draw interaction', function() {
 		spyOn(ol.interaction, 'Draw').and.callFake(function(){
 			return {
 				setActive: function() {
@@ -47,6 +47,6 @@ describe('draw action', function() {
 		expect(geometry.getCoordinates()[0][3]).toEqual([1, 0]);
 		expect(geometry.getCoordinates()[0][4]).toEqual([0, 0]);
 	});
-		*/
+
 
 });

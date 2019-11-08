@@ -63,7 +63,7 @@ describe('show info action', function() {
 				}
 			}
 		};
-		showInfoAction = new acd.ol.action.ShowInfoAction({getSource: function() {return  new ol.source.Vector();}}, infoPromise, 'loading message');
+		showInfoAction = new acd.ol.action.ShowInfoAction({getSource: function() {return  new ol.source.Vector({});}}, infoPromise, 'loading message');
 		showInfoAction.map = map;
 
 		showInfoAction.drawInteraction.dispatchEvent({type: 'drawend', feature: feature});
@@ -114,7 +114,7 @@ describe('show info action', function() {
             }
         };
 
-        showInfoAction = new acd.ol.action.ShowInfoAction({getSource: function() {return  new ol.source.Vector();}}, infoPromise, 'loading message');
+        showInfoAction = new acd.ol.action.ShowInfoAction({getSource: function() {return  new ol.source.Vector({});}}, infoPromise, 'loading message');
         showInfoAction.map = map;
 
         showInfoAction.drawInteraction.dispatchEvent({type: 'drawend', feature: feature});
@@ -141,7 +141,7 @@ describe('show info action', function() {
             }
         };
 
-        showInfoAction = new acd.ol.action.ShowInfoAction({getSource: function() {return  new ol.source.Vector();}}, infoPromise, 'loading message', { offset: [0, 0] });
+        showInfoAction = new acd.ol.action.ShowInfoAction({getSource: function() {return  new ol.source.Vector({});}}, infoPromise, 'loading message', { offset: [0, 0] });
         showInfoAction.map = map;
 
         showInfoAction.drawInteraction.dispatchEvent({type: 'drawend', feature: feature});

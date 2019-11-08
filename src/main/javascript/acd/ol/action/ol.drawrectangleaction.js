@@ -3,7 +3,7 @@ acd.ol.action.DrawRectangleAction = function(layer, onDraw, options) {
 	options.maxPoints = 2;
 	options.geometryFunction = function(coordinates, geometry) {
 		if (!geometry) {
-			geometry = new ol.geom.Polygon(null);
+			geometry = new ol.geom.Polygon([]);
 		}
 		var start = coordinates[0];
 		var end = coordinates[1];

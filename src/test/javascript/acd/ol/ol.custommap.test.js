@@ -230,7 +230,7 @@ describe('custom map', function() {
 		expect(map.overviewMapControl.getOverviewMap().getLayers().getArray()[2].getVisible()).toBe(false);
 	});
 
-/*	it('Na een klik is de volgende toegevoegde baselayer visible', function() {
+	it('Na een klik is de volgende toegevoegde baselayer visible', function() {
 		map = createMapZonderLayers();
 		map.initializeView();
 
@@ -239,7 +239,7 @@ describe('custom map', function() {
 					                           createInvisibleBaseLayer('overview map layer ' + layerNr));
 		}
 
-		var overlayElement = map.overviewMapControl.element.getElementsByClassName('ol-overlay-container')[0];
+		var overlayElement = map.overviewMapControl.element;
 		var overviewMap = map.overviewMapControl.getOverviewMap();
 
 		spyOn(map, 'render');
@@ -278,6 +278,6 @@ describe('custom map', function() {
 		expect(map.overviewMapControl.getOverviewMap().getLayers().getArray()[2].getVisible()).toBe(false);
 		expect(map.render).toHaveBeenCalled();
 		expect(overviewMap.render).toHaveBeenCalled();
-	});*/
+	});
 
 });
