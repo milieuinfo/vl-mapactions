@@ -141,7 +141,7 @@ acd.ol.CustomMap.prototype.zoomToExtent = function(boundingBox, maxZoom) {
 
 acd.ol.CustomMap.prototype.zoomViewToExtent = function(view, boundingBox, maxZoom) {
 	if (boundingBox) {
-		view.fit(boundingBox, this.getSize());
+		view.fit(boundingBox, {size: this.getSize()});
 	}
 	
 	if (maxZoom || this.maxZoomViewToExtent) {
