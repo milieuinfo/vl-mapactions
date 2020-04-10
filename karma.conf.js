@@ -17,7 +17,7 @@ module.exports = function (config) {
         files: [
 			"lib/openlayers/dist/ol.js",
 			"node_modules/proj4/dist/proj4.js",
-			"lib/jsts/dist/jsts.min.js",
+			"node_modules/jsts/dist/jsts.min.js",
 			'src/main/javascript/acd/ol/acd.ol.js',
 			'src/main/javascript/acd/ol/ol.mapwithactions.js',
 			'src/main/javascript/acd/ol/*.js',
