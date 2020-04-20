@@ -84,7 +84,7 @@ acd.ol.MapWithActions.prototype.activateDefaultAction = function () {
   }
 };
 
-acd.ol.MapWithActions.prototype.CLICK_COUNT_TIMEOUT = 300;
+MapWithActions.CLICK_COUNT_TIMEOUT = 300;
 //enhances the ol.mapwithactions.js with additional custom functions (zooming and layer switcher) and an overviewmap 
 acd.ol.CustomMap = function (options) {
 	var self  = this;

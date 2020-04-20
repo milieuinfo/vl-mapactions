@@ -28,6 +28,7 @@ module.exports = function (config) {
 			'src/main/javascript/acd/ol/action/*.js',
 			'src/main/javascript/acd/ol/interaction/*.js',
 			'src/test/javascript/util.js',
+			'test/unit/action/vl-mapactions-box-select-action.test.js',
             'src/test/**/!(karma.conf).js'
         ],
 
