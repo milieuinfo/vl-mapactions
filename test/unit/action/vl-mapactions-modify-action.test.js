@@ -13,7 +13,8 @@ describe('modify action', function() {
   const source = new SourceVector();
   const layer = new Vector({source: source});
   const callback = sinon.spy();
-  const filter = (feature) => {};
+  const filter = (feature) => {
+  };
 
   it('roept de callback functie op nadat er een modify werd uitgevoerd', function() {
     const modifyAction = new ModifyAction({}, callback);

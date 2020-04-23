@@ -66,7 +66,7 @@ describe('select actions', function() {
     const onSelect = sinon.spy();
     const filter = sinon.spy();
     const options = {
-      filter: filter
+      filter: filter,
     };
     const feature = sinon.spy();
     const selectActions = new SelectActions(layerConfiguraties, onSelect, options);

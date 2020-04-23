@@ -3,7 +3,15 @@ import {SelectAction} from './vl-mapactions-select-action';
 import {MapAction} from './vl-mapactions-mapaction';
 import {DrawAction} from './vl-mapactions-draw-action';
 import * as jsts from 'jsts';
-import {Point, LineString, LinearRing, Polygon, MultiPoint, MultiLineString, MultiPolygon} from 'ol/src/ol/geom';
+import {
+  Point,
+  LineString,
+  LinearRing,
+  Polygon,
+  MultiPoint,
+  MultiLineString,
+  MultiPolygon,
+} from 'ol/src/ol/geom';
 
 export class SplitAction extends MapAction {
   constructor(layer, onSplit, options) {
