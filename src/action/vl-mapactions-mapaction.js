@@ -1,28 +1,28 @@
 export class MapAction {
-    constructor(interactions) {
-        if (!Array.isArray(interactions)) {
-            interactions = [interactions];
-        }
-        this.interactions = [];
-        interactions.forEach((interaction) => {
-            this.addInteraction(interaction);
-        });
+  constructor(interactions) {
+    if (!Array.isArray(interactions)) {
+      interactions = [interactions];
     }
+    this.interactions = [];
+    interactions.forEach((interaction) => {
+      this.addInteraction(interaction);
+    });
+  }
 
-    addInteraction(interaction) {
-        interaction.setActive(false);
-        this.interactions.push(interaction);
-    }
+  addInteraction(interaction) {
+    interaction.setActive(false);
+    this.interactions.push(interaction);
+  }
 
-    activate() {
-        this.interactions.forEach((interaction) => {
-            interaction.setActive(true);
-        });
-    }
+  activate() {
+    this.interactions.forEach((interaction) => {
+      interaction.setActive(true);
+    });
+  }
 
-    deactivate() {
-        this.interactions.forEach((interaction) => {
-            interaction.setActive(false);
-        });
-    }
+  deactivate() {
+    this.interactions.forEach((interaction) => {
+      interaction.setActive(false);
+    });
+  }
 }
