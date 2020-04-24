@@ -64,7 +64,7 @@ describe('custom map with actions', function() {
   it('kan met een view geïnitialiseerd worden op een specifieke bounding box, zodat er sterk is ingezoomd (hoge zoom waarde)', function() {
     const map = createCustomMapWithActions();
 
-    map.initializeView([9929.000000, 66929.000000, 9930.000000, 66930.000000]);
+    map.initializeView([9928.000000, 66928.000000, 9930.000000, 66930.000000]);
 
     expect(map.getView().getZoom()).to.equal(16);
   });

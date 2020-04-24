@@ -9,13 +9,11 @@
     "prepare": "npm update --dev vl-ui-util && npm run prepare:util",
     "prepare:util": "npm explore vl-ui-util -- npm run util",
     "test": "mocha -r esm -r jsdom-global/register",
-    "build": "grunt",
-    "release": "npm run build && np",
-    "release:prepare": "echo 'no release prepare'",
+    "release": "np",
+    "release:prepare": "npm explore vl-ui-util -- npm run release-component:prepare $(pwd) mapactions",
     "release:testless": "np --yolo"
   },
   "dependencies": {
-    "bootstrap-sass": "3.3.4",
     "jsts": "2.1.2",
     "ol": "6.3.1",
     "proj4": "2.2.1"

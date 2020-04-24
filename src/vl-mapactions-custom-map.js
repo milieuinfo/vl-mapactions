@@ -11,7 +11,8 @@ import {
 import {MapWithActions} from './vl-mapactions-map-with-actions';
 
 /**
- * Enhances the ol.mapwithactions.js with additional custom functions (zooming and layer switcher) and an overviewmap
+ * Dit is een versie van de MapWithActions die nog enkele extra functies bevat zoals het zoomen naar een bepaalde extent (of bounding box), het togglen van de layers, en alle functionaliteit omtrent een overzichtskaartje (ol.control.OverviewMap).
+ * De view kan in het map opties object bij constructie worden meegegeven, of achteraf aangemaakt in de initializeView functie. Hieraan kan de view worden meegegeven als argument of bij geen argument wordt een standaard view aangemaakt op basis van de meegegeven projectie.
  */
 export class CustomMap extends MapWithActions {
 

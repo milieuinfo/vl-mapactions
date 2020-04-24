@@ -1,6 +1,12 @@
 import {defaults} from '../node_modules/ol/src/ol/interaction';
 import Map from '../node_modules/ol/src/ol/Map';
 
+/**
+ * Deze map bevat enkel de functionaliteit om de acties te behandelen. Aan het eerste argument van de constructor kan het gebruikelijke object map opties worden weergegeven die ook op de ol.Map worden gezet, samen met een extra parameter 'acties' in dat object. Deze array bevat MapActions.
+ * De eerste actie van de array is steeds de default actie en zal ook hierop gezet worden bij bijvoorbeeld een escape toets.
+ *
+ * Deze kaart regelt dat er maar één actie actief kan staan. Bij het activeren van een andere actie wordt namelijk de huidige actie gedeactiveerd.
+ */
 export class MapWithActions extends Map {
 
   static get CLICK_COUNT_TIMEOUT() {
