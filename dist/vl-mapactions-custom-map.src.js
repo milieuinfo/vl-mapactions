@@ -192,3 +192,4 @@ export class CustomMap extends MapWithActions {
     element.parentNode.style.position = 'fixed'; // because the overlay has absolute positioning and otherwise the left side panel could influence the overlay elements
   }
 }
+

@@ -1,5 +1,5 @@
 @startuml
-class acd.ol.CustomMap {
+class CustomMap {
 	overviewMapControl
 	projection
 	baseLayers
@@ -11,19 +11,19 @@ class acd.ol.CustomMap {
 	zoomViewToExtent(view, boundingBox, maxZoom)
 	zoomToGeometry(geometry)
 }
-class acd.ol.MapWithActions {
+class MapWithActions {
 	actions
-	activateAction(acd.ol.MapAction)
+	activateAction(MapAction)
 	activateDefaultAction()
-	addAction(acd.ol.MapAction)
+	addAction(MapAction)
 }
-class acd.ol.MapAction {
+class MapAction {
 	interactions
 	addInteraction(ol.interaction.Interaction)
 	activate()
 	deactivate()
 }
-class acd.ol.action.SelectAction {
+class SelectAction {
 	selectStyle
 	highlightStyle
 	highlightInteraction
@@ -32,23 +32,23 @@ class acd.ol.action.SelectAction {
 	SelectAction(layers, onSelect)
 	clearFeatures()
 }
-class acd.ol.action.BoxSelectAction {
+class BoxSelectAction {
 	dragBoxInteraction
 	BoxSelectAction(layers, onSelect)
 }
-class acd.ol.action.DeleteAction {
+class DeleteAction {
 	DeleteAction(layers, onDelete)
 }
-class acd.ol.action.DrawAction {
+class DrawAction {
 	drawInteraction
 	DrawAction(layer, type, onDraw)
 }
-class acd.ol.action.ShowInfoAction {
+class ShowInfoAction {
 	layer
 	ShowInfoAction(layer, infoPromise, loadingMessage)
 	clear()
 }
-class acd.ol.action.TranslateAction {
+class TranslateAction {
 	selectInteraction
 	translateInteraction
 	TranslateAction(layer, onTranslate)
@@ -56,14 +56,14 @@ class acd.ol.action.TranslateAction {
 hide ol.Map members
 hide ol.interaction.Interaction members
 
-ol.Map <|-- acd.ol.CustomMap
-acd.ol.CustomMap <|-- acd.ol.MapWithActions
-acd.ol.MapWithActions "1" *-- "*" acd.ol.MapAction
-acd.ol.MapAction <|-- acd.ol.action.SelectAction
-acd.ol.action.SelectAction <|-- acd.ol.action.BoxSelectAction
-acd.ol.action.BoxSelectAction <|-- acd.ol.action.DeleteAction
-acd.ol.MapAction <|-- acd.ol.action.DrawAction
-acd.ol.action.DrawAction <|-- acd.ol.action.ShowInfoAction
-acd.ol.MapAction <|-- acd.ol.action.TranslateAction
-acd.ol.MapAction "1" *-- "*" ol.interaction.Interaction
+ol.Map <|-- CustomMap
+CustomMap <|-- MapWithActions
+MapWithActions "1" *-- "*" MapAction
+MapAction <|-- SelectAction
+SelectAction <|-- BoxSelectAction
+BoxSelectAction <|-- DeleteAction
+MapAction <|-- DrawAction
+DrawAction <|-- ShowInfoAction
+MapAction <|-- TranslateAction
+MapAction "1" *-- "*" ol.interaction.Interaction
 @enduml
