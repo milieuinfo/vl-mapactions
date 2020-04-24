@@ -1,7 +1,7 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import Interaction from 'ol/src/ol/interaction/Interaction';
-import {MapAction} from '../../../src/action/vl-mapactions-mapaction';
+import {MapAction} from '../../../src/vl-mapactions-mapaction';
 
 describe('map action', function() {
   it('kan een interactie toevoegen die niet actief staat', function() {

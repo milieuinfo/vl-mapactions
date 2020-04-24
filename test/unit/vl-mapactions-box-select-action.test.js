@@ -1,4 +1,4 @@
-import {BoxSelectAction} from '../../../src/action/vl-mapactions-box-select-action';
+import {BoxSelectAction} from '../../../src/vl-mapactions-box-select-action';
 import sinon from 'sinon/pkg/sinon-esm';
 import Feature from 'ol/src/ol/Feature';
 import {expect} from 'chai';

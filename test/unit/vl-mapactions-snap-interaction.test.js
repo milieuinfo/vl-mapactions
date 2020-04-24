@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {SnapInteraction} from '../../../src/interaction/vl-mapactions-snap-interaction';
+import {SnapInteraction} from '../../../src/vl-mapactions-snap-interaction';
 import {Vector as SourceVector} from 'ol/src/ol/source';
 import {Vector} from 'ol/src/ol/layer';
 

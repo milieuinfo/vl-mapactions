@@ -1,6 +1,6 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {SplitAction} from '../../../src/action/vl-mapactions-split-action';
+import {SplitAction} from '../../../src/vl-mapactions-split-action';
 import MultiPolygon from 'ol/src/ol/geom/MultiPolygon';
 import Polygon from 'ol/src/ol/geom/Polygon';
 import LineString from 'ol/src/ol/geom/LineString';

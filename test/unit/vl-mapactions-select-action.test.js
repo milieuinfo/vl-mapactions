@@ -1,6 +1,6 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {SelectAction} from '../../../src/action/vl-mapactions-select-action';
+import {SelectAction} from '../../../src/vl-mapactions-select-action';
 import Style from 'ol/src/ol/style/Style';
 import Feature from 'ol/src/ol/Feature';
 import {Vector as SourceVector} from 'ol/src/ol/source';

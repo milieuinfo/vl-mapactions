@@ -1,6 +1,6 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {ShowInfoAction} from '../../../src/action/vl-mapactions-show-info-action';
+import {ShowInfoAction} from '../../../src/vl-mapactions-show-info-action';
 import {Vector as SourceVector} from 'ol/src/ol/source';
 import Feature from 'ol/src/ol/Feature';
 import Point from 'ol/src/ol/geom/Point';

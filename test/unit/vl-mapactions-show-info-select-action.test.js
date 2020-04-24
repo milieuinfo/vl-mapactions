@@ -2,7 +2,7 @@ import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import Feature from 'ol/src/ol/Feature';
 import Point from 'ol/src/ol/geom/Point';
-import {ShowInfoSelectAction} from '../../../src/action/vl-mapactions-show-info-select-action';
+import {ShowInfoSelectAction} from '../../../src/vl-mapactions-show-info-select-action';
 import {Vector as SourceVector} from 'ol/src/ol/source';
 
 describe('show info select action', function() {
