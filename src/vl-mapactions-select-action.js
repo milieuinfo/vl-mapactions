@@ -70,7 +70,6 @@ export class SelectAction extends MapAction {
     };
 
     this.selectInteraction.on('select', (event) => {
-      debugger;
       this.markInteraction.getFeatures().clear();
       if (this.selectInteraction.getFeatures().getLength() > 0) {
         let selectedFeature = null;
@@ -133,16 +132,17 @@ export class SelectAction extends MapAction {
 
   activate() {
     if (this.cluster && this.map) {
-      this.map.on('moveend', this._fixClusterBehavior);
-      this.selectInteraction.on('select', this._fixClusterBehavior);
+      this._fixClusterBehaviorListener = () => this._fixClusterBehavior();
+      this.map.on('moveend', this._fixClusterBehaviorListener);
+      this.selectInteraction.on('select', this._fixClusterBehaviorListener);
     }
     super.activate();
   }
 
   deactivate() {
-    if (this.cluster && this.map) {
-      this.map.un('moveend', this._fixClusterBehavior);
-      this.selectInteraction.un('select', this._fixClusterBehavior);
+    if (this._fixClusterBehaviorListener) {
+      this.map.un('moveend', this._fixClusterBehaviorListener);
+      this.selectInteraction.un('select', this._fixClusterBehaviorListener);
     }
     this.clearFeatures();
     super.deactivate();

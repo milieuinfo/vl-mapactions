@@ -313,7 +313,7 @@ describe('select action', function() {
       on: on,
     };
     selectAction.activate();
-    expect(on.calledWithExactly('moveend', selectAction._fixClusterBehavior)).to.be.true;
+    expect(on.calledWithExactly('moveend', selectAction._fixClusterBehaviorListener)).to.be.true;
   });
 
   it('zal bij deactivate de functie deactiveren om na het zoomen de selectie bij clustering goed te zetten', function() {
@@ -322,13 +322,14 @@ describe('select action', function() {
     });
     const un = sinon.spy();
     selectAction.map = {
+      on: sinon.spy(),
       un: un,
     };
+    selectAction.activate();
     selectAction.deactivate();
-    expect(un.calledWithExactly('moveend', selectAction._fixClusterBehavior)).to.be.true;
+    expect(un.calledWithExactly('moveend', selectAction._fixClusterBehaviorListener)).to.be.true;
   });
 
-  // TODO FIX
   it('zal na het zoomen de geselecteerde feature verplaatsen naar de markeer selecteer interactie om visuele problemen met geselecteerde feature en cluster te voorkomen', function() {
     const feature = new Feature();
     feature.setId(1);
