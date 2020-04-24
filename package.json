@@ -9,6 +9,7 @@
     "prepare": "npm update --dev vl-ui-util && npm run prepare:util",
     "prepare:util": "npm explore vl-ui-util -- npm run util",
     "test": "mocha -r esm -r jsdom-global/register",
+    "test:grid": "mocha -r esm -r jsdom-global/register",
     "release": "np",
     "release:prepare": "npm explore vl-ui-util -- npm run release-component:prepare $(pwd) mapactions",
     "release:testless": "np --yolo"
