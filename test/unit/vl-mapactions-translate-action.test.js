@@ -1,6 +1,6 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {TranslateAction} from '../../../src/vl-mapactions-translate-action';
+import {TranslateAction} from '../../src/vl-mapactions-translate-action';
 import Feature from 'ol/src/ol/Feature';
 
 describe('translate action', function() {

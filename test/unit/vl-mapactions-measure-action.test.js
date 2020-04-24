@@ -2,7 +2,7 @@ import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {Vector as SourceVector} from 'ol/src/ol/source';
 import {Vector} from 'ol/src/ol/layer';
-import {MeasureAction} from '../../../src/vl-mapactions-measure-action';
+import {MeasureAction} from '../../src/vl-mapactions-measure-action';
 import Feature from 'ol/src/ol/Feature';
 import LineString from 'ol/src/ol/geom/LineString';
 import * as OlObservable from 'ol/src/ol/Observable';

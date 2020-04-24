@@ -3,7 +3,7 @@ import Overlay from 'ol/src/ol/Overlay';
 import {LineString, Polygon} from 'ol/src/ol/geom';
 import {unByKey} from 'ol/src/ol/Observable';
 import {MapAction} from './vl-mapactions-mapaction';
-import {SnapInteraction} from '../interaction/vl-mapactions-snap-interaction';
+import {SnapInteraction} from './vl-mapactions-snap-interaction';
 
 export class DrawAction extends MapAction {
   constructor(layer, type, onDraw, options) {

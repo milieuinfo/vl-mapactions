@@ -1,5 +1,5 @@
 import {MapWithActions} from '../../src/vl-mapactions-map-with-actions';
-import {MapAction} from '../../src/action/vl-mapactions-mapaction';
+import {MapAction} from '../../src/vl-mapactions-mapaction';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import DragRotate from 'ol/src/ol/interaction/DragRotate';

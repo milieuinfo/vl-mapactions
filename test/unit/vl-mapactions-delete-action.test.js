@@ -1,7 +1,7 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import Style from 'ol/src/ol/style/Style';
-import {DeleteAction} from '../../../src/vl-mapactions-delete-action';
+import {DeleteAction} from '../../src/vl-mapactions-delete-action';
 import {Vector as SourceVector} from 'ol/src/ol/source';
 import {Vector} from 'ol/src/ol/layer';
 import Feature from 'ol/src/ol/Feature';

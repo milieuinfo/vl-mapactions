@@ -1,9 +1,9 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {ModifyAndTranslateAction} from '../../../src/vl-mapactions-modify-and-translate-action';
+import {ModifyAndTranslateAction} from '../../src/vl-mapactions-modify-and-translate-action';
 import Point from 'ol/src/ol/geom/Point';
 import Feature from 'ol/src/ol/Feature';
-import {SnapInteraction} from '../../../src/vl-mapactions-snap-interaction';
+import {SnapInteraction} from '../../src/vl-mapactions-snap-interaction';
 import {Vector as SourceVector} from 'ol/src/ol/source';
 import {Vector} from 'ol/src/ol/layer';
 

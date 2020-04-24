@@ -1,5 +1,5 @@
 import {Modify} from 'ol/src/ol/interaction';
-import {SnapInteraction} from '../interaction/vl-mapactions-snap-interaction';
+import {SnapInteraction} from './vl-mapactions-snap-interaction';
 import {SelectAction} from './vl-mapactions-select-action';
 
 export class ModifyAction extends SelectAction {
