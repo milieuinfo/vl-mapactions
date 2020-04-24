@@ -329,43 +329,43 @@ describe('select action', function() {
   });
 
   // TODO FIX
-  // it('zal na het zoomen de geselecteerde feature verplaatsen naar de markeer selecteer interactie om visuele problemen met geselecteerde feature en cluster te voorkomen', function() {
-  //   const feature = new Feature();
-  //   feature.setId(1);
-  //   const layer = {
-  //     id: 'layer1',
-  //     getSource: function() {
-  //       return {
-  //         getFeatures: function() {
-  //           return [feature];
-  //         },
-  //         getFeatureById: function(id) {
-  //           return (id == 1 ? feature : null);
-  //         },
-  //       };
-  //     },
-  //   };
-  //   const selectAction = new SelectAction(layer, null, {
-  //     cluster: true,
-  //   });
-  //   selectAction.map = {
-  //     on: sinon.spy(),
-  //     un: sinon.spy(),
-  //   };
-  //   selectAction.activate();
-  //
-  //   selectAction.selectInteraction.getFeatures().push(feature);
-  //   expect(selectAction.selectInteraction.getFeatures().getLength()).to.equal(1);
-  //   expect(selectAction.markInteraction.getFeatures().getLength()).to.equal(0);
-  //   expect(selectAction.hoverInteraction.getFeatures().getLength()).to.equal(0);
-  //   const event = {type: 'select'};
-  //   selectAction.selectInteraction.dispatchEvent(event);
-  //   expect(selectAction.selectInteraction.getFeatures().getLength()).to.equal(0);
-  //   expect(selectAction.markInteraction.getFeatures().getLength()).to.equal(1);
-  //   expect(selectAction.hoverInteraction.getFeatures().getLength()).to.equal(0);
-  //   selectAction._fixClusterBehavior();
-  //   expect(selectAction.selectInteraction.getFeatures().getLength()).to.equal(0);
-  //   expect(selectAction.markInteraction.getFeatures().getLength()).to.equal(1);
-  //   expect(selectAction.hoverInteraction.getFeatures().getLength()).to.equal(0);
-  // });
+  it('zal na het zoomen de geselecteerde feature verplaatsen naar de markeer selecteer interactie om visuele problemen met geselecteerde feature en cluster te voorkomen', function() {
+    const feature = new Feature();
+    feature.setId(1);
+    const layer = {
+      id: 'layer1',
+      getSource: function() {
+        return {
+          getFeatures: function() {
+            return [feature];
+          },
+          getFeatureById: function(id) {
+            return (id == 1 ? feature : null);
+          },
+        };
+      },
+    };
+    const selectAction = new SelectAction(layer, null, {
+      cluster: true,
+    });
+    selectAction.map = {
+      on: sinon.spy(),
+      un: sinon.spy(),
+    };
+    selectAction.activate();
+
+    selectAction.selectInteraction.getFeatures().push(feature);
+    expect(selectAction.selectInteraction.getFeatures().getLength()).to.equal(1);
+    expect(selectAction.markInteraction.getFeatures().getLength()).to.equal(0);
+    expect(selectAction.hoverInteraction.getFeatures().getLength()).to.equal(0);
+    const event = {type: 'select'};
+    selectAction.selectInteraction.dispatchEvent(event);
+    expect(selectAction.selectInteraction.getFeatures().getLength()).to.equal(0);
+    expect(selectAction.markInteraction.getFeatures().getLength()).to.equal(1);
+    expect(selectAction.hoverInteraction.getFeatures().getLength()).to.equal(0);
+    selectAction._fixClusterBehavior();
+    expect(selectAction.selectInteraction.getFeatures().getLength()).to.equal(0);
+    expect(selectAction.markInteraction.getFeatures().getLength()).to.equal(1);
+    expect(selectAction.hoverInteraction.getFeatures().getLength()).to.equal(0);
+  });
 });
