@@ -68,7 +68,7 @@ export class SplitAction extends MapAction {
     this.selectAction.activate();
   }
 
-  deactivate = function() {
+  deactivate() {
     this.selectAction.deactivate();
     this.drawAction.deactivate();
   };

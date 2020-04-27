@@ -1,13 +1,13 @@
-import GeoJSON from '../node_modules/ol/src/ol/format/GeoJSON';
-import View from '../node_modules/ol/src/ol/View';
-import Overlay from '../node_modules/ol/src/ol/Overlay';
+import GeoJSON from 'ol/src/ol/format/GeoJSON';
+import View from 'ol/src/ol/View';
+import Overlay from 'ol/src/ol/Overlay';
 import {
   Zoom,
   Rotate,
   ZoomSlider,
   ScaleLine,
   OverviewMap,
-} from '../node_modules/ol/src/ol/control';
+} from 'ol/src/ol/control';
 import {MapWithActions} from './vl-mapactions-map-with-actions';
 
 /**
