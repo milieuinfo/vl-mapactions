@@ -1,4 +1,4 @@
-import {Fill, Stroke, Style, Circle} from 'ol/src/ol/style';
+import {Fill, Stroke, Style, Circle} from 'ol/src/style';
 import {BoxSelectAction} from './vl-mapactions-box-select-action';
 
 export class DeleteAction extends BoxSelectAction {
@@ -25,29 +25,28 @@ export class DeleteAction extends BoxSelectAction {
 
     const style = options ? options.style || defaultStyle : defaultStyle;
 
-    function removeFeature(feature) {
+    const removeFeature = (feature) => {
       if (feature && layer.getSource().getFeatureById(feature.getId()) === feature) {
         layer.getSource().removeFeature(feature);
       }
-    }
+    };
 
-    super(layer,
-      (features) => {
-        if (onDelete && onDelete != null) {
-          onDelete(features, (feature) => {
-            removeFeature(feature);
-            this.clearFeatures();
-          }, () => {
-            this.clearFeatures();
-          });
-        } else {
-          features.forEach((feature) => {
-            removeFeature(feature);
-          });
+    super(layer, (features) => {
+      if (onDelete && onDelete != null) {
+        onDelete(features, (feature) => {
+          removeFeature(feature);
           this.clearFeatures();
-        }
-      }, {
-        style: style,
-      });
+        }, () => {
+          this.clearFeatures();
+        });
+      } else {
+        features.forEach((feature) => {
+          removeFeature(feature);
+        });
+        this.clearFeatures();
+      }
+    }, {
+      style: style,
+    });
   }
 }

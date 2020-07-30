@@ -1,25 +1,23 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {Vector as SourceVector} from 'ol/src/ol/source';
+import {Vector as SourceVector} from 'ol/src/source';
 import {DrawLijnstukAction} from '../../src/vl-mapactions-draw-lijnstuk-action';
 
-describe('draw action', function() {
-
+describe('draw action', () => {
   const source = new SourceVector({});
 
   const layer = {
-    getSource: function() {
+    getSource: () => {
       return source;
     },
   };
 
   const callback = sinon.spy();
 
-  it('geeft de options door aan de draw action', function() {
+  it('geeft de options door aan de draw action', () => {
     const snappingOptions = {
       layer: {
-        getSource: function() {
-        },
+        getSource: () => {},
       },
     };
     const options = {
@@ -33,7 +31,7 @@ describe('draw action', function() {
     expect(action.drawLijnstukOptions.measure).to.be.true;
   });
 
-  it('geeft de juiste configuratie mee aan de draw interaction', function() {
+  it('geeft de juiste configuratie mee aan de draw interaction', () => {
     const action = new DrawLijnstukAction(layer, callback);
     expect(action.drawOptions).to.deep.equal(action.drawLijnstukOptions);
   });

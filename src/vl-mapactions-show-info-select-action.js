@@ -3,7 +3,6 @@ import {Tooltips} from './vl-mapactions-tooltips';
 
 export class ShowInfoSelectAction extends SelectAction {
   constructor(layer, infoPromise, loadingMessage, doneLoading, tooltipOptions) {
-
     super(layer, (feature, event) => {
       if (feature) {
         const coordinate = feature.getGeometry().getClosestPoint(event.mapBrowserEvent.coordinate);

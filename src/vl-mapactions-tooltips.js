@@ -1,11 +1,11 @@
-import Overlay from 'ol/src/ol/Overlay';
+import Overlay from 'ol/src/Overlay';
 
 export class Tooltips {
   constructor(layer, infoPromise, loadingMessage, doneLoading) {
     this.layer = layer;
     layer.tooltips = [];
 
-    this.showTooltip = function(map, feature, coordinates, options) {
+    this.showTooltip = (map, feature, coordinates, options) => {
       options = options || {};
 
       const element = document.createElement('div');
@@ -22,22 +22,22 @@ export class Tooltips {
       map.addOverlay(tooltip);
       layer.tooltips.push(tooltip);
 
-      function showInfoContent(content) {
+      const showInfoContent = (content) => {
         element.childNodes[0].innerHTML = content;
         tooltip.setPosition(coordinates);
         tooltip.setElement(element);
         element.parentNode.style.position = 'fixed'; // because the overlay has absolute positioning and otherwise the left side panel could influence the overlay elements
-      }
+      };
 
-      var delay = 100; // Maximum time we wait on the promise to be resolved before rendering a loading element
-      var resolveDelay = 0; // Minimum time the loading element will be displayed to prevent flashy text
-      var loading = setTimeout(function() {
+      const delay = 100; // Maximum time we wait on the promise to be resolved before rendering a loading element
+      let resolveDelay = 0; // Minimum time the loading element will be displayed to prevent flashy text
+      const loading = setTimeout(() => {
         resolveDelay = 500; // Set the minimum delay time the loading element will be visible
         showInfoContent('<span class=\'icon\'></span> ' + (loadingMessage ? loadingMessage : 'Info berekenen  ...'));
       }, delay);
 
-      infoPromise(feature, coordinates).then(function(result) {
-        setTimeout(function() {
+      infoPromise(feature, coordinates).then((result) => {
+        setTimeout(() => {
           clearTimeout(loading);
           showInfoContent(result);
           map.render(); // re-render the map so changes in the size of the tooltip (due to different content) don't result in a badly placed tooltip
@@ -49,9 +49,7 @@ export class Tooltips {
     };
 
     this.clear = (map) => {
-      this.layer.tooltips.forEach(function(tooltip) {
-        map.removeOverlay(tooltip);
-      });
+      this.layer.tooltips.forEach((tooltip) => map.removeOverlay(tooltip));
     };
   }
 }

@@ -1,5 +1,5 @@
-import Overlay from 'ol/src/ol/Overlay';
-import {unByKey} from 'ol/src/ol/Observable';
+import Overlay from 'ol/src/Overlay';
+import {unByKey} from 'ol/src/Observable';
 import {DrawAction} from './vl-mapactions-draw-action';
 
 export class MeasureAction extends DrawAction {
@@ -14,12 +14,12 @@ export class MeasureAction extends DrawAction {
     this.measureTooltips = [];
     this.measurePointermoveHandler = undefined;
 
-    function showMeasureTooltip(feature, tooltip, tooltipElement) {
+    const showMeasureTooltip = (feature, tooltip, tooltipElement) => {
       const length = feature.getGeometry().getLength().toFixed(2);
       tooltipElement.textContent = length + ' m';
       tooltip.setElement(tooltipElement);
       tooltip.setPosition(feature.getGeometry().getLastCoordinate());
-    }
+    };
 
     this.drawInteraction.on('drawstart', (event) => {
       const id = featureCounter++;
@@ -33,9 +33,7 @@ export class MeasureAction extends DrawAction {
       });
       this.map.addOverlay(tooltip);
       this.measureTooltips[id] = tooltip;
-      this.measurePointermoveHandler = this.map.on('pointermove', function() {
-        showMeasureTooltip(measureFeature, tooltip, tooltipElement);
-      });
+      this.measurePointermoveHandler = this.map.on('pointermove', () => showMeasureTooltip(measureFeature, tooltip, tooltipElement));
     });
 
     const removeTooltip = (id) => {
@@ -65,12 +63,10 @@ export class MeasureAction extends DrawAction {
     };
 
     this.measureOptions = options;
-
   }
 
   deactivate() {
     this.cleanUp();
     super.deactivate(this);
   }
-
 }

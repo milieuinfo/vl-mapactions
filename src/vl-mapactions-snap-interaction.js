@@ -1,4 +1,4 @@
-import Snap from 'ol/src/ol/interaction/Snap';
+import Snap from 'ol/src/interaction/Snap';
 
 export class SnapInteraction extends Snap {
   constructor(layer) {

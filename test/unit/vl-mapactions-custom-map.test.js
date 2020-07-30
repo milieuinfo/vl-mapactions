@@ -1,11 +1,12 @@
-import {Vector, Tile, Group} from 'ol/src/ol/layer';
-import {Vector as SourceVector} from 'ol/src/ol/source';
-import Projection from 'ol/src/ol/proj/Projection';
+import './setup.js';
+import {Vector, Tile, Group} from 'ol/src/layer';
+import {Vector as SourceVector} from 'ol/src/source';
+import Projection from 'ol/src/proj/Projection';
 import {CustomMap} from '../../src/vl-mapactions-custom-map';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 
-describe('custom map', function() {
+describe('custom map', () => {
   let map;
 
   const layers = [new Tile({
@@ -26,13 +27,15 @@ describe('custom map', function() {
 
   const overlayLayer = new Vector({source: new SourceVector()});
 
-  function merge(a, b) {
+  const merge = (a, b) => {
     for (const element in b) {
-      a[element] = b[element];
+      if (b.hasOwnProperty(element)) {
+        a[element] = b[element];
+      }
     }
-  }
+  };
 
-  function createMap(options) {
+  const createMap = (options) => {
     const defaultOptions = {
       actions: [],
       customLayers: {
@@ -56,13 +59,13 @@ describe('custom map', function() {
 
     const map = new CustomMap(defaultOptions);
     map.addControl = sinon.spy();
-    map.getSize = function() {
+    map.getSize = () => {
       return [1200, 800];
     };
     return map;
-  }
+  };
 
-  function createMapZonderLayers() {
+  const createMapZonderLayers = () => {
     const defaultOptions = {
       actions: [],
       customLayers: {
@@ -83,39 +86,38 @@ describe('custom map', function() {
     const map = new CustomMap(defaultOptions);
     map.addControl = sinon.spy();
     return map;
-  }
+  };
 
-  function createBaseLayer(title, visibility) {
+  const createBaseLayer = (title, visibility) => {
     return new Tile({
       title: title,
       type: 'base',
       visible: visibility,
     });
-  }
+  };
 
-  function createVisibleBaseLayer(title) {
+  const createVisibleBaseLayer = (title) => {
     return createBaseLayer(title, true);
+  };
 
-  }
-
-  function createInvisibleBaseLayer(title) {
+  const createInvisibleBaseLayer = (title) => {
     return createBaseLayer(title, false);
-  }
+  };
 
-  beforeEach(function() {
+  beforeEach(() => {
     map = createMap();
   });
 
-  it('kan de base layers teruggeven', function() {
+  it('kan de base layers teruggeven', () => {
     expect(map.getBaseLayers().length).to.equal(2);
     expect(map.getBaseLayers()).to.deep.equal(layers);
   });
 
-  it('kan de overlay layers teruggeven', function() {
+  it('kan de overlay layers teruggeven', () => {
     expect(map.getOverlayLayers().length).to.equal(1);
   });
 
-  it('kan zoomen naar een puntgeometrie, zodat er sterk is ingezoomd (hoge zoom waarde)', function() {
+  it('kan zoomen naar een puntgeometrie, zodat er sterk is ingezoomd (hoge zoom waarde)', () => {
     map.initializeView();
     expect(map.getView().getZoom()).to.equal(2);
 
@@ -127,25 +129,25 @@ describe('custom map', function() {
     expect(map.getView().getZoom()).to.equal(16);
   });
 
-  it('kan zoomen naar een geometrie tot maximaal aan het gedefinieerde zoom niveau via de map declaratie optie of de methode argumenten', function() {
+  it('kan zoomen naar een geometrie tot maximaal aan het gedefinieerde zoom niveau via de map declaratie optie of de methode argumenten', () => {
     const max = 10;
 
     map.zoomToGeometry({type: 'Point', coordinates: [100000, 100000]});
     expect(map.getView().getZoom()).to.equal(16);
 
-    map.zoomToGeometry({type: 'Point', coordinates: [100000, 100000]}, 10);
-    expect(map.getView().getZoom()).to.equal(10);
+    map.zoomToGeometry({type: 'Point', coordinates: [100000, 100000]}, max);
+    expect(map.getView().getZoom()).to.equal(max);
 
     map = createMap({maxZoomViewToExtent: 5});
-    map.zoomToGeometry({type: 'Point', coordinates: [100000, 100000]}, 10);
-    expect(map.getView().getZoom()).to.equal(10);
+    map.zoomToGeometry({type: 'Point', coordinates: [100000, 100000]}, max);
+    expect(map.getView().getZoom()).to.equal(max);
 
     map = createMap({maxZoomViewToExtent: 5});
     map.zoomToGeometry({type: 'Point', coordinates: [100000, 100000]});
     expect(map.getView().getZoom()).to.equal(5);
   });
 
-  it('kan met de show info functie een popover tonen op de kaart', function() {
+  it('kan met de show info functie een popover tonen op de kaart', () => {
     map.showInfo('Test', [0, 0]);
     const overlays = map.getOverlays();
     const array = overlays.getArray();
@@ -158,32 +160,28 @@ describe('custom map', function() {
     expect(overlay.getElement().outerHTML).to.equal(element);
   });
 
-  it('als de overview map control gekend is zal die toegevoegd worden aan de map bij het initializeren', function() {
+  it('als de overview map control gekend is zal die toegevoegd worden aan de map bij het initializeren', () => {
     map = createMap();
-
     map.initializeView();
-
     expect(map.addControl.called).to.be.true;
   });
 
-  it('als de overview map control niet gekend is zal die ook niet toegevoegd worden aan de map bij het initializeren', function() {
+  it('als de overview map control niet gekend is zal die ook niet toegevoegd worden aan de map bij het initializeren', () => {
     map = createMap();
     map.overviewMapControl = undefined;
-
     map.initializeView();
-
     expect(map.addControl.called).to.be.false;
   });
 
 
-  it('Als er geen overviewMapLayers zijn, zal er geen overviewMapControl aangemaakt worden.', function() {
+  it('Als er geen overviewMapLayers zijn, zal er geen overviewMapControl aangemaakt worden.', () => {
     const map = createMapZonderLayers();
     map.initializeView();
     expect(map.overviewMapControl).to.be.undefined;
   });
 
 
-  it('Wanneer de eerse overviewMapLayer wordt toegevoegd, wordt een overviewMapControl aangemaakt.', function() {
+  it('Wanneer de eerse overviewMapLayer wordt toegevoegd, wordt een overviewMapControl aangemaakt.', () => {
     const map = createMapZonderLayers();
     map.initializeView();
     const baseLayer = createVisibleBaseLayer('layer');
@@ -199,7 +197,7 @@ describe('custom map', function() {
   });
 
 
-  it('Er kunnen meerdere base layers en overlayMapLayers toegevoegd worden aan de map ', function() {
+  it('Er kunnen meerdere base layers en overlayMapLayers toegevoegd worden aan de map ', () => {
     map = createMapZonderLayers();
     map.initializeView();
 
@@ -219,13 +217,13 @@ describe('custom map', function() {
   });
 
 
-  it('Enkel de eerste toegevoegde baselayer is visible en enkel de 2e toegevoegde overlaymaplayer is visible', function() {
+  it('Enkel de eerste toegevoegde baselayer is visible en enkel de 2e toegevoegde overlaymaplayer is visible', () => {
     map = createMapZonderLayers();
     map.initializeView();
 
     for (let layerNr = 0; layerNr < 3; layerNr++) {
       map.addBaseLayerAndOverlayMapLayer(createInvisibleBaseLayer('layer ' + layerNr),
-        createInvisibleBaseLayer('overview map layer ' + layerNr));
+          createInvisibleBaseLayer('overview map layer ' + layerNr));
     }
 
     expect(map.getBaseLayers()[0].getVisible()).to.be.true;
@@ -237,13 +235,13 @@ describe('custom map', function() {
     expect(map.overviewMapControl.getOverviewMap().getLayers().getArray()[2].getVisible()).to.be.false;
   });
 
-  it('Na een klik is de volgende toegevoegde baselayer visible', function() {
+  it('Na een klik is de volgende toegevoegde baselayer visible', () => {
     map = createMapZonderLayers();
     map.initializeView();
 
     for (let layerNr = 0; layerNr < 3; layerNr++) {
       map.addBaseLayerAndOverlayMapLayer(createInvisibleBaseLayer('layer ' + layerNr),
-        createInvisibleBaseLayer('overview map layer ' + layerNr));
+          createInvisibleBaseLayer('overview map layer ' + layerNr));
     }
 
     const overlayElement = map.overviewMapControl.element;
@@ -286,5 +284,4 @@ describe('custom map', function() {
     expect(map.render.called).to.be.true;
     expect(overviewMap.render.called).to.be.true;
   });
-
 });

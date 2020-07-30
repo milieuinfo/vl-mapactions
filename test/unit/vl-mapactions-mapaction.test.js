@@ -1,45 +1,30 @@
-import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import Interaction from 'ol/src/ol/interaction/Interaction';
+import Interaction from 'ol/src/interaction/Interaction';
 import {MapAction} from '../../src/vl-mapactions-mapaction';
 
-describe('map action', function() {
-  it('kan een interactie toevoegen die niet actief staat', function() {
+describe('map action', () => {
+  it('kan een interactie toevoegen die niet actief staat', () => {
     const mapAction = new MapAction([new Interaction({}), new Interaction({})]);
     const extraInteractie = new Interaction({});
-
     mapAction.addInteraction(extraInteractie);
-
     expect(mapAction.interactions.length).to.equal(3);
     expect(extraInteractie.getActive()).to.be.false;
   });
 
-  it('zet alle interacties default op inactief', function() {
+  it('zet alle interacties default op inactief', () => {
     const mapAction = new MapAction([new Interaction({}), new Interaction({})]);
-
-    mapAction.interactions.forEach(function(interaction) {
-      expect(interaction.getActive()).to.be.false;
-    });
+    mapAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.false);
   });
 
-  it('kan de interacties actief zetten', function() {
+  it('kan de interacties actief zetten', () => {
     const mapAction = new MapAction([new Interaction({}), new Interaction({})]);
-
     mapAction.activate();
-
-    mapAction.interactions.forEach(function(interaction) {
-      expect(interaction.getActive()).to.be.true;
-    });
+    mapAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.true);
   });
 
-  it('kan de interacties terug deactief zetten', function() {
+  it('kan de interacties terug deactief zetten', () => {
     const mapAction = new MapAction([new Interaction({}), new Interaction({})]);
-
-    mapAction.activate();
     mapAction.deactivate();
-
-    mapAction.interactions.forEach(function(interaction) {
-      expect(interaction.getActive()).to.be.false;
-    });
+    mapAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.false);
   });
 });

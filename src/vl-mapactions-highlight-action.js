@@ -1,5 +1,5 @@
-import {Select} from 'ol/src/ol/interaction';
-import {pointerMove} from 'ol/src/ol/events/condition';
+import {Select} from 'ol/src/interaction';
+import {pointerMove} from 'ol/src/events/condition';
 import {MapAction} from './vl-mapactions-mapaction';
 
 export class HighlightAction extends MapAction {
@@ -51,7 +51,7 @@ export class HighlightAction extends MapAction {
 
   isHighlighted(feature) {
     let highlighted = false;
-    this.highlightInteraction.getFeatures().forEach(function(highlightedFeature) {
+    this.highlightInteraction.getFeatures().forEach((highlightedFeature) => {
       if (highlightedFeature === feature) {
         highlighted = true;
       }

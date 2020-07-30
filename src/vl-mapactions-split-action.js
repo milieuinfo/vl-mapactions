@@ -1,4 +1,4 @@
-import Feature from 'ol/src/ol/Feature';
+import Feature from 'ol/src/Feature';
 import {SelectAction} from './vl-mapactions-select-action';
 import {MapAction} from './vl-mapactions-mapaction';
 import {DrawAction} from './vl-mapactions-draw-action';
@@ -11,7 +11,7 @@ import {
   MultiPoint,
   MultiLineString,
   MultiPolygon,
-} from 'ol/src/ol/geom';
+} from 'ol/src/geom';
 
 export class SplitAction extends MapAction {
   constructor(layer, onSplit, options) {

@@ -1,7 +1,7 @@
-import Draw from 'ol/src/ol/interaction/Draw';
-import Overlay from 'ol/src/ol/Overlay';
-import {LineString, Polygon} from 'ol/src/ol/geom';
-import {unByKey} from 'ol/src/ol/Observable';
+import Draw from 'ol/src/interaction/Draw';
+import Overlay from 'ol/src/Overlay';
+import {LineString, Polygon} from 'ol/src/geom';
+import {unByKey} from 'ol/src/Observable';
 import {MapAction} from './vl-mapactions-mapaction';
 import {SnapInteraction} from './vl-mapactions-snap-interaction';
 
@@ -42,11 +42,11 @@ export class DrawAction extends MapAction {
 
     drawInteraction.on('drawend', (event) => {
       const feature = event.feature;
-      onDraw(feature, function cancelDraw() {
+      onDraw(feature, () => {
         try {
           layer.getSource().removeFeature(feature); // when the features was not yet added to the source we'll add a listener in the catch block
         } catch (exception) {
-          const listener = layer.getSource().on('addfeature', function(event) {
+          const listener = layer.getSource().on('addfeature', (event) => {
             layer.getSource().removeFeature(event.feature);
             unByKey(listener);
           });

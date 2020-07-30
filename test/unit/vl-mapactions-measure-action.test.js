@@ -1,60 +1,54 @@
+import './setup.js';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {Vector as SourceVector} from 'ol/src/ol/source';
-import {Vector} from 'ol/src/ol/layer';
+import {Vector as SourceVector} from 'ol/src/source';
+import {Vector} from 'ol/src/layer';
 import {MeasureAction} from '../../src/vl-mapactions-measure-action';
-import Feature from 'ol/src/ol/Feature';
-import LineString from 'ol/src/ol/geom/LineString';
-import * as OlObservable from 'ol/src/ol/Observable';
+import Feature from 'ol/src/Feature';
+import LineString from 'ol/src/geom/LineString';
+import * as OlObservable from 'ol/src/Observable';
 
-'use strict';
+describe('measure action', () => {
+  let measureAction;
+  let layer;
+  let addOverlay;
+  let removeOverlay;
+  let handler;
+  let source;
 
-describe('measure action', function() {
-  let measureAction, layer, addOverlay, removeOverlay, unByKey, handler,
-    moveMouse, source, callback;
-
-  beforeEach(function setUp() {
+  beforeEach(() => {
     source = new SourceVector({features: []});
     layer = new Vector({source: source});
-
     measureAction = new MeasureAction(layer);
-    callback = sinon.spy();
     addOverlay = sinon.spy();
     removeOverlay = sinon.spy();
-    unByKey = sinon.spy();
     handler = 'handler';
     measureAction.map = {
       addOverlay: addOverlay,
       removeOverlay: removeOverlay,
-      on: function(type, callback) {
-        moveMouse = callback;
-        return handler;
-      },
+      on: (type, callback) => handler,
     };
   });
 
-  it('geeft de snapping configuratie door aan de draw action', function() {
+  it('geeft de snapping configuratie door aan de draw action', () => {
     const snappingLayer = sinon.spy();
     const snapping = {
       layer: snappingLayer,
     };
-
     const action = new MeasureAction(layer, snapping);
     expect(action.measureOptions.layer).to.deep.equal(snappingLayer);
   });
 
-  it('Als het tekenen gestart en er met de muis verschoven wordt zal er een tooltip verschijnen', function() {
+  it('Als het tekenen gestart en er met de muis verschoven wordt zal er een tooltip verschijnen', () => {
     const sketchFeature = new Feature({geometry: new LineString([[0, 0], [1, 1]])});
-
     measureAction.drawInteraction.dispatchEvent({
       type: 'drawstart',
       feature: sketchFeature,
     });
-
     expect(addOverlay.called).to.be.true;
   });
 
-  it('bij het deactiveren worden de tooltips niet verwijderd, maar de listener wordt wel weggegooid', function() {
+  it('bij het deactiveren worden de tooltips niet verwijderd, maar de listener wordt wel weggegooid', () => {
     const unByKey = sinon.spy(OlObservable, 'unByKey');
     const sketchFeature = new Feature({geometry: new LineString([[0, 0], [1, 1]])});
     measureAction.drawInteraction.dispatchEvent({
@@ -66,14 +60,12 @@ describe('measure action', function() {
       feature: sketchFeature,
     });
     source.addFeature(sketchFeature);
-
     measureAction.deactivate();
-
     expect(unByKey.calledWith(measureAction.measurePointermoveHandler)).to.be.true;
     expect(removeOverlay.called).to.be.false;
   });
 
-  it('bij het deactiveren worden de tooltips van features die nog niet volledig getekend waren wel van de kaart verwijderd', function() {
+  it('bij het deactiveren worden de tooltips van features die nog niet volledig getekend waren wel van de kaart verwijderd', () => {
     const sketchFeature = new Feature({geometry: new LineString([[0, 0], [1, 1]])});
     measureAction.drawInteraction.dispatchEvent({
       type: 'drawstart',
@@ -84,32 +76,26 @@ describe('measure action', function() {
       feature: sketchFeature,
     });
     const tooltip = measureAction.getTooltipFor(sketchFeature.getId());
-
     measureAction.deactivate();
-
     expect(removeOverlay.calledWith(tooltip)).to.be.true;
   });
 
-  it('wanneer een feature wordt verwijderd van de layer zal de bijhorende tooltip ook verwijderd worden', function() {
+  it('wanneer een feature wordt verwijderd van de layer zal de bijhorende tooltip ook verwijderd worden', () => {
     const sketchFeature = new Feature({
       id: 1,
       geometry: new LineString([[0, 0], [1, 1]]),
     });
-
     measureAction.drawInteraction.dispatchEvent({
       type: 'drawstart',
       feature: sketchFeature,
     });
-
     measureAction.drawInteraction.dispatchEvent({
       type: 'drawend',
       feature: sketchFeature,
     });
     expect(addOverlay.called).to.be.true;
-
     const tooltip = measureAction.getTooltipFor(sketchFeature.getId());
     expect(tooltip).to.not.be.undefined;
-
     source.dispatchEvent({type: 'removefeature', feature: sketchFeature});
     expect(removeOverlay.calledWith(tooltip)).to.be.true;
   });

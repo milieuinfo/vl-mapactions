@@ -13,6 +13,9 @@
     },
     "ignorePatterns": [
       "**/node_modules",
+      "**/sitespeed-result",
+      "**/dist",
+      "**/lib",
       "CODEOWNERS",
       "*.yml",
       "*.md",
@@ -20,21 +23,22 @@
     ],
     "overrides": [
       {
-        "files": ["dist/*.js", "src/*.js", "demo/demo.js"],
+        "files": ["src/*.js", "demo/demo.js"],
         "parserOptions": {
           "sourceType": "module"
         }
       }
     ],
     "parserOptions": {
-      "sourceType": "module",
-      "ecmaVersion": 2020
+      "ecmaVersion": 2020,
+      "sourceType": "module"
     },
     "plugins": [
         "eslint-plugin-html"
     ],
     "rules": {
       "require-jsdoc": "off",
-      "max-len": "warn"
+      "max-len": "off"
     }
   }
+  

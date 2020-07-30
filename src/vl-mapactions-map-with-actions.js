@@ -1,5 +1,5 @@
-import {defaults} from 'ol/src/ol/interaction';
-import Map from 'ol/src/ol/Map';
+import {defaults} from 'ol/src/interaction';
+import Map from 'ol/src/Map';
 
 /**
  * Deze map bevat enkel de functionaliteit om de acties te behandelen. Aan het eerste argument van de constructor kan het gebruikelijke object map opties worden weergegeven die ook op de ol.Map worden gezet, samen met een extra parameter 'acties' in dat object. Deze array bevat MapActions.
@@ -8,13 +8,11 @@ import Map from 'ol/src/ol/Map';
  * Deze kaart regelt dat er maar één actie actief kan staan. Bij het activeren van een andere actie wordt namelijk de huidige actie gedeactiveerd.
  */
 export class MapWithActions extends Map {
-
   static get CLICK_COUNT_TIMEOUT() {
     return 300;
   }
 
   constructor(options) {
-
     options = options || {};
     const enableRotation = !options.disableRotation;
     const enableMouseWheelZoom = !options.disableMouseWheelZoom;
@@ -24,9 +22,7 @@ export class MapWithActions extends Map {
       mouseWheelZoom: enableMouseWheelZoom,
     });
     if (options && options.interactions) {
-      options.interactions.forEach(function(interaction) {
-        interactions.push(interaction);
-      });
+      options.interactions.forEach((interaction) => interactions.push(interaction));
     }
     options.interactions = interactions;
     super(options);
@@ -47,8 +43,7 @@ export class MapWithActions extends Map {
         }
       };
 
-      document.body.removeEventListener('keydown',
-        activateFirstActionOnEscapeKey);
+      document.body.removeEventListener('keydown', activateFirstActionOnEscapeKey);
       document.body.addEventListener('keydown', activateFirstActionOnEscapeKey);
     }
   }
@@ -67,7 +62,7 @@ export class MapWithActions extends Map {
 
     // delay the activation of the action with 300ms because ol has a timeout of 251ms to detect a double click event
     // when we don't use a delay some click and select events of the previous action will be triggered on the new action
-    this.timeout = setTimeout(function() {
+    this.timeout = setTimeout(() => {
       action.activate();
     }, MapWithActions.CLICK_COUNT_TIMEOUT);
   }

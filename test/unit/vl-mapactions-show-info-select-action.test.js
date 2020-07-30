@@ -1,32 +1,35 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import Feature from 'ol/src/ol/Feature';
-import Point from 'ol/src/ol/geom/Point';
+import Feature from 'ol/src/Feature';
+import Point from 'ol/src/geom/Point';
 import {ShowInfoSelectAction} from '../../src/vl-mapactions-show-info-select-action';
-import {Vector as SourceVector} from 'ol/src/ol/source';
+import {Vector as SourceVector} from 'ol/src/source';
 
-describe('show info select action', function() {
-  let map, showInfoSelectAction, feature, source, doneFunctionCalled,
-    visibility, mapWasRerendered;
+describe('show info select action', () => {
+  let map;
+  let showInfoSelectAction;
+  let feature;
+  let source;
+  let doneFunctionCalled;
+  let visibility;
+  let mapWasRerendered;
 
-  function waitFor(done, callback) {
+  const waitFor = (done, callback) => {
     if (done() && callback) {
       callback();
     } else {
-      window.setTimeout(function() {
+      window.setTimeout(() => {
         waitFor(done, callback);
       }, 50);
     }
-  }
+  };
 
-  beforeEach(function() {
+  beforeEach(() => {
     mapWasRerendered = false;
     source = new SourceVector();
-    const infoPromise = function() {
+    const infoPromise = () => {
       return {
-        then: function(callback) {
-          callback('content of info object');
-        },
+        then: (callback) => callback('content of info object'),
       };
     };
     map = {
@@ -37,7 +40,7 @@ describe('show info select action', function() {
       removeOverlay: function(overlay) {
         this.overlays.splice(this.overlays.indexOf(overlay), 1);
       },
-      render: function() {
+      render: () => {
         mapWasRerendered = true;
       },
       on: sinon.spy(),
@@ -47,26 +50,18 @@ describe('show info select action', function() {
     feature.setGeometry(new Point([0, 0]));
     doneFunctionCalled = false;
     showInfoSelectAction = new ShowInfoSelectAction({
-      getSource: function() {
-        return source;
-      }, setVisible: function(visible) {
-        visibility = visible;
-      }, getVisible: function() {
-        return visibility;
-      },
-    }, infoPromise, 'loading message', function() {
-      doneFunctionCalled = true;
-    });
+      getSource: () => source, setVisible: (visible) => visibility = visible, getVisible: () => visibility,
+    }, infoPromise, 'loading message', () => doneFunctionCalled = true);
     showInfoSelectAction.map = map;
   });
 
-  it('bij het activeren wordt de laag op visible gezet', function() {
+  it('bij het activeren wordt de laag op visible gezet', () => {
     visibility = false;
     showInfoSelectAction.activate();
     expect(visibility).to.be.true;
   });
 
-  it('bij het deactiveren wordt de laag zichtbaarheid weer op de oorspronkelijke waarde gezet', function() {
+  it('bij het deactiveren wordt de laag zichtbaarheid weer op de oorspronkelijke waarde gezet', () => {
     visibility = false;
     showInfoSelectAction.activate();
     showInfoSelectAction.deactivate();
@@ -78,75 +73,52 @@ describe('show info select action', function() {
     expect(visibility).to.be.true;
   });
 
-  it('zet een overlay op de map wanneer punt getekend werd, met daarin inhoud van de promise', function(done) {
+  it('zet een overlay op de map wanneer punt getekend werd, met daarin inhoud van de promise', (done) => {
     showInfoSelectAction.selectInteraction.getFeatures().push(feature);
     const event = {type: 'select', mapBrowserEvent: {coordinate: [0, 0]}};
     showInfoSelectAction.selectInteraction.dispatchEvent(event);
-
-    function contentShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content">content of info object</span><div class="arrow"></div>';
-    }
-
-    waitFor(contentShown, function() {
+    const contentShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content">content of info object</span><div class="arrow"></div>';
+    waitFor(contentShown, () => {
       expect(map.overlays[0].getPosition()).to.deep.equal([0, 0]);
       expect(doneFunctionCalled).to.be.true;
       done();
     });
   });
 
-  it('er wordt een loading message getoond als de promise er lang over doet om zijn resultaat te resolven', function(done) {
-    const infoPromise = function() {
+  it('er wordt een loading message getoond als de promise er lang over doet om zijn resultaat te resolven', (done) => {
+    const infoPromise = () => {
       return {
-        then: function(callback) {
-          setTimeout(function() {
-            callback('content of info object');
-          }, 600);
-        },
+        then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
     showInfoSelectAction = new ShowInfoSelectAction({
-      getSource: function() {
+      getSource: () => {
         return new SourceVector();
-      }, setVisible: function() {
-      }, getVisible: function() {
+      }, setVisible: () => {
+      }, getVisible: () => {
       },
-    }, infoPromise, 'loading message', function() {
+    }, infoPromise, 'loading message', () => {
     });
     showInfoSelectAction.map = map;
-
     showInfoSelectAction.selectInteraction.getFeatures().push(feature);
     const event = {type: 'select', mapBrowserEvent: {coordinate: [0, 0]}};
     showInfoSelectAction.selectInteraction.dispatchEvent(event);
-
-    function loadingShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content"><span class="icon"></span> loading message</span><div class="arrow"></div>';
-    }
-
-    function contentShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content">content of info object</span><div class="arrow"></div>';
-    }
-
-    waitFor(loadingShown, function() {
-      waitFor(contentShown, function() {
+    const loadingShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content"><span class="icon"></span> loading message</span><div class="arrow"></div>';
+    const contentShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content">content of info object</span><div class="arrow"></div>';
+    waitFor(loadingShown, () => {
+      waitFor(contentShown, () => {
         expect(mapWasRerendered).to.be.true;
         done();
       });
     });
   });
 
-  it('overlays worden verwijderd als de interactie gedeactiveerd wordt', function(done) {
+  it('overlays worden verwijderd als de interactie gedeactiveerd wordt', (done) => {
     showInfoSelectAction.selectInteraction.getFeatures().push(feature);
     const event = {type: 'select', mapBrowserEvent: {coordinate: [0, 0]}};
     showInfoSelectAction.selectInteraction.dispatchEvent(event);
-
-    function contentShown() {
-      return map.overlays.length === 1;
-    }
-
-    waitFor(contentShown, function() {
+    const contentShown = () => map.overlays.length === 1;
+    waitFor(contentShown, () => {
       showInfoSelectAction.deactivate();
       expect(map.overlays.length).to.equal(0);
       expect(source.getFeatures().length).to.equal(0);
@@ -154,75 +126,37 @@ describe('show info select action', function() {
     });
   });
 
-  it('een default offset van [0, -10] wordt gebruikt wanneer er geen offset wordt meegegeven', function(done) {
-    const infoPromise = function() {
+  it('een default offset van [0, -10] wordt gebruikt wanneer er geen offset wordt meegegeven', (done) => {
+    const infoPromise = () => {
       return {
-        then: function(callback) {
-          setTimeout(function() {
-            callback('content of info object');
-          }, 600);
-        },
+        then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
     showInfoSelectAction = new ShowInfoSelectAction({
-      getSource: function() {
-        return new SourceVector();
-      }, setVisible: function() {
-      }, getVisible: function() {
-      },
-    }, infoPromise, 'loading message', function() {
-    });
+      getSource: () => new SourceVector(), setVisible: () => {}, getVisible: () => {},
+    }, infoPromise, 'loading message', () => {});
     showInfoSelectAction.map = map;
-
     showInfoSelectAction.selectInteraction.getFeatures().push(feature);
     const event = {type: 'select', mapBrowserEvent: {coordinate: [0, 0]}};
     showInfoSelectAction.selectInteraction.dispatchEvent(event);
-
-
-    function contentShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content">content of info object</span><div class="arrow"></div>'
-        && map.overlays[0].getOffset().length === 2 && map.overlays[0].getOffset()[0] === 0 && map.overlays[0].getOffset()[1] === -10;
-    }
-
-    waitFor(contentShown, function() {
-      done();
-    });
+    const contentShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content">content of info object</span><div class="arrow"></div>' && map.overlays[0].getOffset().length === 2 && map.overlays[0].getOffset()[0] === 0 && map.overlays[0].getOffset()[1] === -10;
+    waitFor(contentShown, () => done());
   });
 
-  it('een meegegeven offset wordt gebruikt', function(done) {
-    const infoPromise = function() {
+  it('een meegegeven offset wordt gebruikt', (done) => {
+    const infoPromise = () => {
       return {
-        then: function(callback) {
-          setTimeout(function() {
-            callback('content of info object');
-          }, 600);
-        },
+        then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
     showInfoSelectAction = new ShowInfoSelectAction({
-      getSource: function() {
-        return new SourceVector();
-      }, setVisible: function() {
-      }, getVisible: function() {
-      },
-    }, infoPromise, 'loading message', function() {
-    }, {offset: [0, 0]});
+      getSource: () => new SourceVector(), setVisible: () => {}, getVisible: () => {},
+    }, infoPromise, 'loading message', () => {}, {offset: [0, 0]});
     showInfoSelectAction.map = map;
-
     showInfoSelectAction.selectInteraction.getFeatures().push(feature);
     const event = {type: 'select', mapBrowserEvent: {coordinate: [0, 0]}};
     showInfoSelectAction.selectInteraction.dispatchEvent(event);
-
-
-    function contentShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content">content of info object</span><div class="arrow"></div>'
-        && map.overlays[0].getOffset().length === 2 && map.overlays[0].getOffset()[0] === 0 && map.overlays[0].getOffset()[1] === 0;
-    }
-
-    waitFor(contentShown, function() {
-      done();
-    });
+    const contentShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content">content of info object</span><div class="arrow"></div>' && map.overlays[0].getOffset().length === 2 && map.overlays[0].getOffset()[0] === 0 && map.overlays[0].getOffset()[1] === 0;
+    waitFor(contentShown, () => done());
   });
 });

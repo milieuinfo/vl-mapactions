@@ -1,13 +1,13 @@
-import GeoJSON from 'ol/src/ol/format/GeoJSON';
-import View from 'ol/src/ol/View';
-import Overlay from 'ol/src/ol/Overlay';
+import GeoJSON from 'ol/src/format/GeoJSON';
+import View from 'ol/src/View';
+import Overlay from 'ol/src/Overlay';
 import {
   Zoom,
   Rotate,
   ZoomSlider,
   ScaleLine,
   OverviewMap,
-} from 'ol/src/ol/control';
+} from 'ol/src/control';
 import {MapWithActions} from './vl-mapactions-map-with-actions';
 
 /**
@@ -15,7 +15,6 @@ import {MapWithActions} from './vl-mapactions-map-with-actions';
  * De view kan in het map opties object bij constructie worden meegegeven, of achteraf aangemaakt in de initializeView functie. Hieraan kan de view worden meegegeven als argument of bij geen argument wordt een standaard view aangemaakt op basis van de meegegeven projectie.
  */
 export class CustomMap extends MapWithActions {
-
   constructor(options) {
     options.layers = [
       options.customLayers.baseLayerGroup,
@@ -53,6 +52,28 @@ export class CustomMap extends MapWithActions {
   createOverviewMapControl(options) {
     const self = this;
 
+    const toggleBaseLayer = (baseLayer) => {
+      const getNextLayerAfterVisibleLayer = (layers) => {
+        let currentIndex = 0;
+        self.baseLayers.forEach((layer, index) => {
+          if (layer.getVisible()) {
+            currentIndex = index;
+          }
+        });
+        return layers[(currentIndex + 1) >= layers.length ? 0 : currentIndex + 1];
+      };
+
+      if (!baseLayer) {
+        baseLayer = getNextLayerAfterVisibleLayer(self.baseLayers);
+      }
+      self.baseLayers.forEach((layer) => layer.setVisible(layer == baseLayer));
+      const overviewMapLayers = self.overviewMapControl.getOverviewMap().getLayers().getArray();
+      const nextVisibleOverviewMapLayer = getNextLayerAfterVisibleLayer(overviewMapLayers);
+      overviewMapLayers.forEach((layer) => layer.setVisible(layer == nextVisibleOverviewMapLayer));
+      self.render();
+      self.overviewMapControl.getOverviewMap().render();
+    };
+
     this.overviewMapLayers = options.customLayers.overviewMapLayers;
     this.overviewMapControl = new OverviewMap({
       layers: this.overviewMapLayers,
@@ -62,41 +83,13 @@ export class CustomMap extends MapWithActions {
       }),
     });
 
-    this.overviewMapControl.element.addEventListener('click', function() {
-      toggleBaseLayer();
-    }, false);
+    this.overviewMapControl.element.addEventListener('click', () => toggleBaseLayer(), false);
 
     if (options.view) {
       options.controls.push(this.overviewMapControl);
     }
 
     this.custom.toggleBaseLayer = toggleBaseLayer;
-
-    function toggleBaseLayer(baseLayer) {
-      function getNextLayerAfterVisibleLayer(layers) {
-        let currentIndex = 0;
-        self.baseLayers.forEach(function(layer, index) {
-          if (layer.getVisible()) {
-            currentIndex = index;
-          }
-        });
-        return layers[(currentIndex + 1) >= layers.length ? 0 : currentIndex + 1];
-      }
-
-      if (!baseLayer) {
-        baseLayer = getNextLayerAfterVisibleLayer(self.baseLayers);
-      }
-      self.baseLayers.forEach(function(layer) {
-        layer.setVisible(layer == baseLayer);
-      });
-      const overviewMapLayers = self.overviewMapControl.getOverviewMap().getLayers().getArray();
-      const nextVisibleOverviewMapLayer = getNextLayerAfterVisibleLayer(overviewMapLayers);
-      overviewMapLayers.forEach(function(layer) {
-        layer.setVisible(layer == nextVisibleOverviewMapLayer);
-      });
-      self.render();
-      self.overviewMapControl.getOverviewMap().render();
-    }
   }
 
   addBaseLayerAndOverlayMapLayer(baseLayer, overlayMapLayer) {
@@ -105,8 +98,7 @@ export class CustomMap extends MapWithActions {
 
     if (this.overviewMapControl) {
       this.overviewMapControl.getOverviewMap().getLayers().getArray().push(overlayMapLayer);
-    }
-    else {
+    } else {
       this.createOverviewMapControl({
         customLayers: {
           overviewMapLayers: [overlayMapLayer],
@@ -172,9 +164,7 @@ export class CustomMap extends MapWithActions {
   showInfo(info, coordinate) {
     const close = document.createElement('div');
     close.setAttribute('class', 'close');
-    close.onclick = function() {
-      event.currentTarget.parentNode.remove();
-    };
+    close.onclick = () => event.currentTarget.parentNode.remove();
 
     const element = document.createElement('div');
     element.innerHTML = '<span class=\'content\'>' + info + '</span><div class=\'arrow\'></div>';

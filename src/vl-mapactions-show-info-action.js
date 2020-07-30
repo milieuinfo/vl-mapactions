@@ -3,7 +3,6 @@ import {Tooltips} from './vl-mapactions-tooltips';
 
 export class ShowInfoAction extends DrawAction {
   constructor(layer, infoPromise, loadingMessage, tooltipOptions) {
-
     const tooltips = new Tooltips(layer, infoPromise, loadingMessage);
 
     super(layer, 'Point', (feature) => {

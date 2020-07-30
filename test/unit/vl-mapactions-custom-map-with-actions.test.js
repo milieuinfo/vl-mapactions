@@ -1,11 +1,12 @@
-import {Vector, Tile, Group} from 'ol/src/ol/layer';
+import './setup.js';
+import {Vector, Tile, Group} from 'ol/src/layer';
 import {CustomMap} from '../../src/vl-mapactions-custom-map';
-import Projection from 'ol/src/ol/proj/Projection';
+import Projection from 'ol/src/proj/Projection';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 
-describe('custom map with actions', function() {
-  function createCustomMapWithActions() {
+describe('custom map with actions', () => {
+  const createCustomMapWithActions = () => {
     const layers = [new Tile({
       type: 'base',
       visible: true,
@@ -37,47 +38,39 @@ describe('custom map with actions', function() {
       }),
     });
     map.addControl = sinon.spy();
-    map.getSize = function() {
-      return [1200, 800];
-    };
+    map.getSize = () => [1200, 800];
     return map;
-  }
+  };
 
-  it('bij het initialiseren van de view, wordt ook de over view map control toegevoegd', function() {
+  it('bij het initialiseren van de view, wordt ook de over view map control toegevoegd', () => {
     const map = createCustomMapWithActions();
     expect(map.getView().getZoom()).to.be.undefined;
 
     map.initializeView();
-
     expect(map.addControl.calledWith(map.overviewMapControl)).to.be.true;
   });
 
-  it('kan met een view geïnitialiseerd worden met als default zoom niveau 2', function() {
+  it('kan met een view geïnitialiseerd worden met als default zoom niveau 2', () => {
     const map = createCustomMapWithActions();
     expect(map.getView().getZoom()).to.be.undefined;
 
     map.initializeView();
-
     expect(map.getView().getZoom()).to.equal(2);
   });
 
-  it('kan met een view geïnitialiseerd worden op een specifieke bounding box, zodat er sterk is ingezoomd (hoge zoom waarde)', function() {
+  it('kan met een view geïnitialiseerd worden op een specifieke bounding box, zodat er sterk is ingezoomd (hoge zoom waarde)', () => {
     const map = createCustomMapWithActions();
-
     map.initializeView([9928.000000, 66928.000000, 9930.000000, 66930.000000]);
-
     expect(map.getView().getZoom()).to.equal(16);
   });
 
-  it('kan met een view geïnitialiseerd worden op een kleine bounding box en een max zoom niveau, zodat het max niveau bereikt is', function() {
+  it('kan met een view geïnitialiseerd worden op een kleine bounding box en een max zoom niveau, zodat het max niveau bereikt is', () => {
     const map = createCustomMapWithActions();
-
     map.initializeView([9928.000000, 66928.000000, 9930.000000, 66930.000000], 4);
-
     expect(map.getView().getZoom()).to.equal(4);
   });
 
-  it('als de baselayer getoggled wordt van een map, zal dit ook gebeuren bij de overview map', function() {
+  it('als de baselayer getoggled wordt van een map, zal dit ook gebeuren bij de overview map', () => {
     const map = createCustomMapWithActions();
     map.initializeView();
     expect(map.overviewMapLayers[0].getVisible()).to.be.false;
@@ -86,18 +79,15 @@ describe('custom map with actions', function() {
     expect(map.baseLayers[1].getVisible()).to.be.false;
 
     map.custom.toggleBaseLayer();
-
     expect(map.overviewMapLayers[0].getVisible()).to.be.true;
     expect(map.overviewMapLayers[1].getVisible()).to.be.false;
     expect(map.baseLayers[0].getVisible()).to.be.false;
     expect(map.baseLayers[1].getVisible()).to.be.true;
 
     map.custom.toggleBaseLayer();
-
     expect(map.overviewMapLayers[0].getVisible()).to.be.false;
     expect(map.overviewMapLayers[1].getVisible()).to.be.true;
     expect(map.baseLayers[0].getVisible()).to.be.true;
     expect(map.baseLayers[1].getVisible()).to.be.false;
   });
-
 });

@@ -11,7 +11,9 @@
     "test": "mocha -r esm -r jsdom-global/register",
     "test:grid": "mocha -r esm -r jsdom-global/register",
     "release": "np",
-    "release:prepare": "parcel build src/vl-*.js",
+    "release:prepare": "npm run release:prepare:code && npm run release:prepare:style",
+    "release:prepare:code": "webpack src/vl-mapactions-all.js -o dist/vl-mapactions.js --mode production",
+    "release:prepare:style": "copyfiles -f src/style.css dist",
     "release:testless": "np --yolo"
   },
   "dependencies": {
@@ -22,14 +24,12 @@
   },
   "devDependencies": {
     "canvas": "^2.6.1",
-    "chai": "^4.2.0",
+    "copyfiles": "2.3.0",
     "esm": "^3.2.25",
-    "jsdom": "16.2.2",
+    "jsdom": "^16.3.0",
     "jsdom-global": "3.0.2",
-    "parcel-bundler": "^1.12.4",
-    "vl-ui-util": "5.0.10"
-  },
-  "engines": {
-    "node": ">=0.10.0"
+    "vl-ui-util": "github:milieuinfo/webcomponent-vl-ui-util#dependencies",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
   }
 }

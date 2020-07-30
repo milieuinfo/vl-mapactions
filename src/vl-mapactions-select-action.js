@@ -1,10 +1,9 @@
-import {Select} from 'ol/src/ol/interaction';
-import {pointerMove} from 'ol/src/ol/events/condition';
+import {Select} from 'ol/src/interaction';
+import {pointerMove} from 'ol/src/events/condition';
 import {MapAction} from './vl-mapactions-mapaction';
 
 export class SelectAction extends MapAction {
   constructor(layer, onSelect, options) {
-
     const cluster = options && options.cluster;
     const filter = options && options.filter ? options.filter : () => true;
     const style = options ? options.style : null;
@@ -56,9 +55,7 @@ export class SelectAction extends MapAction {
 
     this.selectedFeature = null;
 
-    this.getLayer = function() {
-      return layer;
-    };
+    this.getLayer = () => layer;
 
     const nextFeature = (features) => {
       const index = features.getArray().indexOf(this.selectedFeature);
@@ -72,7 +69,7 @@ export class SelectAction extends MapAction {
     this.selectInteraction.on('select', (event) => {
       this.markInteraction.getFeatures().clear();
       if (this.selectInteraction.getFeatures().getLength() > 0) {
-        let selectedFeature = null;
+        const selectedFeature = null;
         if (this.selectInteraction.getFeatures().getLength() === 1) {
           this.selectedFeature = this.selectInteraction.getFeatures().getArray()[0];
         } else {
@@ -176,7 +173,7 @@ export class SelectAction extends MapAction {
 
   isMarked(feature) {
     let marked = false;
-    this.markInteraction.getFeatures().forEach(function(selectedFeature) {
+    this.markInteraction.getFeatures().forEach((selectedFeature) => {
       if (selectedFeature === feature) {
         marked = true;
       }

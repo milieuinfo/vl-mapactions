@@ -30,10 +30,10 @@ export class SelectActions extends SelectAction {
     };
 
     super(layers, onSelect, {
-        filter: filter,
-        style: style,
-        hoverStyle: hoverStyle,
-      },
+      filter: filter,
+      style: style,
+      hoverStyle: hoverStyle,
+    },
     );
 
     this.layerConfiguraties = layerConfiguraties;
@@ -63,7 +63,7 @@ export class SelectActions extends SelectAction {
       this.layers.forEach((layer) => {
         super.markFeatureWithId(id, layer);
       });
-      //todo refactor! : this is wrong: what if multiple features have same id but different layer?
+      // todo refactor! : this is wrong: what if multiple features have same id but different layer?
     }
   };
 }

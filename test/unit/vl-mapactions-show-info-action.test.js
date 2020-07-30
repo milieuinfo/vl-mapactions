@@ -1,31 +1,31 @@
-import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {ShowInfoAction} from '../../src/vl-mapactions-show-info-action';
-import {Vector as SourceVector} from 'ol/src/ol/source';
-import Feature from 'ol/src/ol/Feature';
-import Point from 'ol/src/ol/geom/Point';
+import {Vector as SourceVector} from 'ol/src/source';
+import Feature from 'ol/src/Feature';
+import Point from 'ol/src/geom/Point';
 
-describe('show info action', function() {
-  let map, showInfoAction, feature, source, mapWasRerendered;
+describe('show info action', () => {
+  let map; let showInfoAction;
+  let feature;
+  let source;
+  let mapWasRerendered;
 
-  function waitFor(done, callback) {
+  const waitFor = (done, callback) => {
     if (done() && callback) {
       callback();
     } else {
-      window.setTimeout(function() {
+      window.setTimeout(() => {
         waitFor(done, callback);
       }, 50);
     }
-  }
+  };
 
-  beforeEach(function() {
+  beforeEach(() => {
     mapWasRerendered = false;
     source = new SourceVector();
-    const infoPromise = function() {
+    const infoPromise = () => {
       return {
-        then: function(callback) {
-          callback('content of info object');
-        },
+        then: (callback) => callback('content of info object'),
       };
     };
     map = {
@@ -36,78 +36,57 @@ describe('show info action', function() {
       removeOverlay: function(overlay) {
         this.overlays.splice(this.overlays.indexOf(overlay), 1);
       },
-      render: function() {
+      render: () => {
         mapWasRerendered = true;
       },
     };
     feature = new Feature();
     feature.setGeometry(new Point([0, 0]));
     showInfoAction = new ShowInfoAction({
-      getSource: function() {
+      getSource: () => {
         return source;
       },
     }, infoPromise, 'loading message');
     showInfoAction.map = map;
   });
 
-  it('zet een overlay op de map wanneer punt getekend werd, met daarin inhoud van de promise', function(done) {
+  it('zet een overlay op de map wanneer punt getekend werd, met daarin inhoud van de promise', (done) => {
     showInfoAction.drawInteraction.dispatchEvent({
       type: 'drawend',
       feature: feature,
     });
-
-    function contentShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content">content of info object</span><div class="arrow"></div>';
-    }
-
-    waitFor(contentShown, function() {
+    const contentShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content">content of info object</span><div class="arrow"></div>';
+    waitFor(contentShown, () => {
       expect(map.overlays[0].getPosition()).to.deep.equal([0, 0]);
       done();
     });
   });
 
-  it('er wordt een loading message getoond als de promise er lang over doet om zijn resultaat te resolven', function(done) {
-    const infoPromise = function() {
+  it('er wordt een loading message getoond als de promise er lang over doet om zijn resultaat te resolven', (done) => {
+    const infoPromise = () => {
       return {
-        then: function(callback) {
-          setTimeout(function() {
-            callback('content of info object');
-          }, 600);
-        },
+        then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
     showInfoAction = new ShowInfoAction({
-      getSource: function() {
-        return new SourceVector({});
-      },
+      getSource: () => new SourceVector({}),
     }, infoPromise, 'loading message');
     showInfoAction.map = map;
-
     showInfoAction.drawInteraction.dispatchEvent({
       type: 'drawend',
       feature: feature,
     });
-
-    function loadingShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content"><span class="icon"></span> loading message</span><div class="arrow"></div>';
-    }
-
-    function contentShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content">content of info object</span><div class="arrow"></div>';
-    }
-
-    waitFor(loadingShown, function() {
-      waitFor(contentShown, function() {
+    const loadingShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content"><span class="icon"></span> loading message</span><div class="arrow"></div>';
+    const contentShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content">content of info object</span><div class="arrow"></div>';
+    waitFor(loadingShown, () => {
+      waitFor(contentShown, () => {
         expect(mapWasRerendered).to.be.true;
         done();
       });
     });
   });
 
-  it('overlays worden verwijderd als de interactie gedeactiveerd wordt', function(done) {
+  it('overlays worden verwijderd als de interactie gedeactiveerd wordt', (done) => {
     showInfoAction.drawInteraction.dispatchEvent({
       type: 'drawend',
       feature: feature,
@@ -117,12 +96,8 @@ describe('show info action', function() {
       type: 'drawend',
       feature: feature,
     });
-
-    function contentShown() {
-      return map.overlays.length === 2 && source.getFeatures().length > 0;
-    }
-
-    waitFor(contentShown, function() {
+    const contentShown = () => map.overlays.length === 2 && source.getFeatures().length > 0;
+    waitFor(contentShown, () => {
       showInfoAction.deactivate();
       expect(map.overlays.length).to.equal(0);
       expect(source.getFeatures().length).to.equal(0);
@@ -130,71 +105,43 @@ describe('show info action', function() {
     });
   });
 
-  it('een default offset van [0, -10] wordt gebruikt wanneer er geen offset wordt meegegeven', function(done) {
-    const infoPromise = function() {
+  it('een default offset van [0, -10] wordt gebruikt wanneer er geen offset wordt meegegeven', (done) => {
+    const infoPromise = () => {
       return {
         then: function(callback) {
-          setTimeout(function() {
+          setTimeout(() => {
             callback('content of info object');
           }, 600);
         },
       };
     };
-
     showInfoAction = new ShowInfoAction({
-      getSource: function() {
-        return new SourceVector({});
-      },
+      getSource: () => new SourceVector({}),
     }, infoPromise, 'loading message');
     showInfoAction.map = map;
-
     showInfoAction.drawInteraction.dispatchEvent({
       type: 'drawend',
       feature: feature,
     });
-
-    function contentShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content">content of info object</span><div class="arrow"></div>'
-        && map.overlays[0].getOffset().length === 2 && map.overlays[0].getOffset()[0] === 0 && map.overlays[0].getOffset()[1] === -10;
-    }
-
-    waitFor(contentShown, function() {
-      done();
-    });
+    const contentShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content">content of info object</span><div class="arrow"></div>' && map.overlays[0].getOffset().length === 2 && map.overlays[0].getOffset()[0] === 0 && map.overlays[0].getOffset()[1] === -10;
+    waitFor(contentShown, () => done());
   });
 
-  it('een meegegeven offset wordt gebruikt', function(done) {
-    const infoPromise = function() {
+  it('een meegegeven offset wordt gebruikt', (done) => {
+    const infoPromise = () => {
       return {
-        then: function(callback) {
-          setTimeout(function() {
-            callback('content of info object');
-          }, 600);
-        },
+        then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
-
     showInfoAction = new ShowInfoAction({
-      getSource: function() {
-        return new SourceVector({});
-      },
+      getSource: () => new SourceVector({}),
     }, infoPromise, 'loading message', {offset: [0, 0]});
     showInfoAction.map = map;
-
     showInfoAction.drawInteraction.dispatchEvent({
       type: 'drawend',
       feature: feature,
     });
-
-    function contentShown() {
-      return map.overlays.length === 1 && map.overlays[0].getElement().innerHTML ===
-        '<span class="content">content of info object</span><div class="arrow"></div>'
-        && map.overlays[0].getOffset().length === 2 && map.overlays[0].getOffset()[0] === 0 && map.overlays[0].getOffset()[1] === 0;
-    }
-
-    waitFor(contentShown, function() {
-      done();
-    });
+    const contentShown = () => map.overlays.length === 1 && map.overlays[0].getElement().innerHTML === '<span class="content">content of info object</span><div class="arrow"></div>' && map.overlays[0].getOffset().length === 2 && map.overlays[0].getOffset()[0] === 0 && map.overlays[0].getOffset()[1] === 0;
+    waitFor(contentShown, () => done());
   });
 });

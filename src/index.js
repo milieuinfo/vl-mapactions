@@ -18,5 +18,5 @@ module.exports = {
   ShowInfoSelectAction: require('../dist/vl-mapactions-all.src.js').ShowInfoSelectAction,
   SplitAction: require('../dist/vl-mapactions-all.src.js').SplitAction,
   Tooltips: require('../dist/vl-mapactions-all.src.js').Tooltips,
-  TranslateAction: require('../dist/vl-mapactions-all.src.js').TranslateAction
+  TranslateAction: require('../dist/vl-mapactions-all.src.js').TranslateAction,
 };
