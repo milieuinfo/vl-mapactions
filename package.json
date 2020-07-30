@@ -17,18 +17,18 @@
     "release:testless": "np --yolo"
   },
   "dependencies": {
-    "bootstrap-sass": "3.3.4",
-    "jsts": "2.1.2",
-    "ol": "6.3.1",
-    "proj4": "2.2.1"
+    "bootstrap-sass": "^3.3.4",
+    "jsts": "^2.1.2",
+    "ol": "^6.3.1",
+    "proj4": "^2.2.1"
   },
   "devDependencies": {
     "canvas": "^2.6.1",
-    "copyfiles": "2.3.0",
+    "copyfiles": "^2.3.0",
     "esm": "^3.2.25",
     "jsdom": "^16.3.0",
-    "jsdom-global": "3.0.2",
-    "vl-ui-util": "github:milieuinfo/webcomponent-vl-ui-util#dependencies",
+    "jsdom-global": "^3.0.2",
+    "vl-ui-util": "^5.0.10",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   }
