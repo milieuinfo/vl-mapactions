@@ -1,6 +1,6 @@
 import {BoxSelectAction} from '../../src/vl-mapactions-box-select-action';
 import sinon from 'sinon/pkg/sinon-esm';
-import Feature from 'ol/src/Feature';
+import Feature from 'ol/Feature';
 import {expect} from 'chai';
 
 describe('box select action', () => {

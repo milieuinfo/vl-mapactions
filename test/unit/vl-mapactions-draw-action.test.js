@@ -1,14 +1,14 @@
 import './setup.js';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {Vector as SourceVector} from 'ol/src/source';
-import {Vector} from 'ol/src/layer';
-import Feature from 'ol/src/Feature';
+import {Vector as SourceVector} from 'ol/source';
+import {Vector} from 'ol/layer';
+import Feature from 'ol/Feature';
 import {DrawAction} from '../../src/vl-mapactions-draw-action';
-import Draw from 'ol/src/interaction/Draw';
+import Draw from 'ol/interaction/Draw';
 import {SnapInteraction} from '../../src/vl-mapactions-snap-interaction';
-import Polygon from 'ol/src/geom/Polygon';
-import LineString from 'ol/src/geom/LineString';
+import Polygon from 'ol/geom/Polygon';
+import LineString from 'ol/geom/LineString';
 
 describe('draw action', () => {
   const source = new SourceVector({features: []});

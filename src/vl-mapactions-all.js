@@ -18,6 +18,23 @@ import {SplitAction} from './vl-mapactions-split-action';
 import {Tooltips} from './vl-mapactions-tooltips';
 import {TranslateAction} from './vl-mapactions-translate-action';
 import {SnapInteraction} from './vl-mapactions-snap-interaction';
+import OlLayerGroup from 'ol/layer/Group';
+import OlVectorLayer from 'ol/layer/Vector';
+import OlTileLayer from 'ol/layer/Tile';
+import OlVectorSource from 'ol/source/Vector';
+import OlClusterSource from 'ol/source/Cluster';
+import OlWMTSSource from 'ol/source/WMTS';
+import OlWMTSTileGrid from 'ol/tilegrid/WMTS';
+import OlPoint from 'ol/geom/Point';
+import OlStyle from 'ol/style/Style';
+import OlStyleStroke from 'ol/style/Stroke';
+import OlStyleFill from 'ol/style/Fill';
+import OlStyleCircle from 'ol/style/Circle';
+import OlStyleText from 'ol/style/Text';
+import OlProjection from 'ol/proj/Projection';
+import OlGeoJSON from 'ol/format/GeoJSON';
+import * as OlExtent from 'ol/extent';
+import * as OlLoadingstrategy from 'ol/loadingstrategy';
 
 export {
   CustomMap,
@@ -40,4 +57,21 @@ export {
   SplitAction,
   Tooltips,
   TranslateAction,
+  OlLayerGroup,
+  OlVectorLayer,
+  OlTileLayer,
+  OlVectorSource,
+  OlClusterSource,
+  OlWMTSSource,
+  OlWMTSTileGrid,
+  OlPoint,
+  OlStyle,
+  OlStyleStroke,
+  OlStyleFill,
+  OlStyleCircle,
+  OlStyleText,
+  OlProjection,
+  OlGeoJSON,
+  OlExtent,
+  OlLoadingstrategy,
 };

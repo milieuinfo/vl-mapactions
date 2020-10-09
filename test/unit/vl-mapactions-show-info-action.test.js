@@ -1,8 +1,8 @@
 import {expect} from 'chai';
 import {ShowInfoAction} from '../../src/vl-mapactions-show-info-action';
-import {Vector as SourceVector} from 'ol/src/source';
-import Feature from 'ol/src/Feature';
-import Point from 'ol/src/geom/Point';
+import {Vector as SourceVector} from 'ol/source';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 
 describe('show info action', () => {
   let map; let showInfoAction;

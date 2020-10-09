@@ -1,10 +1,10 @@
 import './setup.js';
 import {expect} from 'chai';
-import Style from 'ol/src/style/Style';
+import Style from 'ol/style/Style';
 import {DeleteAction} from '../../src/vl-mapactions-delete-action';
-import {Vector as SourceVector} from 'ol/src/source';
-import {Vector} from 'ol/src/layer';
-import Feature from 'ol/src/Feature';
+import {Vector as SourceVector} from 'ol/source';
+import {Vector} from 'ol/layer';
+import Feature from 'ol/Feature';
 
 describe('delete action', () => {
   it('indien er geen delete stijl gedefinieerd is zal de standaard stijl gebruikt worden', () => {

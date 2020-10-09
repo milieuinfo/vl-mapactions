@@ -1,8 +1,8 @@
 import './setup.js';
 import {expect} from 'chai';
 import {SnapInteraction} from '../../src/vl-mapactions-snap-interaction';
-import {Vector as SourceVector} from 'ol/src/source';
-import {Vector} from 'ol/src/layer';
+import {Vector as SourceVector} from 'ol/source';
+import {Vector} from 'ol/layer';
 
 describe('snapinteraction interaction', () => {
   it('bij het aanmaken van een snap interactie zullen de options correct worden gezet', () => {

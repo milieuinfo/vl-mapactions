@@ -1,12 +1,12 @@
 import './setup.js';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {Vector as SourceVector} from 'ol/src/source';
-import {Vector} from 'ol/src/layer';
+import {Vector as SourceVector} from 'ol/source';
+import {Vector} from 'ol/layer';
 import {SelectActions} from '../../src/vl-mapactions-select-actions';
 import {SelectAction} from '../../src/vl-mapactions-select-action';
-import Feature from 'ol/src/Feature';
-import Style from 'ol/src/style/Style';
+import Feature from 'ol/Feature';
+import Style from 'ol/style/Style';
 
 describe('select actions', () => {
   it('select actions is een select action', () => {

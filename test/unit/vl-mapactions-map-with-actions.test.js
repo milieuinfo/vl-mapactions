@@ -2,17 +2,17 @@ import {MapWithActions} from '../../src/vl-mapactions-map-with-actions';
 import {MapAction} from '../../src/vl-mapactions-mapaction';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import DragRotate from 'ol/src/interaction/DragRotate';
-import DoubleClickZoom from 'ol/src/interaction/DoubleClickZoom';
-import KeyboardPan from 'ol/src/interaction/KeyboardPan';
-import KeyboardZoom from 'ol/src/interaction/KeyboardZoom';
-import MouseWheelZoom from 'ol/src/interaction/MouseWheelZoom';
-import PinchZoom from 'ol/src/interaction/PinchZoom';
-import PinchRotate from 'ol/src/interaction/PinchRotate';
-import DragPan from 'ol/src/interaction/DragPan';
-import DragZoom from 'ol/src/interaction/DragZoom';
-import Collection from 'ol/src/Collection';
-import Interaction from 'ol/src/interaction/Interaction';
+import DragRotate from 'ol/interaction/DragRotate';
+import DoubleClickZoom from 'ol/interaction/DoubleClickZoom';
+import KeyboardPan from 'ol/interaction/KeyboardPan';
+import KeyboardZoom from 'ol/interaction/KeyboardZoom';
+import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
+import PinchZoom from 'ol/interaction/PinchZoom';
+import PinchRotate from 'ol/interaction/PinchRotate';
+import DragPan from 'ol/interaction/DragPan';
+import DragZoom from 'ol/interaction/DragZoom';
+import Collection from 'ol/Collection';
+import Interaction from 'ol/interaction/Interaction';
 
 describe('map with actions', () => {
   let action1;

@@ -1,12 +1,12 @@
 import './setup.js';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {Vector as SourceVector} from 'ol/src/source';
-import {Vector} from 'ol/src/layer';
+import {Vector as SourceVector} from 'ol/source';
+import {Vector} from 'ol/layer';
 import {MeasureAction} from '../../src/vl-mapactions-measure-action';
-import Feature from 'ol/src/Feature';
-import LineString from 'ol/src/geom/LineString';
-import * as OlObservable from 'ol/src/Observable';
+import Feature from 'ol/Feature';
+import LineString from 'ol/geom/LineString';
+import * as OlObservable from 'ol/Observable';
 
 describe('measure action', () => {
   let measureAction;

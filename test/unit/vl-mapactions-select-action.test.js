@@ -2,10 +2,10 @@ import './setup.js';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {SelectAction} from '../../src/vl-mapactions-select-action';
-import Style from 'ol/src/style/Style';
-import Feature from 'ol/src/Feature';
-import {Vector as SourceVector} from 'ol/src/source';
-import {Vector} from 'ol/src/layer';
+import Style from 'ol/style/Style';
+import Feature from 'ol/Feature';
+import {Vector as SourceVector} from 'ol/source';
+import {Vector} from 'ol/layer';
 
 describe('select action', () => {
   it('kan de selectie en hover stijl definiëren', () => {

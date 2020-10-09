@@ -1,10 +1,10 @@
 import './setup.js';
 import {expect} from 'chai';
 import {HighlightAction} from '../../src/vl-mapactions-highlight-action';
-import Feature from 'ol/src/Feature';
-import Style from 'ol/src/style/Style';
-import {Vector} from 'ol/src/layer';
-import {Vector as SourceVector} from 'ol/src/source';
+import Feature from 'ol/Feature';
+import Style from 'ol/style/Style';
+import {Vector} from 'ol/layer';
+import {Vector as SourceVector} from 'ol/source';
 
 describe('highlight action', () => {
   it('kan de highlight stijl definiëren', () => {

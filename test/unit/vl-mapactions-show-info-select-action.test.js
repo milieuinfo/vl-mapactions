@@ -1,9 +1,9 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import Feature from 'ol/src/Feature';
-import Point from 'ol/src/geom/Point';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
 import {ShowInfoSelectAction} from '../../src/vl-mapactions-show-info-select-action';
-import {Vector as SourceVector} from 'ol/src/source';
+import {Vector as SourceVector} from 'ol/source';
 
 describe('show info select action', () => {
   let map;

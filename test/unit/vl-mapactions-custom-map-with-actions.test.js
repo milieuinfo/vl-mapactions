@@ -1,7 +1,7 @@
 import './setup.js';
-import {Vector, Tile, Group} from 'ol/src/layer';
+import {Vector, Tile, Group} from 'ol/layer';
 import {CustomMap} from '../../src/vl-mapactions-custom-map';
-import Projection from 'ol/src/proj/Projection';
+import Projection from 'ol/proj/Projection';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 

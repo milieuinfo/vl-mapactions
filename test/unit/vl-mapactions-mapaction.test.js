@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import Interaction from 'ol/src/interaction/Interaction';
+import Interaction from 'ol/interaction/Interaction';
 import {MapAction} from '../../src/vl-mapactions-mapaction';
 
 describe('map action', () => {

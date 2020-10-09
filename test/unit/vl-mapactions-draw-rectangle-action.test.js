@@ -1,6 +1,6 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {Vector as SourceVector} from 'ol/src/source';
+import {Vector as SourceVector} from 'ol/source';
 import {DrawRectangleAction} from '../../src/vl-mapactions-draw-rectangle-action';
 
 describe('draw rectangle action', () => {

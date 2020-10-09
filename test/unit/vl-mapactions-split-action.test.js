@@ -1,10 +1,10 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {SplitAction} from '../../src/vl-mapactions-split-action';
-import MultiPolygon from 'ol/src/geom/MultiPolygon';
-import Polygon from 'ol/src/geom/Polygon';
-import LineString from 'ol/src/geom/LineString';
-import Feature from 'ol/src/Feature';
+import MultiPolygon from 'ol/geom/MultiPolygon';
+import Polygon from 'ol/geom/Polygon';
+import LineString from 'ol/geom/LineString';
+import Feature from 'ol/Feature';
 
 describe('split action', () => {
   const mapAddActionSpy = sinon.spy();
