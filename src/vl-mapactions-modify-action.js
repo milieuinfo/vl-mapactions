@@ -1,4 +1,4 @@
-import {Modify} from 'ol/src/interaction';
+import {Modify} from 'ol/interaction';
 import {SnapInteraction} from './vl-mapactions-snap-interaction';
 import {SelectAction} from './vl-mapactions-select-action';
 

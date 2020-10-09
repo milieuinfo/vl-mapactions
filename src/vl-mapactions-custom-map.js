@@ -1,13 +1,13 @@
-import GeoJSON from 'ol/src/format/GeoJSON';
-import View from 'ol/src/View';
-import Overlay from 'ol/src/Overlay';
+import GeoJSON from 'ol/format/GeoJSON';
+import View from 'ol/View';
+import Overlay from 'ol/Overlay';
 import {
   Zoom,
   Rotate,
   ZoomSlider,
   ScaleLine,
   OverviewMap,
-} from 'ol/src/control';
+} from 'ol/control';
 import {MapWithActions} from './vl-mapactions-map-with-actions';
 
 /**

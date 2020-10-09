@@ -1,6 +1,6 @@
 import {MapAction} from './vl-mapactions-mapaction';
-import Select from 'ol/src/interaction/Select';
-import Translate from 'ol/src/interaction/Translate';
+import Select from 'ol/interaction/Select';
+import Translate from 'ol/interaction/Translate';
 
 export class TranslateAction extends MapAction {
   constructor(layer, onTranslate) {

@@ -1,7 +1,7 @@
-import Draw from 'ol/src/interaction/Draw';
-import Overlay from 'ol/src/Overlay';
-import {LineString, Polygon} from 'ol/src/geom';
-import {unByKey} from 'ol/src/Observable';
+import Draw from 'ol/interaction/Draw';
+import Overlay from 'ol/Overlay';
+import {LineString, Polygon} from 'ol/geom';
+import {unByKey} from 'ol/Observable';
 import {MapAction} from './vl-mapactions-mapaction';
 import {SnapInteraction} from './vl-mapactions-snap-interaction';
 

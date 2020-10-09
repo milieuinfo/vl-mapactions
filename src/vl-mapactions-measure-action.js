@@ -1,5 +1,5 @@
-import Overlay from 'ol/src/Overlay';
-import {unByKey} from 'ol/src/Observable';
+import Overlay from 'ol/Overlay';
+import {unByKey} from 'ol/Observable';
 import {DrawAction} from './vl-mapactions-draw-action';
 
 export class MeasureAction extends DrawAction {

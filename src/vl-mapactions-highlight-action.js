@@ -1,5 +1,5 @@
-import {Select} from 'ol/src/interaction';
-import {pointerMove} from 'ol/src/events/condition';
+import {Select} from 'ol/interaction';
+import {pointerMove} from 'ol/events/condition';
 import {MapAction} from './vl-mapactions-mapaction';
 
 export class HighlightAction extends MapAction {

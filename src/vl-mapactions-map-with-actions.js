@@ -1,5 +1,5 @@
-import {defaults} from 'ol/src/interaction';
-import Map from 'ol/src/Map';
+import {defaults} from 'ol/interaction';
+import Map from 'ol/Map';
 
 /**
  * Deze map bevat enkel de functionaliteit om de acties te behandelen. Aan het eerste argument van de constructor kan het gebruikelijke object map opties worden weergegeven die ook op de ol.Map worden gezet, samen met een extra parameter 'acties' in dat object. Deze array bevat MapActions.

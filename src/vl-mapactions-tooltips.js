@@ -1,4 +1,4 @@
-import Overlay from 'ol/src/Overlay';
+import Overlay from 'ol/Overlay';
 
 export class Tooltips {
   constructor(layer, infoPromise, loadingMessage, doneLoading) {

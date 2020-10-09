@@ -1,4 +1,4 @@
-import {Fill, Stroke, Style, Circle} from 'ol/src/style';
+import {Fill, Stroke, Style, Circle} from 'ol/style';
 import {BoxSelectAction} from './vl-mapactions-box-select-action';
 
 export class DeleteAction extends BoxSelectAction {

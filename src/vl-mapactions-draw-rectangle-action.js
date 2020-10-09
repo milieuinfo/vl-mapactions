@@ -1,4 +1,4 @@
-import {Polygon} from 'ol/src/geom';
+import {Polygon} from 'ol/geom';
 import {DrawAction} from './vl-mapactions-draw-action';
 
 export class DrawRectangleAction extends DrawAction {

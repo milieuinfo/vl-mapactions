@@ -1,4 +1,4 @@
-import {Translate} from 'ol/src/interaction';
+import {Translate} from 'ol/interaction';
 import {ModifyAction} from './vl-mapactions-modify-action';
 
 export class ModifyAndTranslateAction extends ModifyAction {
