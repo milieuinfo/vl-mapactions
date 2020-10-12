@@ -46,8 +46,11 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
 .ol-overviewmap {
   background: white;
-  margin-bottom: 30;
+  margin-bottom: 3rem;
   border: 1px solid $vl-alt-bg;
+  border-radius: 0;
+  width: 10rem;
+  height: 10rem;
 
   &:not(.ol-collapsed) {
     background:white;
@@ -56,13 +59,11 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
   .ol-overviewmap-map {
     border: none;
     cursor: pointer;
-    height: 10rem;
-    width: 10rem;
     box-sizing: border-box;
     margin: 0;
 
     .ol-overviewmap-box {
-      border: 2px solid $vl-text-color;
+      border: 1px dotted $vl-text-color;
     }
   }
 
