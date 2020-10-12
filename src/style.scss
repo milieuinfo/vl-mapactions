@@ -6,10 +6,10 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_glyphicons.scss';
 
 .ol-zoom {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   border: 1px $vl-alt-bg solid;
-  border-radius: 0px;
+  border-radius: 0;
   background: white;
   
   .ol-zoom-in, .ol-zoom-out {
@@ -17,8 +17,8 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
     background: white;
     width: 3.5rem;
     height: 3.5rem;
-    margin: 0px;
-    border-radius: 0px;
+    margin: 0;
+    border-radius: 0;
 
     &:hover {
       background-color: $vl-alt-hover-bg;
@@ -35,11 +35,18 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
 .ol-scale-line {
   border: 1px solid $vl-alt-bg;
+  border-radius: 0;
+  background-color: white;
+
+  .ol-scale-line-inner {
+    border-color: $vl-text-color;
+    color: $vl-text-color;
+  }
 }
 
 .ol-overviewmap {
   background: white;
-  margin-bottom: 30px;
+  margin-bottom: 30;
   border: 1px solid $vl-alt-bg;
 
   &:not(.ol-collapsed) {
@@ -52,10 +59,10 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
     height: 10rem;
     width: 10rem;
     box-sizing: border-box;
-    margin: 0px;
+    margin: 0;
 
     .ol-overviewmap-box {
-      border: 2px solid $vl-alt-bg;
+      border: 2px solid $vl-text-color;
     }
   }
 
@@ -71,7 +78,7 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
   &.layer-switcher {
     opacity: 0.9;
-    margin-top: 50px;
+    margin-top: 50;
 
     button {
       background-image: none;
@@ -98,22 +105,22 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
     }
 
     .panel {
-      margin-bottom: 0px;
+      margin-bottom: 0;
 
       ul {
-        margin-bottom: 0px;
+        margin-bottom: 0;
         padding: 5px 8px;
 
         li {
           input {
             width: auto;
-            margin-right: 10px;
+            margin-right: 10;
           }
 
           label {
             float: none;
             clear: none;
-            margin-bottom: 0px;
+            margin-bottom: 0;
           }
         }
       }
@@ -125,7 +132,7 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
   position: relative;
   color: white;
   background-color: black;
-  padding: 5px 10px;
+  padding: 5px 10;
   opacity: 0.8;
   border-radius: 5px;
   font-size: 0.8em;
@@ -147,7 +154,7 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
     right: 5px;
     color: white;
     opacity: 0.6;
-    font-size: 10px;
+    font-size: 10;
 
     &:hover {
       opacity: 1;
@@ -192,11 +199,11 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
   position: absolute;
   color: white;
   background-color: black;
-  padding: 5px 10px;
+  padding: 5px 10;
   opacity: 0.8;
   border-radius: 5px;
   font-size: 0.8em;
-  bottom: 20px;
+  bottom: 20;
   white-space: nowrap;
   pointer-events: none;
 }
