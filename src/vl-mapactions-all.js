@@ -25,6 +25,7 @@ import OlVectorSource from 'ol/source/Vector';
 import OlClusterSource from 'ol/source/Cluster';
 import OlWMTSSource from 'ol/source/WMTS';
 import OlWMTSTileGrid from 'ol/tilegrid/WMTS';
+import OlFeature from 'ol/Feature';
 import OlPoint from 'ol/geom/Point';
 import OlStyle from 'ol/style/Style';
 import OlStyleStroke from 'ol/style/Stroke';
@@ -64,6 +65,7 @@ export {
   OlClusterSource,
   OlWMTSSource,
   OlWMTSTileGrid,
+  OlFeature,
   OlPoint,
   OlStyle,
   OlStyleStroke,
