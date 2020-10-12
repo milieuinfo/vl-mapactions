@@ -4,7 +4,6 @@ import Overlay from 'ol/Overlay';
 import {
   Zoom,
   Rotate,
-  ZoomSlider,
   ScaleLine,
   OverviewMap,
 } from 'ol/control';
@@ -24,7 +23,6 @@ export class VlCustomMap extends VlMapWithActions {
     options.controls = options.controls || [
       new Zoom(),
       new Rotate(),
-      new ZoomSlider(),
       new ScaleLine({
         minWidth: 128,
       }),
