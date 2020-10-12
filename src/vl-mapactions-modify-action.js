@@ -1,8 +1,8 @@
 import {Modify} from 'ol/interaction';
-import {SnapInteraction} from './vl-mapactions-snap-interaction';
-import {SelectAction} from './vl-mapactions-select-action';
+import {VlSnapInteraction} from './vl-mapactions-snap-interaction';
+import {VlSelectAction} from './vl-mapactions-select-action';
 
-export class ModifyAction extends SelectAction {
+export class VlModifyAction extends VlSelectAction {
   constructor(layer, onModify, options) {
     const filter = options ? options.filter : null;
 
@@ -17,7 +17,7 @@ export class ModifyAction extends SelectAction {
     this.addInteraction(this.modifyInteraction);
 
     if (options && options.snapping) {
-      this.addInteraction(new SnapInteraction(options.snapping.layer || layer));
+      this.addInteraction(new VlSnapInteraction(options.snapping.layer || layer));
     }
 
     this.modifyInteraction.on('modifystart', (event) => {

@@ -1,7 +1,7 @@
-import {SelectAction} from './vl-mapactions-select-action';
-import {Tooltips} from './vl-mapactions-tooltips';
+import {VlSelectAction} from './vl-mapactions-select-action';
+import {VlTooltips} from './vl-mapactions-tooltips';
 
-export class ShowInfoSelectAction extends SelectAction {
+export class VlShowInfoSelectAction extends VlSelectAction {
   constructor(layer, infoPromise, loadingMessage, doneLoading, tooltipOptions) {
     super(layer, (feature, event) => {
       if (feature) {
@@ -10,7 +10,7 @@ export class ShowInfoSelectAction extends SelectAction {
       }
     });
 
-    this.tooltips = new Tooltips(layer, infoPromise, loadingMessage, doneLoading);
+    this.tooltips = new VlTooltips(layer, infoPromise, loadingMessage, doneLoading);
     this.layer = layer;
   }
 

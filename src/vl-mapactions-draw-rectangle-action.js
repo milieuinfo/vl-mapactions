@@ -1,7 +1,7 @@
 import {Polygon} from 'ol/geom';
-import {DrawAction} from './vl-mapactions-draw-action';
+import {VlDrawAction} from './vl-mapactions-draw-action';
 
-export class DrawRectangleAction extends DrawAction {
+export class VlDrawRectangleAction extends VlDrawAction {
   constructor(layer, onDraw, options) {
     const drawRectangleOptions = options || {};
     drawRectangleOptions.maxPoints = 2;

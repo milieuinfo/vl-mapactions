@@ -1,8 +1,8 @@
 import Overlay from 'ol/Overlay';
 import {unByKey} from 'ol/Observable';
-import {DrawAction} from './vl-mapactions-draw-action';
+import {VlDrawAction} from './vl-mapactions-draw-action';
 
-export class MeasureAction extends DrawAction {
+export class VlMeasureAction extends VlDrawAction {
   constructor(layer, options) {
     super(layer, 'LineString', () => {
       unByKey(this.measurePointermoveHandler);

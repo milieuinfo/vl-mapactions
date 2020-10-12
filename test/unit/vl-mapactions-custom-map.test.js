@@ -2,7 +2,7 @@ import './setup.js';
 import {Vector, Tile, Group} from 'ol/layer';
 import {Vector as SourceVector} from 'ol/source';
 import Projection from 'ol/proj/Projection';
-import {CustomMap} from '../../src/vl-mapactions-custom-map';
+import {VlCustomMap} from '../../src/vl-mapactions-custom-map';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 
@@ -57,7 +57,7 @@ describe('custom map', () => {
       merge(defaultOptions, options);
     }
 
-    const map = new CustomMap(defaultOptions);
+    const map = new VlCustomMap(defaultOptions);
     map.addControl = sinon.spy();
     map.getSize = () => {
       return [1200, 800];
@@ -83,7 +83,7 @@ describe('custom map', () => {
       }),
     };
 
-    const map = new CustomMap(defaultOptions);
+    const map = new VlCustomMap(defaultOptions);
     map.addControl = sinon.spy();
     return map;
   };

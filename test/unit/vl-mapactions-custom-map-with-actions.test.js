@@ -1,12 +1,12 @@
 import './setup.js';
 import {Vector, Tile, Group} from 'ol/layer';
-import {CustomMap} from '../../src/vl-mapactions-custom-map';
+import {VlCustomMap} from '../../src/vl-mapactions-custom-map';
 import Projection from 'ol/proj/Projection';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 
 describe('custom map with actions', () => {
-  const createCustomMapWithActions = () => {
+  const createVlCustomMapWithActions = () => {
     const layers = [new Tile({
       type: 'base',
       visible: true,
@@ -21,7 +21,7 @@ describe('custom map with actions', () => {
       type: 'base',
       visible: true,
     })];
-    const map = new CustomMap({
+    const map = new VlCustomMap({
       actions: [],
       customLayers: {
         baseLayerGroup: new Group({
@@ -43,7 +43,7 @@ describe('custom map with actions', () => {
   };
 
   it('bij het initialiseren van de view, wordt ook de over view map control toegevoegd', () => {
-    const map = createCustomMapWithActions();
+    const map = createVlCustomMapWithActions();
     expect(map.getView().getZoom()).to.be.undefined;
 
     map.initializeView();
@@ -51,7 +51,7 @@ describe('custom map with actions', () => {
   });
 
   it('kan met een view geïnitialiseerd worden met als default zoom niveau 2', () => {
-    const map = createCustomMapWithActions();
+    const map = createVlCustomMapWithActions();
     expect(map.getView().getZoom()).to.be.undefined;
 
     map.initializeView();
@@ -59,19 +59,19 @@ describe('custom map with actions', () => {
   });
 
   it('kan met een view geïnitialiseerd worden op een specifieke bounding box, zodat er sterk is ingezoomd (hoge zoom waarde)', () => {
-    const map = createCustomMapWithActions();
+    const map = createVlCustomMapWithActions();
     map.initializeView([9928.000000, 66928.000000, 9930.000000, 66930.000000]);
     expect(map.getView().getZoom()).to.equal(16);
   });
 
   it('kan met een view geïnitialiseerd worden op een kleine bounding box en een max zoom niveau, zodat het max niveau bereikt is', () => {
-    const map = createCustomMapWithActions();
+    const map = createVlCustomMapWithActions();
     map.initializeView([9928.000000, 66928.000000, 9930.000000, 66930.000000], 4);
     expect(map.getView().getZoom()).to.equal(4);
   });
 
   it('als de baselayer getoggled wordt van een map, zal dit ook gebeuren bij de overview map', () => {
-    const map = createCustomMapWithActions();
+    const map = createVlCustomMapWithActions();
     map.initializeView();
     expect(map.overviewMapLayers[0].getVisible()).to.be.false;
     expect(map.overviewMapLayers[1].getVisible()).to.be.true;

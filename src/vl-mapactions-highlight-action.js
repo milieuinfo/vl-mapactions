@@ -1,8 +1,8 @@
 import {Select} from 'ol/interaction';
 import {pointerMove} from 'ol/events/condition';
-import {MapAction} from './vl-mapactions-mapaction';
+import {VlMapAction} from './vl-mapactions-mapaction';
 
-export class HighlightAction extends MapAction {
+export class VlHighlightAction extends VlMapAction {
   constructor(layer, options) {
     const highlightInteraction = new Select({
       layers: [layer],

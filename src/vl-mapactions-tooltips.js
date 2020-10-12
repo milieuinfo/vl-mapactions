@@ -1,6 +1,6 @@
 import Overlay from 'ol/Overlay';
 
-export class Tooltips {
+export class VlTooltips {
   constructor(layer, infoPromise, loadingMessage, doneLoading) {
     this.layer = layer;
     layer.tooltips = [];

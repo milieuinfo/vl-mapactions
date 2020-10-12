@@ -4,9 +4,9 @@ import {expect} from 'chai';
 import {Vector as SourceVector} from 'ol/source';
 import {Vector} from 'ol/layer';
 import Feature from 'ol/Feature';
-import {DrawAction} from '../../src/vl-mapactions-draw-action';
+import {VlDrawAction} from '../../src/vl-mapactions-draw-action';
 import Draw from 'ol/interaction/Draw';
-import {SnapInteraction} from '../../src/vl-mapactions-snap-interaction';
+import {VlSnapInteraction} from '../../src/vl-mapactions-snap-interaction';
 import Polygon from 'ol/geom/Polygon';
 import LineString from 'ol/geom/LineString';
 
@@ -25,7 +25,7 @@ describe('draw action', () => {
   });
 
   it('kan opties meegeven aan draw action', () => {
-    const drawAction = new DrawAction(layer, 'LineString', callback, {maxPoints: 2});
+    const drawAction = new VlDrawAction(layer, 'LineString', callback, {maxPoints: 2});
     const options = drawAction.drawOptions;
     expect(options.maxPoints).to.equal(2);
     expect(options.source).to.equal(source);
@@ -39,30 +39,30 @@ describe('draw action', () => {
       maxPoints: 2,
     };
 
-    let drawAction = new DrawAction(layer, 'LineString', callback, options);
-    expect(drawAction.interactions.find((interaction) => interaction instanceof SnapInteraction)).to.be.undefined;
+    let drawAction = new VlDrawAction(layer, 'LineString', callback, options);
+    expect(drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction)).to.be.undefined;
 
     options.snapping = false;
-    drawAction = new DrawAction(layer, 'LineString', callback, options);
-    expect(drawAction.interactions.find((interaction) => interaction instanceof SnapInteraction)).to.be.undefined;
+    drawAction = new VlDrawAction(layer, 'LineString', callback, options);
+    expect(drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction)).to.be.undefined;
 
     options.snapping = true;
-    drawAction = new DrawAction(layer, 'LineString', callback, options);
+    drawAction = new VlDrawAction(layer, 'LineString', callback, options);
     expect(drawAction.interactions.length).to.equal(2);
-    expect(drawAction.interactions.find((interaction) => interaction instanceof SnapInteraction)).to.not.be.undefined;
+    expect(drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction)).to.not.be.undefined;
 
     const snappingSource = new SourceVector({features: []});
     const snappingLayer = new Vector({source: snappingSource});
     options.snapping = {
       layer: snappingLayer,
     };
-    drawAction = new DrawAction(layer, 'LineString', callback, options);
-    const snapInteraction = drawAction.interactions.find((interaction) => interaction instanceof SnapInteraction);
+    drawAction = new VlDrawAction(layer, 'LineString', callback, options);
+    const snapInteraction = drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction);
     expect(snapInteraction.snapOptions.source).to.equal(snappingSource);
   });
 
   it('roept de callback functie aan na het tekenen', () => {
-    const drawAction = new DrawAction(layer, 'Polygon', callback);
+    const drawAction = new VlDrawAction(layer, 'Polygon', callback);
     const sketchFeature = new Feature();
 
     drawAction.drawInteraction.dispatchEvent({
@@ -75,7 +75,7 @@ describe('draw action', () => {
 
   it('kan na het tekenen de feature terug verwijderen via de cancel draw functie', () => {
     const callback = (feature, cancelDraw) => cancelDraw();
-    const drawAction = new DrawAction(layer, 'Polygon', callback);
+    const drawAction = new VlDrawAction(layer, 'Polygon', callback);
     const sketchFeature = new Feature({});
 
     drawAction.drawInteraction.dispatchEvent({
@@ -92,7 +92,7 @@ describe('draw action', () => {
       source.addFeature(feature);
       cancelDraw();
     };
-    const drawAction = new DrawAction(layer, 'Polygon', callback);
+    const drawAction = new VlDrawAction(layer, 'Polygon', callback);
     const sketchFeature = new Feature({});
 
     drawAction.drawInteraction.dispatchEvent({
@@ -228,7 +228,7 @@ describe('draw action', () => {
 
   const createDrawActionWithMap = (type, options) => {
     setMeasureSpies();
-    const drawAction = new DrawAction(layer, type, callback, options);
+    const drawAction = new VlDrawAction(layer, type, callback, options);
     drawAction.map = {
       addOverlay: addOverlay,
       removeOverlay: removeOverlay,

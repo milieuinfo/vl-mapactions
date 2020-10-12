@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import {ShowInfoAction} from '../../src/vl-mapactions-show-info-action';
+import {VlShowInfoAction} from '../../src/vl-mapactions-show-info-action';
 import {Vector as SourceVector} from 'ol/source';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
@@ -42,7 +42,7 @@ describe('show info action', () => {
     };
     feature = new Feature();
     feature.setGeometry(new Point([0, 0]));
-    showInfoAction = new ShowInfoAction({
+    showInfoAction = new VlShowInfoAction({
       getSource: () => {
         return source;
       },
@@ -68,7 +68,7 @@ describe('show info action', () => {
         then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
-    showInfoAction = new ShowInfoAction({
+    showInfoAction = new VlShowInfoAction({
       getSource: () => new SourceVector({}),
     }, infoPromise, 'loading message');
     showInfoAction.map = map;
@@ -115,7 +115,7 @@ describe('show info action', () => {
         },
       };
     };
-    showInfoAction = new ShowInfoAction({
+    showInfoAction = new VlShowInfoAction({
       getSource: () => new SourceVector({}),
     }, infoPromise, 'loading message');
     showInfoAction.map = map;
@@ -133,7 +133,7 @@ describe('show info action', () => {
         then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
-    showInfoAction = new ShowInfoAction({
+    showInfoAction = new VlShowInfoAction({
       getSource: () => new SourceVector({}),
     }, infoPromise, 'loading message', {offset: [0, 0]});
     showInfoAction.map = map;

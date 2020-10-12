@@ -7,7 +7,7 @@ import Map from 'ol/Map';
  *
  * Deze kaart regelt dat er maar één actie actief kan staan. Bij het activeren van een andere actie wordt namelijk de huidige actie gedeactiveerd.
  */
-export class MapWithActions extends Map {
+export class VlMapWithActions extends Map {
   static get CLICK_COUNT_TIMEOUT() {
     return 300;
   }
@@ -64,7 +64,7 @@ export class MapWithActions extends Map {
     // when we don't use a delay some click and select events of the previous action will be triggered on the new action
     this.timeout = setTimeout(() => {
       action.activate();
-    }, MapWithActions.CLICK_COUNT_TIMEOUT);
+    }, VlMapWithActions.CLICK_COUNT_TIMEOUT);
   }
 
   addAction(action) {

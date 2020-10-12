@@ -2,7 +2,7 @@ import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import {ShowInfoSelectAction} from '../../src/vl-mapactions-show-info-select-action';
+import {VlShowInfoSelectAction} from '../../src/vl-mapactions-show-info-select-action';
 import {Vector as SourceVector} from 'ol/source';
 
 describe('show info select action', () => {
@@ -49,7 +49,7 @@ describe('show info select action', () => {
     feature = new Feature();
     feature.setGeometry(new Point([0, 0]));
     doneFunctionCalled = false;
-    showInfoSelectAction = new ShowInfoSelectAction({
+    showInfoSelectAction = new VlShowInfoSelectAction({
       getSource: () => source, setVisible: (visible) => visibility = visible, getVisible: () => visibility,
     }, infoPromise, 'loading message', () => doneFunctionCalled = true);
     showInfoSelectAction.map = map;
@@ -91,7 +91,7 @@ describe('show info select action', () => {
         then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
-    showInfoSelectAction = new ShowInfoSelectAction({
+    showInfoSelectAction = new VlShowInfoSelectAction({
       getSource: () => {
         return new SourceVector();
       }, setVisible: () => {
@@ -132,7 +132,7 @@ describe('show info select action', () => {
         then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
-    showInfoSelectAction = new ShowInfoSelectAction({
+    showInfoSelectAction = new VlShowInfoSelectAction({
       getSource: () => new SourceVector(), setVisible: () => {}, getVisible: () => {},
     }, infoPromise, 'loading message', () => {});
     showInfoSelectAction.map = map;
@@ -149,7 +149,7 @@ describe('show info select action', () => {
         then: (callback) => setTimeout(() => callback('content of info object'), 600),
       };
     };
-    showInfoSelectAction = new ShowInfoSelectAction({
+    showInfoSelectAction = new VlShowInfoSelectAction({
       getSource: () => new SourceVector(), setVisible: () => {}, getVisible: () => {},
     }, infoPromise, 'loading message', () => {}, {offset: [0, 0]});
     showInfoSelectAction.map = map;

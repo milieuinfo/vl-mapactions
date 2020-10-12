@@ -1,7 +1,7 @@
 import './setup.js';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {SelectAction} from '../../src/vl-mapactions-select-action';
+import {VlSelectAction} from '../../src/vl-mapactions-select-action';
 import Style from 'ol/style/Style';
 import Feature from 'ol/Feature';
 import {Vector as SourceVector} from 'ol/source';
@@ -11,7 +11,7 @@ describe('select action', () => {
   it('kan de selectie en hover stijl definiëren', () => {
     const selectieStyle = new Style();
     const hoverStyle = new Style();
-    const selectAction = new SelectAction({}, null, {
+    const selectAction = new VlSelectAction({}, null, {
       style: selectieStyle,
       hoverStyle: hoverStyle,
     });
@@ -21,14 +21,14 @@ describe('select action', () => {
 
   it('zal terugvallen op de selectie stijl indien er geen hover stijl gedefinieerd is', () => {
     const style = new Style();
-    const selectAction = new SelectAction({}, null, {
+    const selectAction = new VlSelectAction({}, null, {
       style: style,
     });
     expect(selectAction.hoverStyle).to.equal(style);
   });
 
   it('kan de selectie en hover stijl niet bepalen als die niet gedefinieerd is', () => {
-    const selectAction = new SelectAction({});
+    const selectAction = new VlSelectAction({});
     expect(selectAction.style).to.be.null;
     expect(selectAction.hoverStyle).to.be.null;
   });
@@ -38,7 +38,7 @@ describe('select action', () => {
     const feature2 = new Feature();
     feature1.setId(1);
     feature2.setId(2);
-    const selectAction = new SelectAction({
+    const selectAction = new VlSelectAction({
       getSource: () => {
         return {
           getFeatureById: (id) => id == 1 ? feature1 : feature2,
@@ -73,7 +73,7 @@ describe('select action', () => {
         features: [cluster1, cluster2],
       }),
     });
-    const selectAction = new SelectAction(layer);
+    const selectAction = new VlSelectAction(layer);
     selectAction.markFeatureWithId(1);
     expect(selectAction.isMarked(cluster1)).to.be.true;
     expect(selectAction.isMarked(cluster2)).to.be.false;
@@ -99,7 +99,7 @@ describe('select action', () => {
     };
     const onSelect = sinon.spy();
     const feature = new Feature({id: 1});
-    const selectAction = new SelectAction(layer, onSelect);
+    const selectAction = new VlSelectAction(layer, onSelect);
     selectAction.selectInteraction.getFeatures().push(feature);
     const event = {type: 'select'};
     selectAction.selectInteraction.dispatchEvent(event);
@@ -116,7 +116,7 @@ describe('select action', () => {
     const feature = new Feature({id: 1});
     const feature2 = new Feature({id: 2});
     const feature3 = new Feature({id: 3});
-    const selectAction = new SelectAction([{
+    const selectAction = new VlSelectAction([{
       id: 'layer1',
       getSource: () => {
         return {
@@ -146,7 +146,7 @@ describe('select action', () => {
     const feature = new Feature({id: 1});
     const feature2 = new Feature({id: 2});
     const feature3 = new Feature({id: 3});
-    const selectAction = new SelectAction([{
+    const selectAction = new VlSelectAction([{
       id: 'layer1',
       getSource: () => {
         return {
@@ -188,7 +188,7 @@ describe('select action', () => {
     feature.setId(1);
     feature2.setId(2);
     feature3.setId(3);
-    const selectAction = new SelectAction({
+    const selectAction = new VlSelectAction({
       id: 'layer1',
       getSource: () => {
         return {
@@ -224,7 +224,7 @@ describe('select action', () => {
 
   it('zal de onselect functie oproepen met lege argumenten als er een select wordt gedaan niet op een feature', () => {
     const onSelect = sinon.spy();
-    const selectAction = new SelectAction([{}], onSelect);
+    const selectAction = new VlSelectAction([{}], onSelect);
     selectAction.map = {
       on: sinon.spy(),
       un: sinon.spy(),
@@ -235,7 +235,7 @@ describe('select action', () => {
   });
 
   it('zal bij een deactivate de selectie features clearen', () => {
-    const selectAction = new SelectAction([{}]);
+    const selectAction = new VlSelectAction([{}]);
     selectAction.map = {
       on: sinon.spy(),
       un: sinon.spy(),
@@ -250,7 +250,7 @@ describe('select action', () => {
     const feature = new Feature();
     feature.setId(1);
     const layer = new Vector({source: new SourceVector({features: [feature]})});
-    const selectAction = new SelectAction(layer);
+    const selectAction = new VlSelectAction(layer);
     selectAction.selectInteraction.getFeatures().push(feature);
     const filter = selectAction.selectInteractionFilter(feature);
     expect(filter).to.be.true;
@@ -261,7 +261,7 @@ describe('select action', () => {
     const feature = new Feature();
     feature.setId(1);
     const layer = new Vector({source: new SourceVector({features: [feature]})});
-    const selectAction = new SelectAction(layer);
+    const selectAction = new VlSelectAction(layer);
     selectAction.selectInteraction.getFeatures().push(feature);
     const filter = selectAction.hoverInteractionFilter(feature, layer);
     expect(filter).to.be.false;
@@ -273,7 +273,7 @@ describe('select action', () => {
     const featureWithId2 = new Feature();
     feature.setId(2);
     let filter = (feature) => feature.getId() == 1;
-    const selectAction = new SelectAction([new Vector({source: new SourceVector({features: [feature, featureWithId2]})})], null, {
+    const selectAction = new VlSelectAction([new Vector({source: new SourceVector({features: [feature, featureWithId2]})})], null, {
       filter: filter,
     });
     selectAction.selectInteraction.getFeatures().push(featureWithId2);
@@ -282,7 +282,7 @@ describe('select action', () => {
   });
 
   it('zal bij activatie de functie activeren om na het zoomen de selectie bij clustering goed te zetten', () => {
-    const selectAction = new SelectAction([{}], null, {
+    const selectAction = new VlSelectAction([{}], null, {
       cluster: true,
     });
     const on = sinon.spy();
@@ -294,7 +294,7 @@ describe('select action', () => {
   });
 
   it('zal bij deactivate de functie deactiveren om na het zoomen de selectie bij clustering goed te zetten', () => {
-    const selectAction = new SelectAction([{}], null, {
+    const selectAction = new VlSelectAction([{}], null, {
       cluster: true,
     });
     const un = sinon.spy();
@@ -323,7 +323,7 @@ describe('select action', () => {
         };
       },
     };
-    const selectAction = new SelectAction(layer, null, {
+    const selectAction = new VlSelectAction(layer, null, {
       cluster: true,
     });
     selectAction.map = {

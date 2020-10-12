@@ -1,20 +1,20 @@
 import './setup.js';
 import {expect} from 'chai';
 import Style from 'ol/style/Style';
-import {DeleteAction} from '../../src/vl-mapactions-delete-action';
+import {VlDeleteAction} from '../../src/vl-mapactions-delete-action';
 import {Vector as SourceVector} from 'ol/source';
 import {Vector} from 'ol/layer';
 import Feature from 'ol/Feature';
 
 describe('delete action', () => {
   it('indien er geen delete stijl gedefinieerd is zal de standaard stijl gebruikt worden', () => {
-    const deleteAction = new DeleteAction({});
+    const deleteAction = new VlDeleteAction({});
     expect(deleteAction.style).to.not.be.undefined;
   });
 
   it('de delete stijl kan bepaald worden', () => {
     const style = new Style();
-    const deleteAction = new DeleteAction({}, null, {
+    const deleteAction = new VlDeleteAction({}, null, {
       style: style,
     });
     expect(deleteAction.style).to.equal(style);
@@ -25,7 +25,7 @@ describe('delete action', () => {
     teVerwijderenFeature.setId(1);
     const layer = new Vector({source: new SourceVector({features: [teVerwijderenFeature]})});
     const callback = (features, success, cancel) => success(teVerwijderenFeature);
-    const deleteAction = new DeleteAction(layer, callback);
+    const deleteAction = new VlDeleteAction(layer, callback);
     deleteAction.selectInteraction.getFeatures().push(teVerwijderenFeature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(deleteAction.selectInteraction.getFeatures().getLength()).to.equal(0);
@@ -36,7 +36,7 @@ describe('delete action', () => {
     teVerwijderenFeature.setId(1);
     const layer = new Vector({source: new SourceVector({features: [teVerwijderenFeature]})});
     const callback = (features, success, cancel) => cancel();
-    const deleteAction = new DeleteAction(layer, callback);
+    const deleteAction = new VlDeleteAction(layer, callback);
     deleteAction.selectInteraction.getFeatures().push(teVerwijderenFeature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(deleteAction.selectInteraction.getFeatures().getLength()).to.equal(0);
@@ -47,7 +47,7 @@ describe('delete action', () => {
     teVerwijderenFeature.setId(1);
     const layer = new Vector({source: new SourceVector({features: [teVerwijderenFeature]})});
     const callback = (features, success, cancel) => success(teVerwijderenFeature);
-    const deleteAction = new DeleteAction(layer, callback);
+    const deleteAction = new VlDeleteAction(layer, callback);
     deleteAction.selectInteraction.getFeatures().push(teVerwijderenFeature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(layer.getSource().getFeatures().length).to.equal(0);
@@ -58,7 +58,7 @@ describe('delete action', () => {
     teVerwijderenFeature.setId(1);
     const layer = new Vector({source: new SourceVector({features: [teVerwijderenFeature]})});
     const callback = (features, success, cancel) => cancel();
-    const deleteAction = new DeleteAction(layer, callback);
+    const deleteAction = new VlDeleteAction(layer, callback);
     deleteAction.selectInteraction.getFeatures().push(teVerwijderenFeature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(layer.getSource().getFeatures().length).to.equal(1);
@@ -68,7 +68,7 @@ describe('delete action', () => {
     const teVerwijderenFeature = new Feature();
     teVerwijderenFeature.setId(1);
     const layer = new Vector({source: new SourceVector({features: [teVerwijderenFeature]})});
-    const deleteAction = new DeleteAction(layer);
+    const deleteAction = new VlDeleteAction(layer);
     deleteAction.selectInteraction.getFeatures().push(teVerwijderenFeature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(layer.getSource().getFeatures().length).to.equal(0);

@@ -1,6 +1,6 @@
-import {SelectAction} from './vl-mapactions-select-action';
+import {VlSelectAction} from './vl-mapactions-select-action';
 
-export class SelectActions extends SelectAction {
+export class VlSelectActions extends VlSelectAction {
   constructor(layerConfiguraties, onSelect, options) {
     const layers = layerConfiguraties.map((layerConfiguratie) => layerConfiguratie.layer);
 

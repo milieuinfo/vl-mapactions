@@ -1,6 +1,6 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import {SplitAction} from '../../src/vl-mapactions-split-action';
+import {VlSplitAction} from '../../src/vl-mapactions-split-action';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 import Polygon from 'ol/geom/Polygon';
 import LineString from 'ol/geom/LineString';
@@ -24,7 +24,7 @@ describe('split action', () => {
   };
 
   const createSplitAction = () => {
-    const splitAction = new SplitAction(layer, callbackSpy, optionsSpy);
+    const splitAction = new VlSplitAction(layer, callbackSpy, optionsSpy);
     splitAction.map = {
       addAction: mapAddActionSpy,
       on: sinon.spy(),

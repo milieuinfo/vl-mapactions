@@ -3,15 +3,15 @@ import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {Vector as SourceVector} from 'ol/source';
 import {Vector} from 'ol/layer';
-import {SelectActions} from '../../src/vl-mapactions-select-actions';
-import {SelectAction} from '../../src/vl-mapactions-select-action';
+import {VlSelectActions} from '../../src/vl-mapactions-select-actions';
+import {VlSelectAction} from '../../src/vl-mapactions-select-action';
 import Feature from 'ol/Feature';
 import Style from 'ol/style/Style';
 
 describe('select actions', () => {
   it('select actions is een select action', () => {
-    const selectActions = new SelectActions([{}], null, {});
-    expect(selectActions instanceof SelectAction).to.be.true;
+    const selectActions = new VlSelectActions([{}], null, {});
+    expect(selectActions instanceof VlSelectAction).to.be.true;
   });
 
   it('select actions bevat de layers en configuraties', () => {
@@ -41,7 +41,7 @@ describe('select actions', () => {
       hoverStyle: hoverStyle2,
     }];
     const onSelect = sinon.spy();
-    const selectActions = new SelectActions(layerConfiguraties, onSelect);
+    const selectActions = new VlSelectActions(layerConfiguraties, onSelect);
     expect(selectActions.layerConfiguraties).to.equal(layerConfiguraties);
     expect(selectActions.layers).to.deep.equal([layer1, layer2]);
   });
@@ -63,7 +63,7 @@ describe('select actions', () => {
       filter: filter,
     };
     const feature = sinon.spy();
-    const selectActions = new SelectActions(layerConfiguraties, onSelect, options);
+    const selectActions = new VlSelectActions(layerConfiguraties, onSelect, options);
     selectActions.filter(feature, layer1);
     expect(filter.calledWith(feature)).to.be.true;
   });
@@ -100,7 +100,7 @@ describe('select actions', () => {
       style: selectieStyle2,
       hoverStyle: hoverStyle2,
     }];
-    const selectActions = new SelectActions(layerConfiguraties, null, {});
+    const selectActions = new VlSelectActions(layerConfiguraties, null, {});
     expect(selectActions.style(feature1)).to.deep.equal(selectieStyle1(feature1));
     expect(selectActions.style(feature2)).to.deep.equal(selectieStyle2(feature2));
     expect(selectActions.hoverStyle(feature1)).to.deep.equal(hoverStyle1(feature1));
@@ -131,7 +131,7 @@ describe('select actions', () => {
       }),
       style: selectieStyle2,
     }];
-    const selectActions = new SelectActions(layerConfiguraties, null, {});
+    const selectActions = new VlSelectActions(layerConfiguraties, null, {});
     expect(selectActions.hoverStyle(feature1)).to.deep.equal(selectieStyle1(feature1));
     expect(selectActions.hoverStyle(feature2)).to.deep.equal(selectieStyle2(feature2));
   });
@@ -145,14 +145,14 @@ describe('select actions', () => {
         }),
       }),
     }];
-    const selectActions = new SelectActions(layerConfiguraties);
+    const selectActions = new VlSelectActions(layerConfiguraties);
     expect(selectActions.style(feature)).to.be.undefined;
     expect(selectActions.hoverStyle(feature)).to.be.undefined;
   });
 
   it('kan de selectie en hover stijl niet bepalen als de layer niet gekend is', () => {
     const feature = new Feature();
-    const selectActions = new SelectActions([]);
+    const selectActions = new VlSelectActions([]);
     expect(selectActions.style(feature)).to.be.null;
     expect(selectActions.hoverStyle(feature)).to.be.null;
   });
@@ -164,7 +164,7 @@ describe('select actions', () => {
     feature1.setId(1);
     feature2.setId(2);
     feature3.setId(3);
-    const selectActions = new SelectActions([{
+    const selectActions = new VlSelectActions([{
       layer: new Vector({
         source: new SourceVector({
           features: [feature1, feature2],
@@ -218,7 +218,7 @@ describe('select actions', () => {
         features: [cluster3],
       }),
     });
-    const selectActions = new SelectActions([{
+    const selectActions = new VlSelectActions([{
       layer: layer1,
     }, {
       layer: layer2,

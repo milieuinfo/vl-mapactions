@@ -3,7 +3,7 @@ import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {Vector as SourceVector} from 'ol/source';
 import {Vector} from 'ol/layer';
-import {MeasureAction} from '../../src/vl-mapactions-measure-action';
+import {VlMeasureAction} from '../../src/vl-mapactions-measure-action';
 import Feature from 'ol/Feature';
 import LineString from 'ol/geom/LineString';
 import * as OlObservable from 'ol/Observable';
@@ -19,7 +19,7 @@ describe('measure action', () => {
   beforeEach(() => {
     source = new SourceVector({features: []});
     layer = new Vector({source: source});
-    measureAction = new MeasureAction(layer);
+    measureAction = new VlMeasureAction(layer);
     addOverlay = sinon.spy();
     removeOverlay = sinon.spy();
     handler = 'handler';
@@ -35,7 +35,7 @@ describe('measure action', () => {
     const snapping = {
       layer: snappingLayer,
     };
-    const action = new MeasureAction(layer, snapping);
+    const action = new VlMeasureAction(layer, snapping);
     expect(action.measureOptions.layer).to.deep.equal(snappingLayer);
   });
 

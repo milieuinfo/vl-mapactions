@@ -1,5 +1,5 @@
-import {MapWithActions} from '../../src/vl-mapactions-map-with-actions';
-import {MapAction} from '../../src/vl-mapactions-mapaction';
+import {VlMapWithActions} from '../../src/vl-mapactions-map-with-actions';
+import {VlMapAction} from '../../src/vl-mapactions-mapaction';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import DragRotate from 'ol/interaction/DragRotate';
@@ -19,10 +19,10 @@ describe('map with actions', () => {
   let action2;
 
   const createMapWithActions = () => {
-    return new MapWithActions({
+    return new VlMapWithActions({
       actions: [
-        action1 = new MapAction([new Interaction({}), new Interaction({})]),
-        action2 = new MapAction([new Interaction({}), new Interaction({}), new Interaction({})]),
+        action1 = new VlMapAction([new Interaction({}), new Interaction({})]),
+        action2 = new VlMapAction([new Interaction({}), new Interaction({}), new Interaction({})]),
       ],
     });
   };
@@ -31,7 +31,7 @@ describe('map with actions', () => {
     setTimeout(() => {
       callback();
       done();
-    }, MapWithActions.CLICK_COUNT_TIMEOUT);
+    }, VlMapWithActions.CLICK_COUNT_TIMEOUT);
   };
 
   it('voegt de interacties van alle actie toe aan de kaart', () => {
@@ -64,7 +64,7 @@ describe('map with actions', () => {
     expect(map.getInteractions().getLength()).to.equal(14);
     setTimeout(() => {
       expect(map.currentAction).to.equal(action1);
-      const nieuweAction = new MapAction([new Interaction({}), new Interaction({})]);
+      const nieuweAction = new VlMapAction([new Interaction({}), new Interaction({})]);
       map.addAction(nieuweAction);
       expect(map.actions.length).to.equal(3);
       expect(map.actions[2]).to.equal(nieuweAction);
@@ -77,7 +77,7 @@ describe('map with actions', () => {
   it('kan een actie verwijderen van de map', (done) => {
     const map = createMapWithActions();
     setTimeout(() => {
-      const nieuweAction = new MapAction([new Interaction({}), new Interaction({})]);
+      const nieuweAction = new VlMapAction([new Interaction({}), new Interaction({})]);
       map.addAction(nieuweAction);
       map.removeAction(nieuweAction);
       expect(map.actions.length).to.equal(2);
@@ -91,7 +91,7 @@ describe('map with actions', () => {
   it('als de te verwijderen actie de current actie wordt de default geactiveerd', (done) => {
     const map = createMapWithActions();
     setTimeout(() => {
-      const nieuweAction = new MapAction([new Interaction({}), new Interaction({})]);
+      const nieuweAction = new VlMapAction([new Interaction({}), new Interaction({})]);
       map.addAction(nieuweAction);
       map.activateAction(nieuweAction);
       expect(map.currentAction).to.equal(nieuweAction);
@@ -149,7 +149,7 @@ describe('map with actions', () => {
   });
 
   it('bij het aanmaken van een kaart met acties wordt standaard functionaliteit toegevoegd aan de kaart dat bij escape de eerste kaart actie geactiveerd wordt', (done) => {
-    const map = new MapWithActions({
+    const map = new VlMapWithActions({
       actions: [],
     });
     sinon.spy(map, 'activateDefaultAction');
@@ -164,7 +164,7 @@ describe('map with actions', () => {
   });
 
   it('indien gewenst kan de standaard escape functionaliteit uitgeschakeld worden bij het aanmaken van een kaart met acties', () => {
-    const map = new MapWithActions({
+    const map = new VlMapWithActions({
       actions: [],
       disableEscapeKey: true,
     });
@@ -177,7 +177,7 @@ describe('map with actions', () => {
   });
 
   it('er zijn 9 predefined interactions', () => {
-    const map = new MapWithActions({
+    const map = new VlMapWithActions({
       actions: [],
     });
     expect(map.getInteractions().getLength()).to.equal(9); // Standaard zijn er 9 interactions
@@ -193,7 +193,7 @@ describe('map with actions', () => {
   });
 
   it('indien gewenst kan de standaard rotation functionaliteit uitgeschaked worden bij het aanmaken van een kaart met acties', () => {
-    const map = new MapWithActions({
+    const map = new VlMapWithActions({
       actions: [],
       disableRotation: true,
     });
@@ -210,7 +210,7 @@ describe('map with actions', () => {
   });
 
   it('indien gewenst kan de extra interactions toegevoegd worden bij het aanmaken van een kaart met acties', () => {
-    const map = new MapWithActions({
+    const map = new VlMapWithActions({
       actions: [],
       interactions: new Collection([new PinchZoom(), new PinchRotate()]),
       disableRotation: true,
@@ -219,7 +219,7 @@ describe('map with actions', () => {
   });
 
   it('indien gewenst kan het zoomen met de mouse wheel afgezet worden', () => {
-    const map = new MapWithActions({
+    const map = new VlMapWithActions({
       actions: [],
       disableMouseWheelZoom: true,
     });

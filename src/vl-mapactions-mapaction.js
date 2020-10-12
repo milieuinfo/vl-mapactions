@@ -1,4 +1,4 @@
-export class MapAction {
+export class VlMapAction {
   constructor(interactions) {
     if (!Array.isArray(interactions)) {
       interactions = [interactions];

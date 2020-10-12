@@ -1,7 +1,7 @@
 import {Fill, Stroke, Style, Circle} from 'ol/style';
-import {BoxSelectAction} from './vl-mapactions-box-select-action';
+import {VlBoxSelectAction} from './vl-mapactions-box-select-action';
 
-export class DeleteAction extends BoxSelectAction {
+export class VlDeleteAction extends VlBoxSelectAction {
   constructor(layer, onDelete, options) {
     const defaultStyle = new Style({
       fill: new Fill({

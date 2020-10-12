@@ -2,10 +2,10 @@ import Draw from 'ol/interaction/Draw';
 import Overlay from 'ol/Overlay';
 import {LineString, Polygon} from 'ol/geom';
 import {unByKey} from 'ol/Observable';
-import {MapAction} from './vl-mapactions-mapaction';
-import {SnapInteraction} from './vl-mapactions-snap-interaction';
+import {VlMapAction} from './vl-mapactions-mapaction';
+import {VlSnapInteraction} from './vl-mapactions-snap-interaction';
 
-export class DrawAction extends MapAction {
+export class VlDrawAction extends VlMapAction {
   constructor(layer, type, onDraw, options) {
     const interactions = [];
     const drawOptions = options || {};
@@ -14,7 +14,7 @@ export class DrawAction extends MapAction {
     const drawInteraction = new Draw(drawOptions);
     interactions.push(drawInteraction);
     if (drawOptions.snapping) {
-      interactions.push(new SnapInteraction(drawOptions.snapping.layer || layer));
+      interactions.push(new VlSnapInteraction(drawOptions.snapping.layer || layer));
     }
 
     drawInteraction.on('drawstart', (event) => {

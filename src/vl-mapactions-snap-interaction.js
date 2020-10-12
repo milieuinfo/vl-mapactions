@@ -1,6 +1,6 @@
 import Snap from 'ol/interaction/Snap';
 
-export class SnapInteraction extends Snap {
+export class VlSnapInteraction extends Snap {
   constructor(layer) {
     const source = layer ? layer.getSource() : null;
     const snapOptions = {

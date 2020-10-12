@@ -1,8 +1,8 @@
 import DragBox from 'ol/interaction/DragBox';
 import {Stroke, Style} from 'ol/style';
-import {SelectAction} from './vl-mapactions-select-action';
+import {VlSelectAction} from './vl-mapactions-select-action';
 
-export class BoxSelectAction extends SelectAction {
+export class VlBoxSelectAction extends VlSelectAction {
   constructor(layer, onSelect, options) {
     super(layer, (feature) => {
       if (feature) {

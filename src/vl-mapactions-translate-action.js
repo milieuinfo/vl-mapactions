@@ -1,8 +1,8 @@
-import {MapAction} from './vl-mapactions-mapaction';
+import {VlMapAction} from './vl-mapactions-mapaction';
 import Select from 'ol/interaction/Select';
 import Translate from 'ol/interaction/Translate';
 
-export class TranslateAction extends MapAction {
+export class VlTranslateAction extends VlMapAction {
   constructor(layer, onTranslate) {
     const selectInteraction = new Select({
       layers: [layer],

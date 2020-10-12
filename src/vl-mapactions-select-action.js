@@ -1,8 +1,8 @@
 import {Select} from 'ol/interaction';
 import {pointerMove} from 'ol/events/condition';
-import {MapAction} from './vl-mapactions-mapaction';
+import {VlMapAction} from './vl-mapactions-mapaction';
 
-export class SelectAction extends MapAction {
+export class VlSelectAction extends VlMapAction {
   constructor(layer, onSelect, options) {
     const cluster = options && options.cluster;
     const filter = options && options.filter ? options.filter : () => true;

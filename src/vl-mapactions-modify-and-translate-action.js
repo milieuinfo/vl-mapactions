@@ -1,7 +1,7 @@
 import {Translate} from 'ol/interaction';
-import {ModifyAction} from './vl-mapactions-modify-action';
+import {VlModifyAction} from './vl-mapactions-modify-action';
 
-export class ModifyAndTranslateAction extends ModifyAction {
+export class VlModifyAndTranslateAction extends VlModifyAction {
   constructor(layer, onModify, options) {
     super(layer, onModify, options);
 

@@ -1,7 +1,7 @@
 import Feature from 'ol/Feature';
-import {SelectAction} from './vl-mapactions-select-action';
-import {MapAction} from './vl-mapactions-mapaction';
-import {DrawAction} from './vl-mapactions-draw-action';
+import {VlSelectAction} from './vl-mapactions-select-action';
+import {VlMapAction} from './vl-mapactions-mapaction';
+import {VlDrawAction} from './vl-mapactions-draw-action';
 import * as jsts from 'jsts';
 import {
   Point,
@@ -13,20 +13,20 @@ import {
   MultiPolygon,
 } from 'ol/geom';
 
-export class SplitAction extends MapAction {
+export class VlSplitAction extends VlMapAction {
   constructor(layer, onSplit, options) {
     const reader = new jsts.io.OL3Parser();
     reader.inject(Point, LineString, LinearRing, Polygon, MultiPoint, MultiLineString, MultiPolygon);
     const interactions = [];
 
-    const selectAction = new SelectAction(layer, (feature) => {
+    const selectAction = new VlSelectAction(layer, (feature) => {
       if (feature) {
         this.selectAction.deactivate();
         this.drawAction.activate();
       }
     }, options);
 
-    const drawAction = new DrawAction(layer, 'LineString', (drawnFeature) => {
+    const drawAction = new VlDrawAction(layer, 'LineString', (drawnFeature) => {
       const selectedFeature = this.selectAction.selectedFeature;
       const selectedGeometry = reader.read(selectedFeature.getGeometry().getPolygons()[0]);
       const drawnGeometry = reader.read(drawnFeature.getGeometry());

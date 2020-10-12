@@ -1,20 +1,20 @@
-import {DrawAction} from './vl-mapactions-draw-action';
-import {Tooltips} from './vl-mapactions-tooltips';
+import {VlDrawAction} from './vl-mapactions-draw-action';
+import {VlTooltips} from './vl-mapactions-tooltips';
 
-export class ShowInfoAction extends DrawAction {
+export class VlShowInfoAction extends VlDrawAction {
   constructor(layer, infoPromise, loadingMessage, tooltipOptions) {
-    const tooltips = new Tooltips(layer, infoPromise, loadingMessage);
+    const Vltooltips = new VlTooltips(layer, infoPromise, loadingMessage);
 
     super(layer, 'Point', (feature) => {
-      this.tooltips.showTooltip(this.map, feature, feature.getGeometry().getCoordinates(), tooltipOptions);
+      this.Vltooltips.showTooltip(this.map, feature, feature.getGeometry().getCoordinates(), tooltipOptions);
     });
 
     this.layer = layer;
-    this.tooltips = tooltips;
+    this.Vltooltips = Vltooltips;
   }
 
   clear() {
-    this.tooltips.clear(this.map);
+    this.Vltooltips.clear(this.map);
     this.layer.getSource().clear();
   }
 

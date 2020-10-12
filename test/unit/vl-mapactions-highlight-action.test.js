@@ -1,6 +1,6 @@
 import './setup.js';
 import {expect} from 'chai';
-import {HighlightAction} from '../../src/vl-mapactions-highlight-action';
+import {VlHighlightAction} from '../../src/vl-mapactions-highlight-action';
 import Feature from 'ol/Feature';
 import Style from 'ol/style/Style';
 import {Vector} from 'ol/layer';
@@ -9,7 +9,7 @@ import {Vector as SourceVector} from 'ol/source';
 describe('highlight action', () => {
   it('kan de highlight stijl definiëren', () => {
     const style = new Style();
-    const highlightAction = new HighlightAction({}, {
+    const highlightAction = new VlHighlightAction({}, {
       style: style,
     });
     expect(highlightAction.highlightInteraction.getStyle()).to.equal(style);
@@ -20,7 +20,7 @@ describe('highlight action', () => {
     const feature2 = new Feature();
     feature1.setId(1);
     feature2.setId(2);
-    const highlightAction = new HighlightAction({
+    const highlightAction = new VlHighlightAction({
       getSource: () => {
         return {
           getFeatureById: (id) => {
@@ -58,7 +58,7 @@ describe('highlight action', () => {
         features: [cluster1, cluster2],
       }),
     });
-    const highlightAction = new HighlightAction(layer);
+    const highlightAction = new VlHighlightAction(layer);
     highlightAction.highlightFeatureWithId(1);
     expect(highlightAction.isHighlighted(cluster1)).to.be.true;
     expect(highlightAction.isHighlighted(cluster2)).to.be.false;
@@ -72,12 +72,12 @@ describe('highlight action', () => {
   });
 
   it('kan de highlight stijl niet bepalen als die niet gedefinieerd is', () => {
-    const highlightAction = new HighlightAction({});
+    const highlightAction = new VlHighlightAction({});
     expect(highlightAction.style).to.be.undefined;
   });
 
   it('zal bij een deactivate de highlight features clearen', () => {
-    const highlightAction = new HighlightAction({});
+    const highlightAction = new VlHighlightAction({});
     const feature = new Feature({id: 1});
     highlightAction.highlightInteraction.getFeatures().push(feature);
     highlightAction.deactivate();

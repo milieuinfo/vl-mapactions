@@ -8,13 +8,13 @@ import {
   ScaleLine,
   OverviewMap,
 } from 'ol/control';
-import {MapWithActions} from './vl-mapactions-map-with-actions';
+import {VlMapWithActions} from './vl-mapactions-map-with-actions';
 
 /**
- * Dit is een versie van de MapWithActions die nog enkele extra functies bevat zoals het zoomen naar een bepaalde extent (of bounding box), het togglen van de layers, en alle functionaliteit omtrent een overzichtskaartje (ol.control.OverviewMap).
+ * Dit is een versie van de VlMapWithActions die nog enkele extra functies bevat zoals het zoomen naar een bepaalde extent (of bounding box), het togglen van de layers, en alle functionaliteit omtrent een overzichtskaartje (ol.control.OverviewMap).
  * De view kan in het map opties object bij constructie worden meegegeven, of achteraf aangemaakt in de initializeView functie. Hieraan kan de view worden meegegeven als argument of bij geen argument wordt een standaard view aangemaakt op basis van de meegegeven projectie.
  */
-export class CustomMap extends MapWithActions {
+export class VlCustomMap extends VlMapWithActions {
   constructor(options) {
     options.layers = [
       options.customLayers.baseLayerGroup,
