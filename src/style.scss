@@ -61,6 +61,8 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
     cursor: pointer;
     box-sizing: border-box;
     margin: 0;
+    width: 10rem;
+    height: 10rem;
 
     .ol-overviewmap-box {
       border: 1px dotted $vl-text-color;
