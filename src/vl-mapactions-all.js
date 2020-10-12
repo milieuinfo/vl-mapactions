@@ -1,4 +1,4 @@
-import {VlMap} from './vl-mapactions-custom-map';
+import {VlCustomMap} from './vl-mapactions-custom-map';
 import {VlMapWithActions} from './vl-mapactions-map-with-actions';
 import {VlBoxSelectAction} from './vl-mapactions-box-select-action';
 import {VlDeleteAction} from './vl-mapactions-delete-action';
@@ -38,7 +38,7 @@ import * as OlExtent from 'ol/extent';
 import * as OlLoadingstrategy from 'ol/loadingstrategy';
 
 export {
-  VlMap,
+  VlCustomMap,
   VlMapWithActions,
   VlSnapInteraction,
   VlBoxSelectAction,

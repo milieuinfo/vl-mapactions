@@ -1,5 +1,5 @@
 module.exports = {
-  VlMap: require('../dist/vl-mapactions.js').CustomMap,
+  VlCustomMap: require('../dist/vl-mapactions.js').CustomMap,
   VlMapWithActions: require('../dist/vl-mapactions.js').MapWithActions,
   VlSnapInteraction: require('../dist/vl-mapactions.js').SnapInteraction,
   VlBoxSelectAction: require('../dist/vl-mapactions.js').BoxSelectAction,
