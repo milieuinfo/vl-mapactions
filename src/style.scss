@@ -21,6 +21,10 @@ $color-text: #333332 !default;
     margin: 0px;
     border-radius: 0px;
 
+    &:hover {
+      background-color: #f7f9fc;
+    }
+
     &:focus {
       outline: 0;
       border: 0.1rem solid #ffc515;
