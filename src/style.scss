@@ -1,27 +1,24 @@
 $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
-$color-primary-2: #222222 !default;
-$color-text: #333 !default;
+$color-primary-2: #e8ebee !default;
+$color-text: #333332 !default;
 
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss';
 @import '../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/_glyphicons.scss';
 
-.ol-zoom .ol-zoom-out {
-  margin-top: 204px;
+.ol-zoom {
+  padding: 0px;
+  margin: 0px;
+  border: 1px $color-primary-2 solid;
+  border-radius: 2px;
+  background: white;
 }
 
-.ol-touch .ol-zoom .ol-zoom-out {
-  margin-top: 212px;
-}
-
-.ol-zoom-in.ol-has-tooltip:hover [role=tooltip],
-.ol-zoom-in.ol-has-tooltip:focus [role=tooltip] {
-  top: 3px;
-}
-
-.ol-zoom-out.ol-has-tooltip:hover [role=tooltip],
-.ol-zoom-out.ol-has-tooltip:focus [role=tooltip] {
-  top: 232px;
+.ol-zoom button {
+  color: $color-text;
+  background: white;
+  width: 3.5rem;
+  height: 3.5rem;
 }
 
 .ol-scale-line {
