@@ -21,6 +21,7 @@ import {VlSnapInteraction} from './vl-mapactions-snap-interaction';
 import OlLayerGroup from 'ol/layer/Group';
 import OlVectorLayer from 'ol/layer/Vector';
 import OlTileLayer from 'ol/layer/Tile';
+import OlOverlay from 'ol/Overlay';
 import OlVectorSource from 'ol/source/Vector';
 import OlClusterSource from 'ol/source/Cluster';
 import OlWMTSSource from 'ol/source/WMTS';
@@ -61,6 +62,7 @@ export {
   OlLayerGroup,
   OlVectorLayer,
   OlTileLayer,
+  OlOverlay,
   OlVectorSource,
   OlClusterSource,
   OlWMTSSource,
