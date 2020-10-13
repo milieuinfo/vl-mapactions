@@ -1,0 +1,69 @@
+@startuml
+class CustomMap {
+	overviewMapControl
+	projection
+	baseLayers
+	overviewMapLayers
+	custom
+	CustomMap({customLayers:{baseLayerGroup, overlayGroup, overviewMapLayers}, projection})
+	initializeView(boundingBox, maxZoom)
+	zoomToExtent(boundingBox, maxZoom)
+	zoomViewToExtent(view, boundingBox, maxZoom)
+	zoomToGeometry(geometry)
+}
+class MapWithActions {
+	actions
+	activateAction(MapAction)
+	activateDefaultAction()
+	addAction(MapAction)
+}
+class MapAction {
+	interactions
+	addInteraction(ol.interaction.Interaction)
+	activate()
+	deactivate()
+}
+class SelectAction {
+	selectStyle
+	highlightStyle
+	highlightInteraction
+	selectInteraction
+	selectInteractionFilter
+	SelectAction(layers, onSelect)
+	clearFeatures()
+}
+class BoxSelectAction {
+	dragBoxInteraction
+	BoxSelectAction(layers, onSelect)
+}
+class DeleteAction {
+	DeleteAction(layers, onDelete)
+}
+class DrawAction {
+	drawInteraction
+	DrawAction(layer, type, onDraw)
+}
+class ShowInfoAction {
+	layer
+	ShowInfoAction(layer, infoPromise, loadingMessage)
+	clear()
+}
+class TranslateAction {
+	selectInteraction
+	translateInteraction
+	TranslateAction(layer, onTranslate)
+}
+hide ol.Map members
+hide ol.interaction.Interaction members
+
+ol.Map <|-- CustomMap
+CustomMap <|-- MapWithActions
+MapWithActions "1" *-- "*" MapAction
+MapAction <|-- SelectAction
+SelectAction <|-- BoxSelectAction
+BoxSelectAction <|-- DeleteAction
+MapAction <|-- DrawAction
+DrawAction <|-- ShowInfoAction
+MapAction <|-- TranslateAction
+MapAction "1" *-- "*" ol.interaction.Interaction
+@enduml
