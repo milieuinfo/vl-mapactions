@@ -8,7 +8,7 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 .ol-zoom {
   padding: 0;
   margin: 0;
-  border: 1px $vl-alt-bg solid;
+  border: 1px $vl-border-color solid;
   border-radius: 0;
   background: white;
   
@@ -35,7 +35,7 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 }
 
 .ol-scale-line {
-  border: 1px solid $vl-alt-bg;
+  border: 1px solid $vl-border-color;
   border-radius: 0;
   background-color: white;
 
@@ -48,7 +48,7 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 .ol-overviewmap {
   background: white;
   margin-bottom: 3rem;
-  border: 1px solid $vl-alt-bg;
+  border: 1px solid $vl-border-color;
   border-radius: 0;
   width: 10rem;
   height: 10rem;
@@ -77,7 +77,7 @@ $icon-font-path: '../node_modules/bootstrap-sass/assets/fonts/bootstrap/';
 
 .ol-control {
   &.ol-zoom, &.layer-switcher {
-    border: 1px solid $vl-alt-bg;
+    border: 1px solid $vl-border-color;
   }
 
   &.layer-switcher {
