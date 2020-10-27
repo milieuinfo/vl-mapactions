@@ -12,7 +12,7 @@ $ npm install --save vl-mapactions
 De [API](https://webcomponenten.omgeving.vlaanderen.be/doc/VlMapactions.html) bevat een overzicht van de ondersteunde attributen en een beschrijving van de beschikbare functies.
 
 ## Demo
-De [demo](https://webcomponenten.omgeving.vlaanderen.be/demo/vl-actions.html) pagina bevat een overzicht van de mogelijkheden met code voorbeelden. Lokaal opstarten kan met onderstaand [NPM](https://www.npmjs.com) script.
+De [demo](https://webcomponenten.omgeving.vlaanderen.be/demo/vl-mapactions.html) pagina bevat een overzicht van de mogelijkheden met code voorbeelden. Lokaal opstarten kan met onderstaand [NPM](https://www.npmjs.com) script.
 ``` bash
 $ npm run demo
 ```
