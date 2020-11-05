@@ -30,7 +30,7 @@
     "esm": "^3.2.25",
     "jsdom": "^16.3.0",
     "jsdom-global": "^3.0.2",
-    "vl-ui-util": "^5.2.18",
+    "vl-ui-util": "^5.2.19",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
   }
