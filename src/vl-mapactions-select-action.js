@@ -1,5 +1,5 @@
 import {Select} from 'ol/interaction';
-import {pointerMove} from 'ol/events/condition';
+import {click, pointerMove} from 'ol/events/condition';
 import {VlMapAction} from './vl-mapactions-mapaction';
 
 export class VlSelectAction extends VlMapAction {
@@ -23,14 +23,19 @@ export class VlSelectAction extends VlMapAction {
       filter: hoverInteractionFilter,
       condition: pointerMove,
       style: hoverStyle,
+      layers: [layer],
     });
 
     const markInteraction = new Select({
       style: style,
+      layers: [layer],
     });
 
     const selectInteraction = new Select({
       filter: selectInteractionFilter,
+      condition: click,
+      style: style,
+      layers: [layer],
     });
 
     super([markInteraction, selectInteraction, hoverInteraction]);
@@ -51,6 +56,7 @@ export class VlSelectAction extends VlMapAction {
       } else {
         element.style.cursor = '';
       }
+      this.map.render();
     });
 
     this.selectedFeature = null;
@@ -69,14 +75,13 @@ export class VlSelectAction extends VlMapAction {
     this.selectInteraction.on('select', (event) => {
       this.markInteraction.getFeatures().clear();
       if (this.selectInteraction.getFeatures().getLength() > 0) {
-        const selectedFeature = null;
         if (this.selectInteraction.getFeatures().getLength() === 1) {
           this.selectedFeature = this.selectInteraction.getFeatures().getArray()[0];
         } else {
           this.selectedFeature = nextFeature(this.selectInteraction.getFeatures());
         }
         if (onSelect) {
-          onSelect(this.selectedFeature, event, this.getLayer(selectedFeature));
+          onSelect(this.selectedFeature, event, this.getLayer());
         }
       } else {
         this.selectedFeature = null;
@@ -84,6 +89,7 @@ export class VlSelectAction extends VlMapAction {
           onSelect();
         }
       }
+      this.map.render();
     });
     this.selectInteractionFilter = selectInteractionFilter;
     this.hoverInteractionFilter = hoverInteractionFilter;
@@ -157,7 +163,7 @@ export class VlSelectAction extends VlMapAction {
     return this.selectInteraction.getFeatures();
   }
 
-  vergeetLaatstGeselecteerdeFeature() {
+  deselect() {
     this.selectedFeature = null;
   }
 

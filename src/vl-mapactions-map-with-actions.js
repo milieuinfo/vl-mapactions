@@ -72,6 +72,7 @@ export class VlMapWithActions extends Map {
     action.map = this;
     action.interactions.forEach((interaction) => {
       this.addInteraction(interaction);
+      interaction.map = action.map;
     });
   }
 
