@@ -6,7 +6,7 @@ module.exports = {
   VlDeleteAction: require('../dist/vl-mapactions.js').DeleteAction,
   VlDrawAction: require('../dist/vl-mapactions.js').DrawAction,
   VlDrawLineAction: require('../dist/vl-mapactions.js').DrawLineAction,
-  VlDrawRectangleAction: require('../dist/vl-mapactions.js').DrawRectangleAction,
+  VlDrawPolygonAction: require('../dist/vl-mapactions.js').DrawPolygonAction,
   VlHighlightAction: require('../dist/vl-mapactions.js').HighlightAction,
   VlMapAction: require('../dist/vl-mapactions.js').MapAction,
   VlMeasureAction: require('../dist/vl-mapactions.js').MeasureAction,

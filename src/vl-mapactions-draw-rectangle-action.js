@@ -2,11 +2,11 @@ import {Polygon} from 'ol/geom';
 import {VlDrawAction} from './vl-mapactions-draw-action';
 import GeometryType from 'ol/geom/GeometryType';
 
-export class VlDrawRectangleAction extends VlDrawAction {
+export class VlDrawPolygonAction extends VlDrawAction {
   constructor(layer, onDraw, options) {
-    const drawRectangleOptions = options || {};
-    drawRectangleOptions.maxPoints = 2;
-    drawRectangleOptions.geometryFunction = (coordinates, geometry) => {
+    const drawPolygonOptions = options || {};
+    drawPolygonOptions.maxPoints = 2;
+    drawPolygonOptions.geometryFunction = (coordinates, geometry) => {
       if (!geometry) {
         geometry = new Polygon([]);
       }
@@ -18,8 +18,8 @@ export class VlDrawRectangleAction extends VlDrawAction {
       return geometry;
     };
 
-    super(layer, GeometryType.LINE_STRING, onDraw, drawRectangleOptions);
+    super(layer, GeometryType.LINE_STRING, onDraw, drawPolygonOptions);
 
-    this.drawRectangleOptions = drawRectangleOptions;
+    this.drawPolygonOptions = drawPolygonOptions;
   }
 }
