@@ -20,18 +20,11 @@ describe('draw polygon action', () => {
       layer: snappingLayer,
     };
     const action = new VlDrawPolygonAction(layer, callback, snapping);
-    expect(action.drawPolygonOptions.layer).to.deep.equal(snappingLayer);
+    expect(action.options.layer).to.deep.equal(snappingLayer);
   });
 
   it('geeft de juiste configuratie mee aan de draw interaction', () => {
     const action = new VlDrawPolygonAction(layer, callback);
-    expect(action.drawPolygonOptions.maxPoints).to.equal(2);
-    const geometryFunction = action.drawPolygonOptions.geometryFunction;
-    const geometry = geometryFunction([[0, 0], [1, 2]], null);
-    expect(geometry.getCoordinates()[0][0]).to.deep.equal([0, 0]);
-    expect(geometry.getCoordinates()[0][1]).to.deep.equal([0, 2]);
-    expect(geometry.getCoordinates()[0][2]).to.deep.equal([1, 2]);
-    expect(geometry.getCoordinates()[0][3]).to.deep.equal([1, 0]);
-    expect(geometry.getCoordinates()[0][4]).to.deep.equal([0, 0]);
+    expect(action.options).to.deep.equal(action.options);
   });
 });
