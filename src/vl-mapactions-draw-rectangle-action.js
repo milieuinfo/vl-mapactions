@@ -1,6 +1,6 @@
 import {Polygon} from 'ol/geom';
 import {VlDrawAction} from './vl-mapactions-draw-action';
-import {LINE_STRING} from 'ol/geom/GeometryType';
+import GeometryType from 'ol/geom/GeometryType';
 
 export class VlDrawRectangleAction extends VlDrawAction {
   constructor(layer, onDraw, options) {
@@ -18,7 +18,7 @@ export class VlDrawRectangleAction extends VlDrawAction {
       return geometry;
     };
 
-    super(layer, LINE_STRING, onDraw, drawRectangleOptions);
+    super(layer, GeometryType.LINE_STRING, onDraw, drawRectangleOptions);
 
     this.drawRectangleOptions = drawRectangleOptions;
   }
