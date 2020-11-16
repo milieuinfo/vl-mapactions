@@ -37,6 +37,7 @@ import OlProjection from 'ol/proj/Projection';
 import OlGeoJSON from 'ol/format/GeoJSON';
 import * as OlExtent from 'ol/extent';
 import * as OlLoadingstrategy from 'ol/loadingstrategy';
+import OlFullScreenControl from 'ol/control/FullScreen';
 
 export {
   VlCustomMap,
@@ -78,4 +79,5 @@ export {
   OlGeoJSON,
   OlExtent,
   OlLoadingstrategy,
+  OlFullScreenControl,
 };
