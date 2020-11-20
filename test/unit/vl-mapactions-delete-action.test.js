@@ -1,6 +1,5 @@
 import './setup.js';
 import {expect} from 'chai';
-import sinon from 'sinon/pkg/sinon-esm';
 import Map from 'ol/Map';
 import Style from 'ol/style/Style';
 import {VlDeleteAction} from '../../src/vl-mapactions-delete-action';
