@@ -1,6 +1,7 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {VlSplitAction} from '../../src/vl-mapactions-split-action';
+import Map from 'ol/Map';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 import Polygon from 'ol/geom/Polygon';
 import LineString from 'ol/geom/LineString';
@@ -24,17 +25,15 @@ describe('split action', () => {
 
   const createSplitAction = () => {
     const splitAction = new VlSplitAction(layer, callbackSpy, optionsSpy);
-    splitAction.map = {
-      addAction: sinon.spy(),
-      on: sinon.spy(),
-      un: sinon.spy(),
-      render: sinon.spy(),
-    };
+    splitAction.map = new Map();
     return splitAction;
   };
 
   it('zal bij het activeren een select en draw actie toevoegen aan de map en de select interacties activeren', () => {
     const splitAction = createSplitAction();
+    splitAction.map = {
+      addAction: sinon.spy(),
+    };
     expect(splitAction.interactions).to.be.empty;
     expect(splitAction.selectAction.interactions).to.not.be.empty;
     splitAction.selectAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.false);
@@ -62,9 +61,7 @@ describe('split action', () => {
 
   it('zal na het selecteren de select action deactiveren en de draw action activeren', () => {
     const splitAction = createSplitAction();
-    splitAction.selectAction.map = {
-      render: sinon.spy(),
-    };
+    splitAction.selectAction.map = new Map();
     splitAction.selectAction.selectInteraction.getFeatures().push(feature);
     splitAction.selectAction.selectInteraction.dispatchEvent({type: 'select'});
     splitAction.selectAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.false);

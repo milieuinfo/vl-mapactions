@@ -232,7 +232,7 @@ describe('draw action', () => {
     drawAction.map = {
       addOverlay: addOverlay,
       removeOverlay: removeOverlay,
-      on: (type, callback) =>drawAction[type] = callback,
+      on: (type, callback) => drawAction[type] = callback,
     };
     return drawAction;
   };
