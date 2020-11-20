@@ -1,5 +1,6 @@
 import {VlBoxSelectAction} from '../../src/vl-mapactions-box-select-action';
 import sinon from 'sinon/pkg/sinon-esm';
+import Map from 'ol/Map';
 import Feature from 'ol/Feature';
 import {expect} from 'chai';
 
@@ -22,18 +23,13 @@ describe('box select action', () => {
         };
       },
     }, callback);
-    sinon.stub(action.dragBoxInteraction, 'getGeometry').returns({
-      getExtent: () => {},
-    });
+    sinon.stub(action.dragBoxInteraction, 'getGeometry').returns({getExtent: () => {}});
+    action.map = new Map();
     return action;
   };
 
   it('kan op actief gezet worden, zodat de selectie, hover en dragbox interacties op actief gezet worden', () => {
     const VlboxSelectAction = createVlBoxSelectAction();
-    VlboxSelectAction.map = {
-      on: sinon.spy(),
-      un: sinon.spy(),
-    };
     expect(VlboxSelectAction.hoverInteraction.getActive()).to.be.false;
     expect(VlboxSelectAction.selectInteraction.getActive()).to.be.false;
     expect(VlboxSelectAction.dragBoxInteraction.getActive()).to.be.false;
@@ -46,10 +42,6 @@ describe('box select action', () => {
 
   it('kan terug op deactief gezet worden, zodat de selectie, hover en dragbox interacties op deactief gezet worden', () => {
     const VlboxSelectAction = createVlBoxSelectAction();
-    VlboxSelectAction.map = {
-      on: sinon.spy(),
-      un: sinon.spy(),
-    };
     VlboxSelectAction.activate();
     VlboxSelectAction.deactivate();
     expect(VlboxSelectAction.hoverInteraction.getActive()).to.be.false;
@@ -59,11 +51,6 @@ describe('box select action', () => {
 
   it('zal de callback functie nog niet gebeurd zijn na het actief maken van de box selectie', () => {
     const VlboxSelectAction = createVlBoxSelectAction();
-    VlboxSelectAction.map = {
-      on: sinon.spy(),
-      un: sinon.spy(),
-    };
-
     VlboxSelectAction.activate();
     expect(callback.notCalled).to.be.true;
   });

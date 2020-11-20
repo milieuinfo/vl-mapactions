@@ -173,13 +173,11 @@ describe('custom map', () => {
     expect(map.addControl.called).to.be.false;
   });
 
-
   it('Als er geen overviewMapLayers zijn, zal er geen overviewMapControl aangemaakt worden.', () => {
     const map = createMapZonderLayers();
     map.initializeView();
     expect(map.overviewMapControl).to.be.undefined;
   });
-
 
   it('Wanneer de eerse overviewMapLayer wordt toegevoegd, wordt een overviewMapControl aangemaakt.', () => {
     const map = createMapZonderLayers();
@@ -195,7 +193,6 @@ describe('custom map', () => {
     expect(map.overviewMapControl.getOverviewMap().getLayers().getArray().length).to.equal(1);
     expect(map.overviewMapControl.getOverviewMap().getLayers().getArray()[0]).to.equal(overviewMapLayer);
   });
-
 
   it('Er kunnen meerdere base layers en overlayMapLayers toegevoegd worden aan de map ', () => {
     map = createMapZonderLayers();
@@ -216,14 +213,12 @@ describe('custom map', () => {
     expect(map.overviewMapControl.getOverviewMap().getLayers().getArray()[1]).to.equal(overviewMapLayer);
   });
 
-
   it('Enkel de eerste toegevoegde baselayer is visible en enkel de 2e toegevoegde overlaymaplayer is visible', () => {
     map = createMapZonderLayers();
     map.initializeView();
 
     for (let layerNr = 0; layerNr < 3; layerNr++) {
-      map.addBaseLayerAndOverlayMapLayer(createInvisibleBaseLayer('layer ' + layerNr),
-          createInvisibleBaseLayer('overview map layer ' + layerNr));
+      map.addBaseLayerAndOverlayMapLayer(createInvisibleBaseLayer('layer ' + layerNr), createInvisibleBaseLayer('overview map layer ' + layerNr));
     }
 
     expect(map.getBaseLayers()[0].getVisible()).to.be.true;
@@ -240,8 +235,7 @@ describe('custom map', () => {
     map.initializeView();
 
     for (let layerNr = 0; layerNr < 3; layerNr++) {
-      map.addBaseLayerAndOverlayMapLayer(createInvisibleBaseLayer('layer ' + layerNr),
-          createInvisibleBaseLayer('overview map layer ' + layerNr));
+      map.addBaseLayerAndOverlayMapLayer(createInvisibleBaseLayer('layer ' + layerNr), createInvisibleBaseLayer('overview map layer ' + layerNr));
     }
 
     const overlayElement = map.overviewMapControl.element;

@@ -1,6 +1,7 @@
 import './setup.js';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
+import Map from 'ol/Map';
 import {Vector as SourceVector} from 'ol/source';
 import {Vector} from 'ol/layer';
 import {VlModifyAction} from '../../src/vl-mapactions-modify-action';
@@ -31,10 +32,7 @@ describe('modify action', () => {
 
   it('na het deactiveren wordt de selectie verwijderd', () => {
     const modifyAction = new VlModifyAction({});
-    modifyAction.map = {
-      on: sinon.spy(),
-      un: sinon.spy(),
-    };
+    modifyAction.map = new Map();
     const feature = new Feature({
       geometry: new Point([0, 0]),
     });
