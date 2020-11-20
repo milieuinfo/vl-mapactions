@@ -13,7 +13,6 @@ describe('measure action', () => {
   let layer;
   let addOverlay;
   let removeOverlay;
-  let handler;
   let source;
 
   beforeEach(() => {
@@ -22,11 +21,10 @@ describe('measure action', () => {
     measureAction = new VlMeasureAction(layer);
     addOverlay = sinon.spy();
     removeOverlay = sinon.spy();
-    handler = 'handler';
     measureAction.map = {
       addOverlay: addOverlay,
       removeOverlay: removeOverlay,
-      on: (type, callback) => handler,
+      on: () => { },
     };
   });
 
