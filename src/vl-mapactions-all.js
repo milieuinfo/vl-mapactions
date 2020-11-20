@@ -4,6 +4,7 @@ import {VlBoxSelectAction} from './vl-mapactions-box-select-action';
 import {VlDeleteAction} from './vl-mapactions-delete-action';
 import {VlDrawAction} from './vl-mapactions-draw-action';
 import {VlDrawLineAction} from './vl-mapactions-draw-line-action';
+import {VlDrawPolygonAction} from './vl-mapactions-draw-polygon-action';
 import {VlDrawRectangleAction} from './vl-mapactions-draw-rectangle-action';
 import {VlHighlightAction} from './vl-mapactions-highlight-action';
 import {VlMapAction} from './vl-mapactions-mapaction';
@@ -28,6 +29,7 @@ import OlWMTSSource from 'ol/source/WMTS';
 import OlWMTSTileGrid from 'ol/tilegrid/WMTS';
 import OlFeature from 'ol/Feature';
 import OlPoint from 'ol/geom/Point';
+import OlGeometryType from 'ol/geom/GeometryType';
 import OlStyle from 'ol/style/Style';
 import OlStyleStroke from 'ol/style/Stroke';
 import OlStyleFill from 'ol/style/Fill';
@@ -47,6 +49,7 @@ export {
   VlDeleteAction,
   VlDrawAction,
   VlDrawLineAction,
+  VlDrawPolygonAction,
   VlDrawRectangleAction,
   VlHighlightAction,
   VlMapAction,
@@ -70,6 +73,7 @@ export {
   OlWMTSTileGrid,
   OlFeature,
   OlPoint,
+  OlGeometryType,
   OlStyle,
   OlStyleStroke,
   OlStyleFill,

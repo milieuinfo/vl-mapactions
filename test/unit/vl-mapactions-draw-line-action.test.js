@@ -3,7 +3,7 @@ import {expect} from 'chai';
 import {Vector as SourceVector} from 'ol/source';
 import {VlDrawLineAction} from '../../src/vl-mapactions-draw-line-action';
 
-describe('draw action', () => {
+describe('draw line action', () => {
   const source = new SourceVector({});
 
   const layer = {
@@ -26,13 +26,13 @@ describe('draw action', () => {
     };
 
     const action = new VlDrawLineAction(layer, callback, options);
-    expect(action.drawLineOptions.maxPoints).to.equal(2);
-    expect(action.drawLineOptions.snapping).to.deep.equal(snappingOptions);
-    expect(action.drawLineOptions.measure).to.be.true;
+    expect(action.options.maxPoints).to.be.undefined;
+    expect(action.options.snapping).to.deep.equal(snappingOptions);
+    expect(action.options.measure).to.be.true;
   });
 
   it('geeft de juiste configuratie mee aan de draw interaction', () => {
     const action = new VlDrawLineAction(layer, callback);
-    expect(action.drawOptions).to.deep.equal(action.drawLineOptions);
+    expect(action.options).to.deep.equal(action.options);
   });
 });

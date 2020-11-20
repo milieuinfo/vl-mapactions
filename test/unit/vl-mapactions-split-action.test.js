@@ -1,13 +1,13 @@
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {VlSplitAction} from '../../src/vl-mapactions-split-action';
+import Map from 'ol/Map';
 import MultiPolygon from 'ol/geom/MultiPolygon';
 import Polygon from 'ol/geom/Polygon';
 import LineString from 'ol/geom/LineString';
 import Feature from 'ol/Feature';
 
 describe('split action', () => {
-  const mapAddActionSpy = sinon.spy();
   const callbackSpy = sinon.spy();
   const optionsSpy = {
     filter: sinon.spy(),
@@ -25,27 +25,26 @@ describe('split action', () => {
 
   const createSplitAction = () => {
     const splitAction = new VlSplitAction(layer, callbackSpy, optionsSpy);
-    splitAction.map = {
-      addAction: mapAddActionSpy,
-      on: sinon.spy(),
-      un: sinon.spy(),
-    };
+    splitAction.map = new Map();
     return splitAction;
   };
 
   it('zal bij het activeren een select en draw actie toevoegen aan de map en de select interacties activeren', () => {
     const splitAction = createSplitAction();
+    splitAction.map = {
+      addAction: sinon.spy(),
+    };
     expect(splitAction.interactions).to.be.empty;
     expect(splitAction.selectAction.interactions).to.not.be.empty;
     splitAction.selectAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.false);
     expect(splitAction.drawAction.interactions).to.not.be.empty;
     splitAction.drawAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.false);
-    expect(mapAddActionSpy.called).to.be.false;
+    expect(splitAction.map.addAction.called).to.be.false;
     splitAction.activate();
-    expect(mapAddActionSpy.called).to.be.true;
-    expect(mapAddActionSpy.callCount).to.equal(2);
-    expect(mapAddActionSpy.getCall(0).args[0]).to.equal(splitAction.selectAction);
-    expect(mapAddActionSpy.getCall(1).args[0]).to.equal(splitAction.drawAction);
+    expect(splitAction.map.addAction.called).to.be.true;
+    expect(splitAction.map.addAction.callCount).to.equal(2);
+    expect(splitAction.map.addAction.getCall(0).args[0]).to.equal(splitAction.selectAction);
+    expect(splitAction.map.addAction.getCall(1).args[0]).to.equal(splitAction.drawAction);
     expect(splitAction.interactions).to.be.empty;
     splitAction.selectAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.true);
     splitAction.drawAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.false);
@@ -62,6 +61,7 @@ describe('split action', () => {
 
   it('zal na het selecteren de select action deactiveren en de draw action activeren', () => {
     const splitAction = createSplitAction();
+    splitAction.selectAction.map = new Map();
     splitAction.selectAction.selectInteraction.getFeatures().push(feature);
     splitAction.selectAction.selectInteraction.dispatchEvent({type: 'select'});
     splitAction.selectAction.interactions.forEach((interaction) => expect(interaction.getActive()).to.be.false);

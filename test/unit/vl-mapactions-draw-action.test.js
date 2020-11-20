@@ -26,7 +26,7 @@ describe('draw action', () => {
 
   it('kan opties meegeven aan draw action', () => {
     const drawAction = new VlDrawAction(layer, 'LineString', callback, {maxPoints: 2});
-    const options = drawAction.drawOptions;
+    const options = drawAction.options;
     expect(options.maxPoints).to.equal(2);
     expect(options.source).to.equal(source);
     expect(options.type).to.equal('LineString');
@@ -232,7 +232,7 @@ describe('draw action', () => {
     drawAction.map = {
       addOverlay: addOverlay,
       removeOverlay: removeOverlay,
-      on: (type, callback) =>drawAction[type] = callback,
+      on: (type, callback) => drawAction[type] = callback,
     };
     return drawAction;
   };
