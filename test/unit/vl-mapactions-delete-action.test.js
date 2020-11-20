@@ -1,6 +1,7 @@
 import './setup.js';
 import {expect} from 'chai';
 import sinon from 'sinon/pkg/sinon-esm';
+import Map from 'ol/Map';
 import Style from 'ol/style/Style';
 import {VlDeleteAction} from '../../src/vl-mapactions-delete-action';
 import {Vector as SourceVector} from 'ol/source';
@@ -10,9 +11,7 @@ import Feature from 'ol/Feature';
 describe('delete action', () => {
   const createVlDeleteAction = ({layer, callback, options = {}}) => {
     const action = new VlDeleteAction(layer, callback, options);
-    action.map = {
-      render: sinon.spy(),
-    };
+    action.map = new Map();
     return action;
   };
 
