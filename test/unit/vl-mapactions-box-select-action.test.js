@@ -1,5 +1,6 @@
 import {VlBoxSelectAction} from '../../src/vl-mapactions-box-select-action';
 import sinon from 'sinon/pkg/sinon-esm';
+import Map from 'ol/Map';
 import Feature from 'ol/Feature';
 import {expect} from 'chai';
 
@@ -23,11 +24,7 @@ describe('box select action', () => {
       },
     }, callback);
     sinon.stub(action.dragBoxInteraction, 'getGeometry').returns({getExtent: () => {}});
-    action.map = {
-      on: sinon.spy(),
-      un: sinon.spy(),
-      render: sinon.spy(),
-    };
+    action.map = new Map();
     return action;
   };
 

@@ -2,6 +2,7 @@ import './setup.js';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
 import {VlSelectAction} from '../../src/vl-mapactions-select-action';
+import Map from 'ol/Map';
 import Style from 'ol/style/Style';
 import Feature from 'ol/Feature';
 import {Vector as SourceVector} from 'ol/source';
@@ -10,11 +11,7 @@ import {Vector} from 'ol/layer';
 describe('select action', () => {
   const createVlSelectAction = ({layer = {}, callback, options} = {}) => {
     const action = new VlSelectAction(layer, callback, options);
-    action.map = {
-      on: sinon.spy(),
-      un: sinon.spy(),
-      render: sinon.spy(),
-    };
+    action.map = new Map();
     return action;
   };
 
@@ -249,6 +246,7 @@ describe('select action', () => {
   it('zal de onselect functie oproepen met lege argumenten als er een select wordt gedaan niet op een feature', () => {
     const onSelect = sinon.spy();
     const selectAction = createVlSelectAction({layer: [{}], callback: onSelect});
+    selectAction.map = new Map();
     selectAction.activate();
     selectAction.selectInteraction.dispatchEvent('select');
     expect(onSelect.calledWithExactly()).to.be.true;
@@ -256,6 +254,7 @@ describe('select action', () => {
 
   it('zal bij een deactivate de selectie features clearen', () => {
     const selectAction = createVlSelectAction({layer: [{}]});
+    selectAction.map = new Map();
     const feature = new Feature({id: 1});
     selectAction.selectInteraction.getFeatures().push(feature);
     selectAction.deactivate();
@@ -307,6 +306,9 @@ describe('select action', () => {
         cluster: true,
       },
     });
+    selectAction.map = {
+      on: sinon.spy(),
+    };
     selectAction.activate();
     expect(selectAction.map.on.calledWithExactly('moveend', selectAction._fixClusterBehaviorListener)).to.be.true;
   });
@@ -318,6 +320,10 @@ describe('select action', () => {
         cluster: true,
       },
     });
+    selectAction.map = {
+      on: sinon.spy(),
+      un: sinon.spy(),
+    };
     selectAction.activate();
     selectAction.deactivate();
     expect(selectAction.map.un.calledWithExactly('moveend', selectAction._fixClusterBehaviorListener)).to.be.true;
