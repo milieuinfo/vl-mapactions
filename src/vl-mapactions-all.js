@@ -28,6 +28,7 @@ import OlWMTSSource from 'ol/source/WMTS';
 import OlWMTSTileGrid from 'ol/tilegrid/WMTS';
 import OlFeature from 'ol/Feature';
 import OlPoint from 'ol/geom/Point';
+import OlGeometryType from 'ol/geom/GeometryType';
 import OlStyle from 'ol/style/Style';
 import OlStyleStroke from 'ol/style/Stroke';
 import OlStyleFill from 'ol/style/Fill';
@@ -69,6 +70,7 @@ export {
   OlWMTSTileGrid,
   OlFeature,
   OlPoint,
+  OlGeometryType,
   OlStyle,
   OlStyleStroke,
   OlStyleFill,
