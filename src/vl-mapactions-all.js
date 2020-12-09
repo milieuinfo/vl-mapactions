@@ -4,6 +4,7 @@ import {VlBoxSelectAction} from './vl-mapactions-box-select-action';
 import {VlDeleteAction} from './vl-mapactions-delete-action';
 import {VlDrawAction} from './vl-mapactions-draw-action';
 import {VlDrawLineAction} from './vl-mapactions-draw-line-action';
+import {VlDrawPolygonAction} from './vl-mapactions-draw-polygon-action';
 import {VlDrawRectangleAction} from './vl-mapactions-draw-rectangle-action';
 import {VlHighlightAction} from './vl-mapactions-highlight-action';
 import {VlMapAction} from './vl-mapactions-mapaction';
@@ -47,6 +48,7 @@ export {
   VlDeleteAction,
   VlDrawAction,
   VlDrawLineAction,
+  VlDrawPolygonAction,
   VlDrawRectangleAction,
   VlHighlightAction,
   VlMapAction,

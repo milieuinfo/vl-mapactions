@@ -6,29 +6,28 @@ import {VlMapAction} from './vl-mapactions-mapaction';
 import {VlSnapInteraction} from './vl-mapactions-snap-interaction';
 
 export class VlDrawAction extends VlMapAction {
-  constructor(layer, type, onDraw, options) {
+  constructor(layer, type, onDraw, options = {}) {
     const interactions = [];
-    const drawOptions = options || {};
-    drawOptions.source = layer.getSource();
-    drawOptions.type = type;
-    const drawInteraction = new Draw(drawOptions);
+    options.source = layer.getSource();
+    options.type = type;
+    const drawInteraction = new Draw(options);
     interactions.push(drawInteraction);
-    if (drawOptions.snapping) {
-      interactions.push(new VlSnapInteraction(drawOptions.snapping.layer || layer));
+    if (options.snapping) {
+      interactions.push(new VlSnapInteraction(options.snapping.layer || layer));
     }
 
     drawInteraction.on('drawstart', (event) => {
-      if (drawOptions.measure) {
+      if (options.measure) {
         const feature = event.feature;
 
-        drawOptions.measure = typeof drawOptions.measure === 'object' ? drawOptions.measure : {};
-        drawOptions.measure.tooltip = drawOptions.measure.tooltip || {};
+        options.measure = typeof options.measure === 'object' ? options.measure : {};
+        options.measure.tooltip = options.measure.tooltip || {};
 
         const tooltipElement = document.createElement('div');
         tooltipElement.setAttribute('class', 'measure-tooltip');
 
         this.tooltip = new Overlay({
-          offset: drawOptions.measure.tooltip.offset || [-15, 10],
+          offset: options.measure.tooltip.offset || [-15, 10],
           positioning: 'bottom-center',
         });
 
@@ -57,7 +56,7 @@ export class VlDrawAction extends VlMapAction {
 
     super(interactions);
 
-    this.drawOptions = drawOptions;
+    this.options = options;
     this.drawInteraction = drawInteraction;
   }
 
@@ -67,7 +66,7 @@ export class VlDrawAction extends VlMapAction {
   }
 
   _cleanUp() {
-    if (this.drawOptions.measure) {
+    if (this.options.measure) {
       unByKey(this.measurePointermoveHandler);
       this._removeTooltip();
     }
