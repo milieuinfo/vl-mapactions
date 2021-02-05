@@ -21,10 +21,13 @@ import {VlTranslateAction} from './vl-mapactions-translate-action';
 import {VlSnapInteraction} from './vl-mapactions-snap-interaction';
 import OlLayerGroup from 'ol/layer/Group';
 import OlVectorLayer from 'ol/layer/Vector';
+import OlImageLayer from 'ol/layer/Image';
 import OlTileLayer from 'ol/layer/Tile';
 import OlOverlay from 'ol/Overlay';
 import OlVectorSource from 'ol/source/Vector';
 import OlClusterSource from 'ol/source/Cluster';
+import OlImageWMSSource from 'ol/source/ImageWMS';
+import OlTileWMSSource from 'ol/source/TileWMS';
 import OlWMTSSource from 'ol/source/WMTS';
 import OlWMTSTileGrid from 'ol/tilegrid/WMTS';
 import OlFeature from 'ol/Feature';
@@ -65,10 +68,13 @@ export {
   VlTranslateAction,
   OlLayerGroup,
   OlVectorLayer,
+  OlImageLayer,
   OlTileLayer,
   OlOverlay,
   OlVectorSource,
   OlClusterSource,
+  OlImageWMSSource,
+  OlTileWMSSource,
   OlWMTSSource,
   OlWMTSTileGrid,
   OlFeature,
