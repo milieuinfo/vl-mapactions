@@ -25,10 +25,12 @@
   "devDependencies": {
     "@govflanders/vl-ui-core": "^4.0.5",
     "@purtuga/esm-webpack-plugin": "^1.4.0",
+    "canvas": "^2.6.1",
     "copyfiles": "^2.3.0",
     "esm": "^3.2.25",
     "jsdom": "^16.3.0",
     "jsdom-global": "^3.0.2",
+    "node-gyp": "^7.1.2",
     "vl-ui-util": "^5.3.7",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"
