@@ -40,6 +40,9 @@ import OlStyleCircle from 'ol/style/Circle';
 import OlStyleText from 'ol/style/Text';
 import OlProjection from 'ol/proj/Projection';
 import OlGeoJSON from 'ol/format/GeoJSON';
+import OlGML2 from 'ol/format/GML2';
+import OlGML3 from 'ol/format/GML3';
+import OlGML32 from 'ol/format/GML32';
 import * as OlExtent from 'ol/extent';
 import * as OlLoadingstrategy from 'ol/loadingstrategy';
 import OlFullScreenControl from 'ol/control/FullScreen';
@@ -87,6 +90,9 @@ export {
   OlStyleText,
   OlProjection,
   OlGeoJSON,
+  OlGML2,
+  OlGML3,
+  OlGML32,
   OlExtent,
   OlLoadingstrategy,
   OlFullScreenControl,
