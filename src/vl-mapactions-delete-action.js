@@ -31,7 +31,7 @@ export class VlDeleteAction extends VlBoxSelectAction {
       }
     };
     
-    const afterOnDelete = () => {
+    const clearAndRender = () => {
     	this.clearFeatures();
     	this.map.render();
     };
@@ -40,14 +40,14 @@ export class VlDeleteAction extends VlBoxSelectAction {
       if (onDelete && onDelete != null) {
         onDelete(features, (feature) => {
           removeFeature(feature);
-          afterOnDelete();
+          clearAndRender();
         }, () => {
         });
       } else {
         features.forEach((feature) => {
           removeFeature(feature);
         });
-        afterOnDelete();
+        clearAndRender();
       }
     }, {
       style: style,
