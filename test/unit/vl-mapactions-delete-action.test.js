@@ -122,7 +122,7 @@ describe('delete action', () => {
           getFeatures: () => [],
           forEachFeatureIntersectingExtent: (extent, fn) => fn(feature),
           getFeatureById: () => feature,
-          removeFeature: () => {}
+          removeFeature: () => {},
         };
       },
     };
