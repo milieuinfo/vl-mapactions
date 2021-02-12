@@ -27,7 +27,7 @@ export class VlDeleteAction extends VlBoxSelectAction {
 
     const removeFeature = (feature) => {
       if (feature && (!feature.getId() || layer.getSource().getFeatureById(feature.getId()) === feature)) {
-   		layer.getSource().removeFeature(feature);
+        layer.getSource().removeFeature(feature);
       }
     };
 
