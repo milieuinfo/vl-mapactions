@@ -50,7 +50,7 @@ describe('delete action', () => {
 	  expect(deleteAction.map.render.called).to.be.true;
   });
 
-  it.only('delete niet een andere feature met dezelfde id van een andere laag', () => {
+  it('delete niet een andere feature met dezelfde id van een andere laag', () => {
 	  const feature = new Feature();
 	  feature.setId(1);
 	  const andereFeature = new Feature();
