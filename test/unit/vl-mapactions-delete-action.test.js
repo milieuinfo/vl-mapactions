@@ -51,17 +51,17 @@ describe('delete action', () => {
   });
 
   it('als aan de callback andere feature met zelfde id dan feature in de kaart wordt meegegeven wordt die niet gedeletet', () => {
-	  const feature = new Feature();
-	  feature.setId(1);
-	  const andereFeature = new Feature();
-	  andereFeature.setId(1);
-	  const layer = new Vector({source: new SourceVector({features: [feature]})});
-	  const callback = (features, success, cancel) => success(andereFeature);
-	  const deleteAction = createVlDeleteAction({layer: layer, callback: callback});
-	  deleteAction.selectInteraction.getFeatures().push(feature);
-	  deleteAction.selectInteraction.dispatchEvent('select');
-	  expect(layer.getSource().getFeatures().length).to.equal(1);
-	  expect(layer.getSource().getFeatures()[0]).to.equal(feature);
+    const feature = new Feature();
+    feature.setId(1);
+    const andereFeature = new Feature();
+    andereFeature.setId(1);
+    const layer = new Vector({source: new SourceVector({features: [feature]})});
+    const callback = (features, success, cancel) => success(andereFeature);
+    const deleteAction = createVlDeleteAction({layer: layer, callback: callback});
+    deleteAction.selectInteraction.getFeatures().push(feature);
+    deleteAction.selectInteraction.dispatchEvent('select');
+    expect(layer.getSource().getFeatures().length).to.equal(1);
+    expect(layer.getSource().getFeatures()[0]).to.equal(feature);
   });
   
   it('bij het oproepen van de callback zal na een cancel de selectie weggehaald worden', () => {
