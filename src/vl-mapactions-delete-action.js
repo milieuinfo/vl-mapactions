@@ -31,19 +31,24 @@ export class VlDeleteAction extends VlBoxSelectAction {
       }
     };
 
+    const clearAndRender = () => {
+      this.clearFeatures();
+      this.map.render();
+    };
+
     super(layer, (features) => {
       if (onDelete && onDelete != null) {
         onDelete(features, (feature) => {
           removeFeature(feature);
-          this.clearFeatures();
+          clearAndRender();
         }, () => {
-          this.clearFeatures();
+          clearAndRender();
         });
       } else {
         features.forEach((feature) => {
           removeFeature(feature);
         });
-        this.clearFeatures();
+        clearAndRender();
       }
     }, {
       style: style,
