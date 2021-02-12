@@ -86,26 +86,25 @@ describe('delete action', () => {
     expect(deleteAction.selectInteraction.getFeatures().getLength()).to.equal(0);
     expect(deleteAction.map.render.called).to.be.true;
   });
-  
+
   it('zal bij het einde van de box selectie, de features toegevoegd hebben aan de selectie interactie, en de callback functie oproepen van de interactie met de intersecting feature', () => {
     const feature = new Feature();
     feature.setId(1);
     const layer = {
       getSource: () => {
         return {
-          getFeatures: () => {return [];},
+          getFeatures: () => [],
           forEachFeatureIntersectingExtent: (extent, fn) => fn(feature),
           getFeatureById: () => feature,
           removeFeature: () => {}
         };
       },
-    }
+    };
 
     const deleteAction = createVlDeleteAction({layer: layer});
     sinon.stub(deleteAction.dragBoxInteraction, 'getGeometry').returns({getExtent: () => {}});
     deleteAction.dragBoxInteraction.dispatchEvent('boxdrag');
     deleteAction.dragBoxInteraction.dispatchEvent('boxend');
     expect(deleteAction.map.render.called).to.be.true;
-   });
-
+  });
 });
