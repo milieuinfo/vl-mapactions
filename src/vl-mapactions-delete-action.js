@@ -30,20 +30,24 @@ export class VlDeleteAction extends VlBoxSelectAction {
         layer.getSource().removeFeature(feature);
       }
     };
+    
+    const afterOnDelete = () => {
+    	this.clearFeatures();
+    	this.map.render();
+    };
 
     super(layer, (features) => {
       if (onDelete && onDelete != null) {
         onDelete(features, (feature) => {
           removeFeature(feature);
-          this.clearFeatures();
         }, () => {
-          this.clearFeatures();
         });
+        afterOnDelete();
       } else {
         features.forEach((feature) => {
           removeFeature(feature);
         });
-        this.clearFeatures();
+        afterOnDelete();
       }
     }, {
       style: style,

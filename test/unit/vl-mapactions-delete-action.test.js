@@ -6,11 +6,13 @@ import {VlDeleteAction} from '../../src/vl-mapactions-delete-action';
 import {Vector as SourceVector} from 'ol/source';
 import {Vector} from 'ol/layer';
 import Feature from 'ol/Feature';
+import sinon from 'sinon/pkg/sinon-esm';
 
 describe('delete action', () => {
   const createVlDeleteAction = ({layer, callback, options = {}}) => {
     const action = new VlDeleteAction(layer, callback, options);
     action.map = new Map();
+    action.map.render = sinon.spy();
     return action;
   };
 
@@ -34,6 +36,7 @@ describe('delete action', () => {
     deleteAction.selectInteraction.getFeatures().push(feature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(deleteAction.selectInteraction.getFeatures().getLength()).to.equal(0);
+    expect(deleteAction.map.render.called).to.be.true;
   });
 
   it('bij het oproepen van de callback zal na een cancel de selectie weggehaald worden', () => {
@@ -45,6 +48,7 @@ describe('delete action', () => {
     deleteAction.selectInteraction.getFeatures().push(feature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(deleteAction.selectInteraction.getFeatures().getLength()).to.equal(0);
+    expect(deleteAction.map.render.called).to.be.true;
   });
 
   it('bij het oproepen van de callback zal na de success de geselecteerde feature(s) weggehaald worden', () => {
@@ -56,6 +60,7 @@ describe('delete action', () => {
     deleteAction.selectInteraction.getFeatures().push(feature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(layer.getSource().getFeatures().length).to.equal(0);
+    expect(deleteAction.map.render.called).to.be.true;
   });
 
   it('bij het oproepen van de callback zal na een cancel de geselecteerde feature(s) niet weggehaald worden', () => {
@@ -67,6 +72,7 @@ describe('delete action', () => {
     deleteAction.selectInteraction.getFeatures().push(feature);
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(layer.getSource().getFeatures().length).to.equal(1);
+    expect(deleteAction.map.render.called).to.be.true;
   });
 
   it('als er geen callback is meegegeven kunnen worden de features onmiddellijk verwijderd', () => {
@@ -78,5 +84,32 @@ describe('delete action', () => {
     deleteAction.selectInteraction.dispatchEvent('select');
     expect(layer.getSource().getFeatures().length).to.equal(0);
     expect(deleteAction.selectInteraction.getFeatures().getLength()).to.equal(0);
+    expect(deleteAction.map.render.called).to.be.true;
   });
+  
+  it('zal bij het einde van de box selectie, de features toegevoegd hebben aan de selectie interactie, en de callback functie oproepen van de interactie met de intersecting feature', () => {
+    const feature = new Feature();
+    feature.setId(1);
+    const layer = {
+        getSource: () => {
+          return {
+            getFeatures: () => {
+              return [];
+            },
+            forEachFeatureIntersectingExtent: (extent, fn) => {
+              fn(feature);
+            },
+          };
+        },
+      }
+
+    const callback = sinon.spy();
+    const deleteAction = createVlDeleteAction({layer: layer, callback: callback});
+    sinon.stub(deleteAction.dragBoxInteraction, 'getGeometry').returns({getExtent: () => {}});
+    deleteAction.dragBoxInteraction.dispatchEvent('boxdrag');
+    deleteAction.dragBoxInteraction.dispatchEvent('boxend');
+    expect(callback.calledWith([feature])).to.be.true;
+    expect(deleteAction.map.render.called).to.be.true;
+   });
+
 });
