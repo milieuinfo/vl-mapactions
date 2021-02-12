@@ -39,6 +39,32 @@ describe('delete action', () => {
     expect(deleteAction.map.render.called).to.be.true;
   });
 
+  it('gaat niet fout bij feature zonder id', () => {
+	  const feature = new Feature();
+	  const layer = new Vector({source: new SourceVector({features: [feature]})});
+	  const callback = (features, success, cancel) => success(feature);
+	  const deleteAction = createVlDeleteAction({layer: layer, callback: callback});
+	  deleteAction.selectInteraction.getFeatures().push(feature);
+	  deleteAction.selectInteraction.dispatchEvent('select');
+	  expect(deleteAction.selectInteraction.getFeatures().getLength()).to.equal(0);
+	  expect(deleteAction.map.render.called).to.be.true;
+  });
+
+  it.only('delete niet een andere feature met dezelfde id van een andere laag', () => {
+	  const feature = new Feature();
+	  feature.setId(1);
+	  const andereFeature = new Feature();
+	  andereFeature.setId(1);
+	  const layer = new Vector({source: new SourceVector({features: [feature]})});
+	  const callback = (features, success, cancel) => success(andereFeature);
+	  const deleteAction = createVlDeleteAction({layer: layer, callback: callback});
+	  deleteAction.selectInteraction.getFeatures().push(feature);
+	  deleteAction.selectInteraction.dispatchEvent('select');
+	  expect(layer.getSource().getFeatures().length).to.equal(1);
+	  expect(layer.getSource().getFeatures()[0]).to.equal(feature);
+	  expect(deleteAction.map.render.called).to.be.true;
+  });
+
   it('bij het oproepen van de callback zal na een cancel de selectie weggehaald worden', () => {
     const feature = new Feature();
     feature.setId(1);
