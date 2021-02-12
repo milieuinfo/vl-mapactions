@@ -40,9 +40,9 @@ export class VlDeleteAction extends VlBoxSelectAction {
       if (onDelete && onDelete != null) {
         onDelete(features, (feature) => {
           removeFeature(feature);
+          afterOnDelete();
         }, () => {
         });
-        afterOnDelete();
       } else {
         features.forEach((feature) => {
           removeFeature(feature);
