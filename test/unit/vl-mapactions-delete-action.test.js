@@ -91,19 +91,15 @@ describe('delete action', () => {
     const feature = new Feature();
     feature.setId(1);
     const layer = {
-        getSource: () => {
-          return {
-            getFeatures: () => {
-              return [];
-            },
-            forEachFeatureIntersectingExtent: (extent, fn) => {
-              fn(feature);
-            },
-            getFeatureById: () => feature,
-            removeFeature: () => {}
-          };
-        },
-      }
+      getSource: () => {
+        return {
+          getFeatures: () => {return [];},
+          forEachFeatureIntersectingExtent: (extent, fn) => fn(feature),
+          getFeatureById: () => feature,
+          removeFeature: () => {}
+        };
+      },
+    }
 
     const deleteAction = createVlDeleteAction({layer: layer});
     sinon.stub(deleteAction.dragBoxInteraction, 'getGeometry').returns({getExtent: () => {}});

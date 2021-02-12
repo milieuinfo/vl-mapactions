@@ -30,10 +30,10 @@ export class VlDeleteAction extends VlBoxSelectAction {
         layer.getSource().removeFeature(feature);
       }
     };
-    
+
     const clearAndRender = () => {
-    	this.clearFeatures();
-    	this.map.render();
+      this.clearFeatures();
+      this.map.render();
     };
 
     super(layer, (features) => {
@@ -42,7 +42,7 @@ export class VlDeleteAction extends VlBoxSelectAction {
           removeFeature(feature);
           clearAndRender();
         }, () => {
-        	clearAndRender();
+          clearAndRender();
         });
       } else {
         features.forEach((feature) => {
