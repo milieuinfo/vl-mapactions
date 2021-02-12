@@ -42,6 +42,7 @@ export class VlDeleteAction extends VlBoxSelectAction {
           removeFeature(feature);
           clearAndRender();
         }, () => {
+        	clearAndRender();
         });
       } else {
         features.forEach((feature) => {

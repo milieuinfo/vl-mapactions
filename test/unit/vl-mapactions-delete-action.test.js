@@ -99,16 +99,16 @@ describe('delete action', () => {
             forEachFeatureIntersectingExtent: (extent, fn) => {
               fn(feature);
             },
+            getFeatureById: () => feature,
+            removeFeature: () => {}
           };
         },
       }
 
-    const callback = sinon.spy();
-    const deleteAction = createVlDeleteAction({layer: layer, callback: callback});
+    const deleteAction = createVlDeleteAction({layer: layer});
     sinon.stub(deleteAction.dragBoxInteraction, 'getGeometry').returns({getExtent: () => {}});
     deleteAction.dragBoxInteraction.dispatchEvent('boxdrag');
     deleteAction.dragBoxInteraction.dispatchEvent('boxend');
-    expect(callback.calledWith([feature])).to.be.true;
     expect(deleteAction.map.render.called).to.be.true;
    });
 
