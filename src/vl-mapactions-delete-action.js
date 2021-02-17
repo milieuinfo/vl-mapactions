@@ -8,14 +8,14 @@ export class VlDeleteAction extends VlBoxSelectAction {
         color: 'rgba(241, 174, 174, 0.26)',
       }),
       stroke: new Stroke({
-        color: '#f1aeae',
-        width: 2,
+        color: '#db3434',
+        width: 1,
       }),
       image: new Circle({
         radius: 4,
         stroke: new Stroke({
-          color: '#f1aeae',
-          width: 2,
+          color: '#db3434',
+          width: 1,
         }),
         fill: new Fill({
           color: 'rgba(241, 174, 174, 0.26)',
