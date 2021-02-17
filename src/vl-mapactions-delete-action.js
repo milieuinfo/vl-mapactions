@@ -5,20 +5,20 @@ export class VlDeleteAction extends VlBoxSelectAction {
   constructor(layer, onDelete, options) {
     const defaultStyle = new Style({
       fill: new Fill({
-        color: 'rgba(217, 83, 79, 0.6)',
+        color: 'rgba(241, 174, 174, 0.26)',
       }),
       stroke: new Stroke({
-        color: '#d9534f',
-        width: 5,
+        color: '#f1aeae',
+        width: 2,
       }),
       image: new Circle({
         radius: 4,
         stroke: new Stroke({
-          color: '#d9534f',
-          width: 5,
+          color: '#f1aeae',
+          width: 2,
         }),
         fill: new Fill({
-          color: 'rgba(217, 83, 79, 0.6)',
+          color: 'rgba(241, 174, 174, 0.26)',
         }),
       }),
     });
