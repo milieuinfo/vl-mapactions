@@ -63,7 +63,7 @@ describe('delete action', () => {
     expect(layer.getSource().getFeatures().length).to.equal(1);
     expect(layer.getSource().getFeatures()[0]).to.equal(feature);
   });
-  
+
   it('bij het oproepen van de callback zal na een cancel de selectie weggehaald worden', () => {
     const feature = new Feature();
     feature.setId(1);
