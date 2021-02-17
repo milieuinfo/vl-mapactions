@@ -10,6 +10,25 @@ export class VlDrawAction extends VlMapAction {
     const interactions = [];
     options.source = layer.getSource();
     options.type = type;
+    options.style = new Style({
+      fill: new Fill({
+        color: 'rgba(2, 85, 204, 0.8)',
+      }),
+      stroke: new Stroke({
+        color: 'rgba(2, 85, 204, 1)',
+        width: 1,
+      }),
+      image: new Circle({
+        radius: 4,
+        stroke: new Stroke({
+          color: 'rgba(2, 85, 204, 1)',
+          width: 1,
+        }),
+        fill: new Fill({
+          color: 'rgba(2, 85, 204, 0.8)',
+        }),
+      }),
+    });
     const drawInteraction = new Draw(options);
     interactions.push(drawInteraction);
     if (options.snapping) {
