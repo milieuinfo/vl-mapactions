@@ -14,6 +14,7 @@ export class VlBoxSelectAction extends VlSelectAction {
       style: new Style({
         stroke: new Stroke({
           color: 'rgba(2, 85, 204, 1)',
+          width: 1,
         }),
       }),
     });
