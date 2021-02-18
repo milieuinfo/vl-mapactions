@@ -4,6 +4,26 @@ import {VlSelectAction} from './vl-mapactions-select-action';
 
 export class VlBoxSelectAction extends VlSelectAction {
   constructor(layer, onSelect, options) {
+    options.style = new Style({
+      fill: new Fill({
+        color: 'rgba(2, 85, 204, 0.8)',
+      }),
+      stroke: new Stroke({
+        color: 'rgba(2, 85, 204, 1)',
+        width: 1,
+      }),
+      image: new Circle({
+        radius: 4,
+        stroke: new Stroke({
+          color: 'rgba(2, 85, 204, 1)',
+          width: 1,
+        }),
+        fill: new Fill({
+          color: 'rgba(2, 85, 204, 0.8)',
+        }),
+      }),
+    });
+
     super(layer, (feature) => {
       if (feature) {
         onSelect([feature]);
