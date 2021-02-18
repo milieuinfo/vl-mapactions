@@ -2,6 +2,7 @@ import Draw from 'ol/interaction/Draw';
 import Overlay from 'ol/Overlay';
 import {LineString, Polygon} from 'ol/geom';
 import {unByKey} from 'ol/Observable';
+import {Fill, Stroke, Style, Circle} from 'ol/style';
 import {VlMapAction} from './vl-mapactions-mapaction';
 import {VlSnapInteraction} from './vl-mapactions-snap-interaction';
 
