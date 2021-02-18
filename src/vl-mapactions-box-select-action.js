@@ -1,5 +1,5 @@
 import DragBox from 'ol/interaction/DragBox';
-import {Stroke, Style} from 'ol/style';
+import {Fill, Stroke, Style, Circle} from 'ol/style';
 import {VlSelectAction} from './vl-mapactions-select-action';
 
 export class VlBoxSelectAction extends VlSelectAction {
