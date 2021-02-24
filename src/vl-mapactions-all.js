@@ -46,6 +46,7 @@ import OlGML32 from 'ol/format/GML32';
 import * as OlExtent from 'ol/extent';
 import * as OlLoadingstrategy from 'ol/loadingstrategy';
 import OlFullScreenControl from 'ol/control/FullScreen';
+import * as Ol from 'ol';
 
 export {
   VlCustomMap,
@@ -96,4 +97,5 @@ export {
   OlExtent,
   OlLoadingstrategy,
   OlFullScreenControl,
+  Ol,
 };
