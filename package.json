@@ -1,6 +1,6 @@
 {
   "name": "vl-mapactions",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Map acties voor OpenLayers",
   "publishConfig": {
     "registry": "http://artifactory-pr-build.lb.cumuli.be:8081/artifactory/api/npm/acd-npm/"
@@ -8,6 +8,7 @@
   "scripts": {
     "prepare": "npm update --dev vl-ui-util && npm run prepare:util",
     "prepare:util": "npm explore vl-ui-util -- npm run util",
+    "pretest": "npm run release:prepare",
     "test": "mocha -r esm -r jsdom-global/register",
     "test:grid": "mocha -r esm -r jsdom-global/register --reporter mocha-junit-reporter --reporter-options mochaFile=./test/wct-results.xml",
     "release": "np",
