@@ -31,6 +31,15 @@ export class VlCustomMap extends VlMapWithActions {
     super(options);
 
     this.projection = options.projection;
+    this.view = {
+      extent: this.projection.getExtent(),
+      projection: this.projection,
+      maxZoom: 16,
+      minZoom: 2,
+      center: [140860.69299028325, 190532.7165957574],
+      zoom: 2,
+      ...options.view
+    };
 
     this.geoJSONFormat = new GeoJSON({
       dataProjection: options.projection,
@@ -116,19 +125,22 @@ export class VlCustomMap extends VlMapWithActions {
 
   initializeView(boundingBox, maxZoom) {
     if (!this.getView().getZoom()) {
-      const view = new View({
-        extent: this.projection.getExtent(),
-        projection: this.projection,
-        maxZoom: 16,
-        minZoom: 2,
-        center: [140860.69299028325, 190532.7165957574],
-        zoom: 2,
-      });
+      const view = new View(this.view);
       this.zoomViewToExtent(view, boundingBox, maxZoom);
       this.setView(view);
       if (this.overviewMapControl) {
         this.addControl(this.overviewMapControl); // control needs to be added after view initialization
       }
+    }
+  }
+
+  reInitializeView(view, boundingBox, maxZoom) {
+    const updatedView = {...this.view, ...view};
+    const nView = new View(updatedView);
+    this.zoomViewToExtent(nView, boundingBox, maxZoom);
+    this.setView(nView);
+    if (this.overviewMapControl) {
+      this.addControl(this.overviewMapControl); // control needs to be added after view initialization
     }
   }
 
