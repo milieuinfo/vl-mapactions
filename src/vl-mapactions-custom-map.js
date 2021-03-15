@@ -38,7 +38,7 @@ export class VlCustomMap extends VlMapWithActions {
       minZoom: 2,
       center: [140860.69299028325, 190532.7165957574],
       zoom: 2,
-      ...options.view
+      ...options.view,
     };
 
     this.geoJSONFormat = new GeoJSON({
