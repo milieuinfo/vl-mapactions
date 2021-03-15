@@ -28,8 +28,8 @@ export class VlCustomMap extends VlMapWithActions {
       }),
     ].concat(options.controls || []);
 
-    let projection = options.projection;
-    let view = new View({
+    const projection = options.projection;
+    const view = new View({
       extent: projection.getExtent(),
       projection: projection,
       maxZoom: 16,
@@ -37,9 +37,9 @@ export class VlCustomMap extends VlMapWithActions {
       center: [140860.69299028325, 190532.7165957574],
       zoom: 2,
       ...options.view,
-    })
+    });
 
-    options.view = view
+    options.view = view;
 
     super(options);
 
