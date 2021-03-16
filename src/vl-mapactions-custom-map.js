@@ -139,16 +139,6 @@ export class VlCustomMap extends VlMapWithActions {
     }
   }
 
-  reInitializeView(view, boundingBox, maxZoom) {
-    const updatedView = {...this.view.getOptions(), ...view};
-    const nView = new View(updatedView);
-    this.zoomViewToExtent(nView, boundingBox, maxZoom);
-    this.setView(nView);
-    if (this.overviewMapControl) {
-      this.addControl(this.overviewMapControl); // control needs to be added after view initialization
-    }
-  }
-
   zoomToExtent(boundingBox, maxZoom) {
     this.zoomViewToExtent(this.getView(), boundingBox, maxZoom);
   }
