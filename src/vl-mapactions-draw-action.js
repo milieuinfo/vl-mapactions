@@ -33,10 +33,8 @@ export class VlDrawAction extends VlMapAction {
     const drawInteraction = new Draw(options);
     interactions.push(drawInteraction);
     if (options.snapping) {
-      const snappingOptions = {
-        layer: options.snapping.layer || layer,
-        pixelTolerance: options.snapping.pixelTolerance,
-      };
+      const snappingOptions = Object.assign({}, options.snapping);
+      snappingOptions.layer = options.snapping.layer || layer;
       interactions.push(new VlSnapInteraction(snappingOptions));
     }
 

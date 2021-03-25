@@ -17,10 +17,8 @@ export class VlModifyAction extends VlSelectAction {
     this.addInteraction(this.modifyInteraction);
 
     if (options && options.snapping) {
-      const snappingOptions = {
-        layer: options.snapping.layer || layer,
-        pixelTolerance: options.snapping.pixelTolerance,
-      };
+      const snappingOptions = Object.assign({}, options.snapping);
+      snappingOptions.layer = options.snapping.layer || layer;
       this.addInteraction(new VlSnapInteraction(snappingOptions));
     }
 
