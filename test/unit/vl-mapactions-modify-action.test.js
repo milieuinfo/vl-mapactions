@@ -79,10 +79,12 @@ describe('modify action', () => {
     const snappingLayer = new Vector({source: snappingSource});
     options.snapping = {
       layer: snappingLayer,
+      pixelTolerance: 1000,
     };
     modifyAction = new VlModifyAction(layer, callback, options);
     expect(modifyAction.interactions.length).to.equal(5);
     const snapInteraction = modifyAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction);
     expect(snapInteraction.snapOptions.source).to.equal(snappingSource);
+    expect(snapInteraction.snapOptions.pixelTolerance).to.equal(1000);
   });
 });

@@ -55,10 +55,12 @@ describe('draw action', () => {
     const snappingLayer = new Vector({source: snappingSource});
     options.snapping = {
       layer: snappingLayer,
+      pixelTolerance: 1000,
     };
     drawAction = new VlDrawAction(layer, 'LineString', callback, options);
     const snapInteraction = drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction);
     expect(snapInteraction.snapOptions.source).to.equal(snappingSource);
+    expect(snapInteraction.snapOptions.pixelTolerance).to.equal(1000);
   });
 
   it('roept de callback functie aan na het tekenen', () => {
