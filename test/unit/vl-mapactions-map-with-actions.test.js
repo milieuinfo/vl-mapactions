@@ -31,7 +31,7 @@ describe('map with actions', () => {
     setTimeout(() => {
       callback();
       done();
-    }, VlMapWithActions.CLICK_COUNT_TIMEOUT);
+    }, VlMapWithActions.CLICK_COUNT_TIMEOUT + 10);
   };
 
   it('voegt de interacties van alle actie toe aan de kaart', () => {
@@ -142,10 +142,11 @@ describe('map with actions', () => {
     sinon.stub(action1, 'activate');
     sinon.stub(action1, 'deactivate');
     map.activateDefaultAction();
-    afterActivation(() => {
+    setTimeout(() => {
       expect(action1.deactivate.called).to.be.true;
       expect(action1.activate.called).to.be.true;
-    }, done);
+      done();
+    }, 2000);
   });
 
   it('bij het aanmaken van een kaart met acties wordt standaard functionaliteit toegevoegd aan de kaart dat bij escape de eerste kaart actie geactiveerd wordt', (done) => {

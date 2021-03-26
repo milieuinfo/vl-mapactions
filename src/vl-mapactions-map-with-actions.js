@@ -49,24 +49,18 @@ export class VlMapWithActions extends Map {
   }
 
   activateAction(action) {
-    if (action != this.currentAction) {
-      if (this.currentAction) {
-        if (this.currentAction == action) {
-          return false;
-        }
-
-        this.currentAction.deactivate();
-        clearTimeout(this.timeout);
-      }
-
-      this.currentAction = action;
-
-      // delay the activation of the action with 300ms because ol has a timeout of 251ms to detect a double click event
-      // when we don't use a delay some click and select events of the previous action will be triggered on the new action
-      this.timeout = setTimeout(() => {
-        action.activate();
-      }, VlMapWithActions.CLICK_COUNT_TIMEOUT);
+    if (this.currentAction) {
+      this.currentAction.deactivate();
+      clearTimeout(this.timeout);
     }
+
+    this.currentAction = action;
+
+    // delay the activation of the action with 300ms because ol has a timeout of 251ms to detect a double click event
+    // when we don't use a delay some click and select events of the previous action will be triggered on the new action
+    this.timeout = setTimeout(() => {
+      action.activate();
+    }, VlMapWithActions.CLICK_COUNT_TIMEOUT);
   }
 
   addAction(action) {
@@ -90,10 +84,6 @@ export class VlMapWithActions extends Map {
 
   activateDefaultAction() {
     if (this.actions.length > 0 && this.actions[0]) {
-      if (this.currentAction == this.actions[0]) {
-        this.currentAction.deactivate();
-        this.currentAction = undefined;
-      }
       this.activateAction(this.actions[0]);
     }
   }
