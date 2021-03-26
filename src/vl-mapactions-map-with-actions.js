@@ -49,22 +49,24 @@ export class VlMapWithActions extends Map {
   }
 
   activateAction(action) {
-    if (this.currentAction) {
-      if (this.currentAction == action) {
-        return false;
+    if (action != this.currentAction) {
+      if (this.currentAction) {
+        if (this.currentAction == action) {
+          return false;
+        }
+
+        this.currentAction.deactivate();
+        clearTimeout(this.timeout);
       }
 
-      this.currentAction.deactivate();
-      clearTimeout(this.timeout);
+      this.currentAction = action;
+
+      // delay the activation of the action with 300ms because ol has a timeout of 251ms to detect a double click event
+      // when we don't use a delay some click and select events of the previous action will be triggered on the new action
+      this.timeout = setTimeout(() => {
+        action.activate();
+      }, VlMapWithActions.CLICK_COUNT_TIMEOUT);
     }
-
-    this.currentAction = action;
-
-    // delay the activation of the action with 300ms because ol has a timeout of 251ms to detect a double click event
-    // when we don't use a delay some click and select events of the previous action will be triggered on the new action
-    this.timeout = setTimeout(() => {
-      action.activate();
-    }, VlMapWithActions.CLICK_COUNT_TIMEOUT);
   }
 
   addAction(action) {
