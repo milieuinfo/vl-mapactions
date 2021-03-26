@@ -42,47 +42,24 @@ describe('draw action', () => {
     let drawAction = new VlDrawAction(layer, 'LineString', callback, options);
     expect(drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction)).to.be.undefined;
 
-    options.snapping = [];
+    options.snapping = false;
     drawAction = new VlDrawAction(layer, 'LineString', callback, options);
     expect(drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction)).to.be.undefined;
 
-    options.snapping = [{}];
+    options.snapping = true;
     drawAction = new VlDrawAction(layer, 'LineString', callback, options);
     expect(drawAction.interactions.length).to.equal(2);
     expect(drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction)).to.not.be.undefined;
 
     const snappingSource = new SourceVector({features: []});
-    const snappingLayer = new Vector({source: snappingSource});
-    options.snapping = [{
-      layer: snappingLayer,
+    options.snapping = {
+      source: snappingSource,
       pixelTolerance: 1000,
-    }];
+    };
     drawAction = new VlDrawAction(layer, 'LineString', callback, options);
     const snapInteraction = drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction);
     expect(snapInteraction.snapOptions.source).to.equal(snappingSource);
     expect(snapInteraction.snapOptions.pixelTolerance).to.equal(1000);
-  });
-
-  it('kan meerdere snapping interacties aanzetten via opties', () => {
-    const options = {};
-    const snappingSource1 = new SourceVector({features: []});
-    const snappingLayer1 = new Vector({source: snappingSource1});
-    const snappingSource2 = new SourceVector({features: []});
-    const snappingLayer2 = new Vector({source: snappingSource2});
-    options.snapping = [{
-      layer: snappingLayer1,
-      pixelTolerance: 1000,
-    }, {
-      layer: snappingLayer2,
-      pixelTolerance: 500,
-    }];
-    const drawAction = new VlDrawAction(layer, 'LineString', callback, options);
-    const snapInteractions = drawAction.interactions.filter((interaction) => interaction instanceof VlSnapInteraction);
-    expect(snapInteractions.length).to.equal(2);
-    expect(snapInteractions[0].snapOptions.source).to.equal(snappingSource1);
-    expect(snapInteractions[0].snapOptions.pixelTolerance).to.equal(1000);
-    expect(snapInteractions[1].snapOptions.source).to.equal(snappingSource2);
-    expect(snapInteractions[1].snapOptions.pixelTolerance).to.equal(500);
   });
 
   it('roept de callback functie aan na het tekenen', () => {

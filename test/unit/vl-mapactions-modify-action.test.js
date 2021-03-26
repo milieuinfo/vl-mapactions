@@ -76,9 +76,8 @@ describe('modify action', () => {
     expect(modifyAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction)).to.not.be.undefined;
 
     const snappingSource = new SourceVector({features: []});
-    const snappingLayer = new Vector({source: snappingSource});
     options.snapping = {
-      layer: snappingLayer,
+      source: snappingSource,
       pixelTolerance: 1000,
     };
     modifyAction = new VlModifyAction(layer, callback, options);
