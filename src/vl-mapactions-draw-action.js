@@ -34,10 +34,10 @@ export class VlDrawAction extends VlMapAction {
     interactions.push(drawInteraction);
     if (options.snapping) {
       options.snapping.forEach((snapping) => {
-   	    const snappingOptions = Object.assign({}, snapping);
-    	snappingOptions.layer = snapping.layer || layer;
-    	interactions.push(new VlSnapInteraction(snappingOptions));
-      });	
+        const snappingOptions = Object.assign({}, snapping);
+        snappingOptions.layer = snapping.layer || layer;
+        interactions.push(new VlSnapInteraction(snappingOptions));
+      });
     }
 
     drawInteraction.on('drawstart', (event) => {

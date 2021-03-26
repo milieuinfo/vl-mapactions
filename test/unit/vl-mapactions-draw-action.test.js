@@ -64,27 +64,27 @@ describe('draw action', () => {
   });
 
   it('kan meerdere snapping interacties aanzetten via opties', () => {
-	  const options = {};
-	  const snappingSource1 = new SourceVector({features: []});
-	  const snappingLayer1 = new Vector({source: snappingSource1});
-	  const snappingSource2 = new SourceVector({features: []});
-	  const snappingLayer2 = new Vector({source: snappingSource2});
-	  options.snapping = [{
-		  layer: snappingLayer1,
-		  pixelTolerance: 1000,
-	  }, {
-		  layer: snappingLayer2,
-		  pixelTolerance: 500,
-	  }];
-	  const drawAction = new VlDrawAction(layer, 'LineString', callback, options);
-	  const snapInteractions = drawAction.interactions.filter((interaction) => interaction instanceof VlSnapInteraction);
-	  expect(snapInteractions.length).to.equal(2);
-	  expect(snapInteractions[0].snapOptions.source).to.equal(snappingSource1);
-	  expect(snapInteractions[0].snapOptions.pixelTolerance).to.equal(1000);
-	  expect(snapInteractions[1].snapOptions.source).to.equal(snappingSource2);
-	  expect(snapInteractions[1].snapOptions.pixelTolerance).to.equal(500);
+    const options = {};
+    const snappingSource1 = new SourceVector({features: []});
+    const snappingLayer1 = new Vector({source: snappingSource1});
+    const snappingSource2 = new SourceVector({features: []});
+    const snappingLayer2 = new Vector({source: snappingSource2});
+    options.snapping = [{
+      layer: snappingLayer1,
+      pixelTolerance: 1000,
+    }, {
+      layer: snappingLayer2,
+      pixelTolerance: 500,
+    }];
+    const drawAction = new VlDrawAction(layer, 'LineString', callback, options);
+    const snapInteractions = drawAction.interactions.filter((interaction) => interaction instanceof VlSnapInteraction);
+    expect(snapInteractions.length).to.equal(2);
+    expect(snapInteractions[0].snapOptions.source).to.equal(snappingSource1);
+    expect(snapInteractions[0].snapOptions.pixelTolerance).to.equal(1000);
+    expect(snapInteractions[1].snapOptions.source).to.equal(snappingSource2);
+    expect(snapInteractions[1].snapOptions.pixelTolerance).to.equal(500);
   });
-  
+
   it('roept de callback functie aan na het tekenen', () => {
     const drawAction = new VlDrawAction(layer, 'Polygon', callback);
     const sketchFeature = new Feature();
