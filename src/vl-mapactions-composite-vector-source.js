@@ -2,21 +2,27 @@ import OlVectorSource from 'ol/source/Vector';
 import * as OlLoadingstrategy from 'ol/loadingstrategy';
 
 export class VlCompositeVectorSource extends OlVectorSource {
-  constructor(wfsSources) {
+  constructor(sources) {
     super({
       strategy: OlLoadingstrategy.bbox,
       loader: (extent, resolution, projection) => {
-        const featurePromises = wfsSources.map((source) => {
+        const featurePromises = sources.map((source) => {
           const url = source.getUrl()(extent, resolution, projection);
+          console.log('Fetching ' + url);
           return fetch(url).then((response) => response.text());
         });
         Promise.all(featurePromises).then((featureResults) => {
           featureResults.forEach((featureResult, index) => {
-            const features = wfsSources[index].getFormat().readFeatures(featureResult);
+            const features = sources[index].getFormat().readFeatures(featureResult);
             this.addFeatures(features);
           });
         });
       },
     });
+    this.__sources = sources;
+  }
+
+  get sources() {
+    return this.__sources;
   }
 }

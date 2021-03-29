@@ -31,6 +31,7 @@
     "esm": "^3.2.25",
     "jsdom": "^16.3.0",
     "jsdom-global": "^3.0.2",
+    "node-fetch": "^2.6.1",
     "vl-ui-util": "^5.3.10",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12"

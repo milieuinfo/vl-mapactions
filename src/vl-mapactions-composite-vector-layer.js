@@ -1,5 +1,5 @@
 import OlVectorLayer from 'ol/layer/Vector';
-import {VlCompositeVectorSource} from './vl-mapactions-composite-wfs-source';
+import {VlCompositeVectorSource} from './vl-mapactions-composite-vector-source';
 
 
 export class VlCompositeVectorLayer extends OlVectorLayer {
