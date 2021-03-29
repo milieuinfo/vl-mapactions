@@ -52,8 +52,9 @@ describe('draw action', () => {
     expect(drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction)).to.not.be.undefined;
 
     const snappingSource = new SourceVector({features: []});
+    const snappingLayer = new Vector({source: snappingSource});
     options.snapping = {
-      source: snappingSource,
+      layer: snappingLayer,
       pixelTolerance: 1000,
     };
     drawAction = new VlDrawAction(layer, 'LineString', callback, options);

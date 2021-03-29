@@ -39,7 +39,9 @@ export class VlDrawAction extends VlMapAction {
         }
       } else {
         const snappingOptions = Object.assign({}, options.snapping);
-        if (!snappingOptions.source) {
+        if (snappingOptions.layer) {
+          snappingOptions.source = snappingOptions.layer.getSource();
+        } else {
           snappingOptions.source = layer.getSource();
         }
         interactions.push(new VlSnapInteraction(snappingOptions));
