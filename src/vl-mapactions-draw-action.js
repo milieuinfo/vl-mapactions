@@ -91,12 +91,12 @@ export class VlDrawAction extends VlMapAction {
   }
 
   activate() {
-	if (this.options.snapping && this.options.snapping.layer) {
-	  this.map.addLayer(this.options.snapping.layer);
-	}
+    if (this.options.snapping && this.options.snapping.layer) {
+      this.map.addLayer(this.options.snapping.layer);
+    }
     super.activate();
   }
-  
+
   deactivate() {
     this._cleanUp();
     if (this.options.snapping && this.options.snapping.layer) {
