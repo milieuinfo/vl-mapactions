@@ -46,6 +46,7 @@ import OlGML32 from 'ol/format/GML32';
 import * as OlExtent from 'ol/extent';
 import * as OlLoadingstrategy from 'ol/loadingstrategy';
 import OlFullScreenControl from 'ol/control/FullScreen';
+import OlView from 'ol/View';
 import proj4 from 'proj4';
 
 export {
@@ -97,5 +98,6 @@ export {
   OlExtent,
   OlLoadingstrategy,
   OlFullScreenControl,
+  OlView,
   proj4,
 };
