@@ -90,8 +90,18 @@ export class VlDrawAction extends VlMapAction {
     this.drawInteraction = drawInteraction;
   }
 
+  activate() {
+	if (this.options.snapping && this.options.snapping.layer) {
+	  this.map.addLayer(this.options.snapping.layer);
+	}
+    super.activate();
+  }
+  
   deactivate() {
     this._cleanUp();
+    if (this.options.snapping && this.options.snapping.layer) {
+      this.map.removeLayer(this.options.snapping.layer);
+    }
     super.deactivate();
   }
 
