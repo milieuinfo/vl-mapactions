@@ -24,16 +24,12 @@ describe('composite wfs layer', () => {
     const layer1 = new Vector({
       title: 'Laag 1',
       source: source1,
-      updateWhileAnimating: true,
-      updateWhileInteracting: true,
       minResolution: 4,
       maxResolution: 8,
     });
     const layer2 = new Vector({
       title: 'Laag 1',
       source: source2,
-      updateWhileAnimating: true,
-      updateWhileInteracting: true,
       minResolution: 2,
       maxResolution: 10,
     });

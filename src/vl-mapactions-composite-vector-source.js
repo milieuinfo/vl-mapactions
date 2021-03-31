@@ -8,7 +8,6 @@ export class VlCompositeVectorSource extends OlVectorSource {
       loader: (extent, resolution, projection) => {
         const featurePromises = sources.map((source) => {
           const url = source.getUrl()(extent, resolution, projection);
-          console.log('Fetching ' + url);
           return fetch(url).then((response) => response.text());
         });
         Promise.all(featurePromises).then((featureResults) => {

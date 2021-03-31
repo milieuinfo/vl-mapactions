@@ -59,8 +59,8 @@ describe('draw action', () => {
     };
     drawAction = new VlDrawAction(layer, 'LineString', callback, options);
     const snapInteraction = drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction);
-    expect(snapInteraction.snapOptions.source).to.equal(snappingSource);
-    expect(snapInteraction.snapOptions.pixelTolerance).to.equal(1000);
+    expect(snapInteraction.source_).to.equal(snappingSource);
+    expect(snapInteraction.pixelTolerance_).to.equal(1000);
   });
 
   it('als er een snapping layer is wordt die toegevoegd en verwijderd bij het aan- en afzetten van de actie', () => {
@@ -75,12 +75,10 @@ describe('draw action', () => {
     const drawAction = createDrawActionWithMap('Point', options);
     sinon.stub(drawAction.map, 'addLayer');
     drawAction.activate();
-    expect(drawAction.map.addLayer.called).to.be.true;
-    expect(drawAction.map.addLayer.getCall(0).args[0]).to.equal(snappingLayer);
+    expect(drawAction.map.addLayer.calledWith(snappingLayer)).to.be.true;
     sinon.stub(drawAction.map, 'removeLayer');
     drawAction.deactivate();
-    expect(drawAction.map.removeLayer.called).to.be.true;
-    expect(drawAction.map.removeLayer.getCall(0).args[0]).to.equal(snappingLayer);
+    expect(drawAction.map.removeLayer.calledWith(snappingLayer)).to.be.true;
   });
 
   it('roept de callback functie aan na het tekenen', () => {

@@ -18,8 +18,11 @@ export class VlModifyAction extends VlSelectAction {
 
     if (options && options.snapping) {
       const snappingOptions = Object.assign({}, options.snapping);
-      snappingOptions.layer = options.snapping.layer || layer;
-      this.addInteraction(new VlSnapInteraction(snappingOptions));
+      if (snappingOptions.layer) {
+        this.addInteraction(new VlSnapInteraction(snappingOptions.layer.getSource(), options.snapping));
+      } else {
+        this.addInteraction(new VlSnapInteraction(layer.getSource(), options.snapping));
+      }
     }
 
     this.modifyInteraction.on('modifystart', (event) => {

@@ -21,7 +21,7 @@ describe('draw line action', () => {
       },
     };
     const options = {
-      snapping: [snappingOptions],
+      snapping: snappingOptions,
       measure: true,
     };
 
