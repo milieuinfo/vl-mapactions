@@ -55,10 +55,30 @@ describe('draw action', () => {
     const snappingLayer = new Vector({source: snappingSource});
     options.snapping = {
       layer: snappingLayer,
+      pixelTolerance: 1000,
     };
     drawAction = new VlDrawAction(layer, 'LineString', callback, options);
     const snapInteraction = drawAction.interactions.find((interaction) => interaction instanceof VlSnapInteraction);
-    expect(snapInteraction.snapOptions.source).to.equal(snappingSource);
+    expect(snapInteraction.source_).to.equal(snappingSource);
+    expect(snapInteraction.pixelTolerance_).to.equal(1000);
+  });
+
+  it('als er een snapping layer is wordt die toegevoegd en verwijderd bij het aan- en afzetten van de actie', () => {
+    const snappingSource = new SourceVector({features: []});
+    const snappingLayer = new Vector({source: snappingSource});
+    const options = {
+      snapping: {
+        layer: snappingLayer,
+        pixelTolerance: 1000,
+      },
+    };
+    const drawAction = createDrawActionWithMap('Point', options);
+    sinon.stub(drawAction.map, 'addLayer');
+    drawAction.activate();
+    expect(drawAction.map.addLayer.calledWith(snappingLayer)).to.be.true;
+    sinon.stub(drawAction.map, 'removeLayer');
+    drawAction.deactivate();
+    expect(drawAction.map.removeLayer.calledWith(snappingLayer)).to.be.true;
   });
 
   it('roept de callback functie aan na het tekenen', () => {
@@ -233,6 +253,8 @@ describe('draw action', () => {
       addOverlay: addOverlay,
       removeOverlay: removeOverlay,
       on: (type, callback) => drawAction[type] = callback,
+      addLayer: (layer) => {},
+      removeLayer: (layer) => {},
     };
     return drawAction;
   };
