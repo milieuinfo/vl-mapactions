@@ -33,16 +33,21 @@ export class VlDrawAction extends VlMapAction {
     const drawInteraction = new Draw(options);
     interactions.push(drawInteraction);
     if (options.snapping !== undefined) {
-      if (typeof options.snapping === 'boolean') {
-        if (options.snapping) {
-          interactions.push(new VlSnapInteraction(layer.getSource()));
-        }
-      } else {
-        if (options.snapping.layer) {
-          interactions.push(new VlSnapInteraction(options.snapping.layer.getSource(), options.snapping));
-        } else {
-          interactions.push(new VlSnapInteraction(layer.getSource(), options.snapping));
-        }
+      switch (typeof options.snapping) {
+        case 'boolean':
+          if (options.snapping) {
+            interactions.push(new VlSnapInteraction(layer.getSource()));
+          }
+          break;
+        case 'object':
+          if (options.snapping.layer) {
+            interactions.push(new VlSnapInteraction(options.snapping.layer.getSource(), options.snapping));
+          } else {
+            interactions.push(new VlSnapInteraction(layer.getSource(), options.snapping));
+          }
+          break;
+        default:
+          break;
       }
     }
 
