@@ -3,7 +3,7 @@ import {VlCompositeVectorSource} from './vl-mapactions-composite-vector-source';
 
 
 export class VlCompositeVectorLayer extends OlVectorLayer {
-  constructor(wfsLayers, options) {
+  constructor(wfsLayers, options = {}) {
     super({
       title: options.title,
       source: new VlCompositeVectorSource(wfsLayers.map((layer) => layer.getSource())),
