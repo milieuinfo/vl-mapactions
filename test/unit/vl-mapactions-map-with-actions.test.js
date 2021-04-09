@@ -29,11 +29,11 @@ describe('map with actions', () => {
 
   const afterActivation = (callback, done) => {
   // in de source code wordt VlMapWithActions.CLICK_COUNT_TIMEOUT om de actie effectief te activeren
-  // dus wij wachten in de test 1 ms langer
+  // dus wij wachten in de test 10 ms langer
     setTimeout(() => {
       callback();
       done();
-    }, VlMapWithActions.CLICK_COUNT_TIMEOUT + 1);
+    }, VlMapWithActions.CLICK_COUNT_TIMEOUT + 10);
   };
 
   it('voegt de interacties van alle actie toe aan de kaart', () => {
