@@ -27,7 +27,7 @@ describe('draw line action', () => {
 
     const action = new VlDrawLineAction(layer, callback, options);
     expect(action.options.maxPoints).to.be.undefined;
-    expect(action.options.snapping).to.deep.equal(snappingOptions);
+    expect(action.options.snapping).to.deep.equal(options.snapping);
     expect(action.options.measure).to.be.true;
   });
 
