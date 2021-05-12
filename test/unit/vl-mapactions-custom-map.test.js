@@ -118,7 +118,6 @@ describe('custom map', () => {
   });
 
   it('kan zoomen naar een puntgeometrie, zodat er sterk is ingezoomd (hoge zoom waarde)', () => {
-    map.initializeView();
     expect(map.getView().getZoom()).to.equal(2);
 
     map.zoomToGeometry({
@@ -162,26 +161,24 @@ describe('custom map', () => {
 
   it('als de overview map control gekend is zal die toegevoegd worden aan de map bij het initializeren', () => {
     map = createMap();
-    map.initializeView();
-    expect(map.addControl.called).to.be.true;
+    expect(map.getControls().getArray().some(el => el === map.overviewMapControl)).to.be.true;
   });
 
-  it('als de overview map control niet gekend is zal die ook niet toegevoegd worden aan de map bij het initializeren', () => {
-    map = createMap();
-    map.overviewMapControl = undefined;
-    map.initializeView();
-    expect(map.addControl.called).to.be.false;
-  });
+  // TODO: Zal altijd gekend zijn indien er layers zijn
+  // it('als de overview map control niet gekend is zal die ook niet toegevoegd worden aan de map bij het initializeren', () => {
+  //   map = createMap();
+  //   map.overviewMapControl = undefined;
+  //   map.initializeView();
+  //   expect(map.addControl.called).to.be.false;
+  // });
 
   it('Als er geen overviewMapLayers zijn, zal er geen overviewMapControl aangemaakt worden.', () => {
     const map = createMapZonderLayers();
-    map.initializeView();
     expect(map.overviewMapControl).to.be.undefined;
   });
 
   it('Wanneer de eerse overviewMapLayer wordt toegevoegd, wordt een overviewMapControl aangemaakt.', () => {
     const map = createMapZonderLayers();
-    map.initializeView();
     const baseLayer = createVisibleBaseLayer('layer');
     const overviewMapLayer = createInvisibleBaseLayer('overview map layer');
 
@@ -196,7 +193,6 @@ describe('custom map', () => {
 
   it('Er kunnen meerdere base layers en overlayMapLayers toegevoegd worden aan de map ', () => {
     map = createMapZonderLayers();
-    map.initializeView();
 
     const baseLayer = createVisibleBaseLayer('layer');
     const overviewMapLayer = createInvisibleBaseLayer('overview map layer');
@@ -215,7 +211,6 @@ describe('custom map', () => {
 
   it('Enkel de eerste toegevoegde baselayer is visible en enkel de 2e toegevoegde overlaymaplayer is visible', () => {
     map = createMapZonderLayers();
-    map.initializeView();
 
     for (let layerNr = 0; layerNr < 3; layerNr++) {
       map.addBaseLayerAndOverlayMapLayer(createInvisibleBaseLayer('layer ' + layerNr), createInvisibleBaseLayer('overview map layer ' + layerNr));
@@ -232,7 +227,6 @@ describe('custom map', () => {
 
   it('Na een klik is de volgende toegevoegde baselayer visible', () => {
     map = createMapZonderLayers();
-    map.initializeView();
 
     for (let layerNr = 0; layerNr < 3; layerNr++) {
       map.addBaseLayerAndOverlayMapLayer(createInvisibleBaseLayer('layer ' + layerNr), createInvisibleBaseLayer('overview map layer ' + layerNr));

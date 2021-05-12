@@ -98,7 +98,7 @@ export class VlCustomMap extends VlMapWithActions {
     this.overviewMapControl.element.addEventListener('click', () => toggleBaseLayer(), false);
 
     if (options.view) {
-      options.controls.push(this.overviewMapControl);
+      this.addControl(this.overviewMapControl);
     }
 
     this.custom.toggleBaseLayer = toggleBaseLayer;
@@ -129,14 +129,7 @@ export class VlCustomMap extends VlMapWithActions {
   }
 
   initializeView(boundingBox, maxZoom) {
-    if (!this.getView().getZoom()) {
-      const view = this.view;
-      this.zoomViewToExtent(view, boundingBox, maxZoom);
-      this.setView(view);
-      if (this.overviewMapControl) {
-        this.addControl(this.overviewMapControl); // control needs to be added after view initialization
-      }
-    }
+    this.zoomViewToExtent(this.view, boundingBox, maxZoom);
   }
 
   zoomToExtent(boundingBox, maxZoom) {
