@@ -28,10 +28,9 @@ export class VlCustomMap extends VlMapWithActions {
       }),
     ].concat(options.controls || []);
 
-    const projection = options.projection;
     const view = new View({
       extent: projection.getExtent(),
-      projection: projection,
+      projection: options.projection,
       maxZoom: 16,
       minZoom: 2,
       center: [140860.69299028325, 190532.7165957574],
@@ -43,11 +42,11 @@ export class VlCustomMap extends VlMapWithActions {
 
     super(options);
 
-    this.projection = projection;
+    this.projection = options.projection;
     this.view = view;
 
     this.geoJSONFormat = new GeoJSON({
-      dataProjection: options.projection,
+      dataProjection: this.projection,
     });
 
     this.custom = options.custom || {};
