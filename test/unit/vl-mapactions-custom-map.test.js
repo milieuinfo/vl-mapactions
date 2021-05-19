@@ -161,7 +161,7 @@ describe('custom map', () => {
 
   it('als de overview map control gekend is zal die toegevoegd worden aan de map bij het initializeren', () => {
     map = createMap();
-    expect(map.getControls().getArray().some(el => el === map.overviewMapControl)).to.be.true;
+    expect(map.getControls().getArray().some((el) => el === map.overviewMapControl)).to.be.true;
   });
 
   // TODO: Zal altijd gekend zijn indien er layers zijn

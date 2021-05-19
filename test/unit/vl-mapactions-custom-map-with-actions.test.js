@@ -44,7 +44,7 @@ describe('custom map with actions', () => {
 
   it('bij het initialiseren van de view, wordt ook de over view map control toegevoegd', () => {
     const map = createVlCustomMapWithActions();
-    expect(map.getControls().getArray().some(el => el === map.overviewMapControl)).to.be.true;
+    expect(map.getControls().getArray().some((el) => el === map.overviewMapControl)).to.be.true;
   });
 
   it('kan met een view geïnitialiseerd worden met als default zoom niveau 2', () => {
