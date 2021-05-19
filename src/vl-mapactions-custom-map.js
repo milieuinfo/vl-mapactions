@@ -29,7 +29,7 @@ export class VlCustomMap extends VlMapWithActions {
     ].concat(options.controls || []);
 
     const view = new View({
-      extent: projection.getExtent(),
+      extent: options.projection.getExtent(),
       projection: options.projection,
       maxZoom: 16,
       minZoom: 2,
