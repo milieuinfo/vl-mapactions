@@ -43,7 +43,6 @@ export class VlCustomMap extends VlMapWithActions {
     super(options);
 
     this.projection = options.projection;
-    this.view = view;
 
     this.geoJSONFormat = new GeoJSON({
       dataProjection: this.projection,
@@ -128,7 +127,7 @@ export class VlCustomMap extends VlMapWithActions {
   }
 
   initializeView(boundingBox, maxZoom) {
-    this.zoomViewToExtent(this.view, boundingBox, maxZoom);
+    this.zoomViewToExtent(this.getView(), boundingBox, maxZoom);
   }
 
   zoomToExtent(boundingBox, maxZoom) {
