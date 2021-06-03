@@ -43,7 +43,7 @@ describe('custom map with actions', () => {
     return map;
   };
 
-  it('bij het initialiseren van de view, wordt ook de over view map control toegevoegd', () => {
+  it('bij het construeren van een map, wordt de overview map control toegevoegd', () => {
     const map = createVlCustomMapWithActions();
     expect(map.getControls().getArray().some((el) => el === map.overviewMapControl)).to.be.true;
   });
