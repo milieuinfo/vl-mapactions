@@ -160,7 +160,7 @@ describe('custom map', () => {
     expect(overlay.getElement().outerHTML).to.equal(element);
   });
 
-  it('als de overview map control gekend is zal die toegevoegd worden aan de map bij het initializeren', () => {
+  it('wanneer er kaartlagen aanwezig zijn zal de de overview map control toegevoegd worden aan de map bij het initializeren', () => {
     map = createMap();
     expect(map.getControls().getArray().some((el) => el === map.overviewMapControl)).to.be.true;
   });
