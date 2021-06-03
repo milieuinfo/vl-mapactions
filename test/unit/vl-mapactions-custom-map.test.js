@@ -5,6 +5,7 @@ import Projection from 'ol/proj/Projection';
 import {VlCustomMap} from '../../src/vl-mapactions-custom-map';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
+import View from "ol/View";
 
 describe('custom map', () => {
   let map;
@@ -51,6 +52,17 @@ describe('custom map', () => {
         code: 'EPSG:31370',
         extent: [9928.000000, 66928.000000, 272072.000000, 329072.000000],
       }),
+      view: new View({
+        projection: new Projection({
+          code: 'EPSG:31370',
+          extent: [9928.000000, 66928.000000, 272072.000000, 329072.000000],
+        }),
+        maxZoom: 16,
+        minZoom: 2,
+        zoom: 2,
+        center: [140860.69299028325, 190532.7165957574],
+        extent: [9928.000000, 66928.000000, 272072.000000, 329072.000000],
+      })
     };
 
     if (options) {

@@ -28,21 +28,10 @@ export class VlCustomMap extends VlMapWithActions {
       }),
     ].concat(options.controls || []);
 
-    const view = new View({
-      extent: options.projection.getExtent(),
-      projection: options.projection,
-      maxZoom: 16,
-      minZoom: 2,
-      center: [140860.69299028325, 190532.7165957574],
-      zoom: 2,
-      ...options.view,
-    });
-
-    options.view = view;
-
     super(options);
 
     this.projection = options.projection;
+    this.view = options.view;
 
     this.geoJSONFormat = new GeoJSON({
       dataProjection: this.projection,
@@ -95,7 +84,7 @@ export class VlCustomMap extends VlMapWithActions {
 
     this.overviewMapControl.element.addEventListener('click', () => toggleBaseLayer(), false);
 
-    if (options.view) {
+    if (this.view) {
       this.addControl(this.overviewMapControl);
     }
 
