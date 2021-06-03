@@ -5,7 +5,6 @@ import Projection from 'ol/proj/Projection';
 import {VlCustomMap} from '../../src/vl-mapactions-custom-map';
 import sinon from 'sinon/pkg/sinon-esm';
 import {expect} from 'chai';
-import View from "ol/View";
 
 describe('custom map', () => {
   let map;
@@ -164,14 +163,6 @@ describe('custom map', () => {
     map = createMap();
     expect(map.getControls().getArray().some((el) => el === map.overviewMapControl)).to.be.true;
   });
-
-  // TODO: Zal altijd gekend zijn indien er layers zijn
-  // it('als de overview map control niet gekend is zal die ook niet toegevoegd worden aan de map bij het initializeren', () => {
-  //   map = createMap();
-  //   map.overviewMapControl = undefined;
-  //   map.initializeView();
-  //   expect(map.addControl.called).to.be.false;
-  // });
 
   it('Als er geen overviewMapLayers zijn, zal er geen overviewMapControl aangemaakt worden.', () => {
     const map = createMapZonderLayers();
