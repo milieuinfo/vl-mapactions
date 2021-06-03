@@ -11,7 +11,7 @@ import {VlMapWithActions} from './vl-mapactions-map-with-actions';
 
 /**
  * Dit is een versie van de VlMapWithActions die nog enkele extra functies bevat zoals het zoomen naar een bepaalde extent (of bounding box), het togglen van de layers, en alle functionaliteit omtrent een overzichtskaartje (ol.control.OverviewMap).
- * De view kan in het map opties object bij constructie worden meegegeven, of achteraf aangemaakt in de initializeView functie. Hieraan kan de view worden meegegeven als argument of bij geen argument wordt een standaard view aangemaakt op basis van de meegegeven projectie.
+ * De view kan in het map opties object bij constructie worden meegegeven of een default view wordt aangemaakt op basis van de projectie.
  */
 export class VlCustomMap extends VlMapWithActions {
   constructor(options) {
@@ -27,6 +27,18 @@ export class VlCustomMap extends VlMapWithActions {
         minWidth: 128,
       }),
     ].concat(options.controls || []);
+
+    options.view = new View({
+      // default
+      extent: options.projection.getExtent(),
+      projection: options.projection,
+      maxZoom: 16,
+      minZoom: 2,
+      center: [140860.69299028325, 190532.7165957574],
+      zoom: 2,
+      // overwrite default
+      ...options.view,
+    });
 
     super(options);
 

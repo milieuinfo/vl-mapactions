@@ -37,17 +37,6 @@ describe('custom map with actions', () => {
         code: 'EPSG:31370',
         extent: [9928.000000, 66928.000000, 272072.000000, 329072.000000],
       }),
-      view: new View({
-        projection: new Projection({
-          code: 'EPSG:31370',
-          extent: [9928.000000, 66928.000000, 272072.000000, 329072.000000],
-        }),
-        maxZoom: 16,
-        minZoom: 2,
-        zoom: 2,
-        center: [140860.69299028325, 190532.7165957574],
-        extent: [9928.000000, 66928.000000, 272072.000000, 329072.000000],
-      })
     });
     map.addControl = sinon.spy();
     map.getSize = () => [1200, 800];
