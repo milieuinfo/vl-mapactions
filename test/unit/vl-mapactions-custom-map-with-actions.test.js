@@ -42,19 +42,13 @@ describe('custom map with actions', () => {
     return map;
   };
 
-  it('bij het initialiseren van de view, wordt ook de over view map control toegevoegd', () => {
+  it('bij het construeren van een map, wordt de overview map control toegevoegd', () => {
     const map = createVlCustomMapWithActions();
-    expect(map.getView().getZoom()).to.be.undefined;
-
-    map.initializeView();
-    expect(map.addControl.calledWith(map.overviewMapControl)).to.be.true;
+    expect(map.getControls().getArray().some((el) => el === map.overviewMapControl)).to.be.true;
   });
 
-  it('kan met een view geïnitialiseerd worden met als default zoom niveau 2', () => {
+  it('standaard bevat de kaart een view met als default zoom niveau 2', () => {
     const map = createVlCustomMapWithActions();
-    expect(map.getView().getZoom()).to.be.undefined;
-
-    map.initializeView();
     expect(map.getView().getZoom()).to.equal(2);
   });
 
@@ -72,7 +66,6 @@ describe('custom map with actions', () => {
 
   it('als de baselayer getoggled wordt van een map, zal dit ook gebeuren bij de overview map', () => {
     const map = createVlCustomMapWithActions();
-    map.initializeView();
     expect(map.overviewMapLayers[0].getVisible()).to.be.false;
     expect(map.overviewMapLayers[1].getVisible()).to.be.true;
     expect(map.baseLayers[0].getVisible()).to.be.true;

@@ -11,7 +11,7 @@ import {VlMapWithActions} from './vl-mapactions-map-with-actions';
 
 /**
  * Dit is een versie van de VlMapWithActions die nog enkele extra functies bevat zoals het zoomen naar een bepaalde extent (of bounding box), het togglen van de layers, en alle functionaliteit omtrent een overzichtskaartje (ol.control.OverviewMap).
- * De view kan in het map opties object bij constructie worden meegegeven, of achteraf aangemaakt in de initializeView functie. Hieraan kan de view worden meegegeven als argument of bij geen argument wordt een standaard view aangemaakt op basis van de meegegeven projectie.
+ * De view kan in het map opties object bij constructie worden meegegeven of een default view wordt aangemaakt op basis van de projectie.
  */
 export class VlCustomMap extends VlMapWithActions {
   constructor(options) {
@@ -28,12 +28,25 @@ export class VlCustomMap extends VlMapWithActions {
       }),
     ].concat(options.controls || []);
 
+    options.view = new View({
+      // default
+      extent: options.projection.getExtent(),
+      projection: options.projection,
+      maxZoom: 16,
+      minZoom: 2,
+      center: [140860.69299028325, 190532.7165957574],
+      zoom: 2,
+      // overwrite default
+      ...options.view,
+    });
+
     super(options);
 
     this.projection = options.projection;
+    this.view = options.view;
 
     this.geoJSONFormat = new GeoJSON({
-      dataProjection: options.projection,
+      dataProjection: this.projection,
     });
 
     this.custom = options.custom || {};
@@ -83,8 +96,8 @@ export class VlCustomMap extends VlMapWithActions {
 
     this.overviewMapControl.element.addEventListener('click', () => toggleBaseLayer(), false);
 
-    if (options.view) {
-      options.controls.push(this.overviewMapControl);
+    if (this.view) {
+      this.addControl(this.overviewMapControl);
     }
 
     this.custom.toggleBaseLayer = toggleBaseLayer;
@@ -115,21 +128,7 @@ export class VlCustomMap extends VlMapWithActions {
   }
 
   initializeView(boundingBox, maxZoom) {
-    if (!this.getView().getZoom()) {
-      const view = new View({
-        extent: this.projection.getExtent(),
-        projection: this.projection,
-        maxZoom: 16,
-        minZoom: 2,
-        center: [140860.69299028325, 190532.7165957574],
-        zoom: 2,
-      });
-      this.zoomViewToExtent(view, boundingBox, maxZoom);
-      this.setView(view);
-      if (this.overviewMapControl) {
-        this.addControl(this.overviewMapControl); // control needs to be added after view initialization
-      }
-    }
+    this.zoomViewToExtent(this.getView(), boundingBox, maxZoom);
   }
 
   zoomToExtent(boundingBox, maxZoom) {
