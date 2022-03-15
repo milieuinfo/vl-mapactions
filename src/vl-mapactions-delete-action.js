@@ -24,6 +24,7 @@ export class VlDeleteAction extends VlBoxSelectAction {
     });
 
     const style = options ? options.style || defaultStyle : defaultStyle;
+    const filter = options ? options.filter : null;
 
     const removeFeature = (feature) => {
       if (feature && (feature.getId() == null || layer.getSource().getFeatureById(feature.getId()) === feature)) {
@@ -52,6 +53,7 @@ export class VlDeleteAction extends VlBoxSelectAction {
       }
     }, {
       style: style,
+      filter: filter
     });
   }
 }
