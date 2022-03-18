@@ -3,6 +3,7 @@ import {VlBoxSelectAction} from './vl-mapactions-box-select-action';
 
 export class VlDeleteAction extends VlBoxSelectAction {
   constructor(layer, onDelete, options) {
+    options = options || {};
     const defaultStyle = new Style({
       fill: new Fill({
         color: 'rgba(241, 174, 174, 0.26)',
@@ -22,9 +23,6 @@ export class VlDeleteAction extends VlBoxSelectAction {
         }),
       }),
     });
-
-    const style = options ? options.style || defaultStyle : defaultStyle;
-    const filter = options ? options.filter : null;
 
     const removeFeature = (feature) => {
       if (feature && (feature.getId() == null || layer.getSource().getFeatureById(feature.getId()) === feature)) {
@@ -52,8 +50,8 @@ export class VlDeleteAction extends VlBoxSelectAction {
         clearAndRender();
       }
     }, {
-      style: style,
-      filter: filter
+      style: options.style || defaultStyle,
+      filter: options.filter
     });
   }
 }
