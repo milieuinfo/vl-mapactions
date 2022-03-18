@@ -2,8 +2,7 @@ import {Fill, Stroke, Style, Circle} from 'ol/style';
 import {VlBoxSelectAction} from './vl-mapactions-box-select-action';
 
 export class VlDeleteAction extends VlBoxSelectAction {
-  constructor(layer, onDelete, options) {
-    options = options || {};
+  constructor(layer, onDelete, options = {}) {
     const defaultStyle = new Style({
       fill: new Fill({
         color: 'rgba(241, 174, 174, 0.26)',
