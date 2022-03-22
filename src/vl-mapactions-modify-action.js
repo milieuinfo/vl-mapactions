@@ -3,12 +3,12 @@ import {VlSnapInteraction} from './vl-mapactions-snap-interaction';
 import {VlSelectAction} from './vl-mapactions-select-action';
 
 export class VlModifyAction extends VlSelectAction {
-  constructor(layer, onModify, options) {
-    const filter = options ? options.filter : null;
-
+  constructor(layer, onModify, options = {}) {
     super(layer, null, {
-      filter: filter,
+      filter: options.filter,
     });
+
+    this.options = options;
 
     this.modifyInteraction = new Modify({
       features: this.selectInteraction.getFeatures(),
@@ -36,5 +36,19 @@ export class VlModifyAction extends VlSelectAction {
         });
       });
     });
+  }
+
+  activate() {
+    if (this.options.snapping && this.options.snapping.layer) {
+      this.map.addLayer(this.options.snapping.layer);
+    }
+    super.activate();
+  }
+
+  deactivate() {
+    if (this.options.snapping && this.options.snapping.layer) {
+      this.map.removeLayer(this.options.snapping.layer);
+    }
+    super.deactivate();
   }
 }
