@@ -132,4 +132,14 @@ describe('delete action', () => {
     deleteAction.dragBoxInteraction.dispatchEvent('boxend');
     expect(deleteAction.map.render.called).to.be.true;
   });
+
+  it('de feature filter zal doorgegeven worden aan de select action', () => {
+    const layers = {};
+    const filter = () => {};
+    const options = {
+      filter: filter,
+    };
+    const action = new VlDeleteAction(layers, null, options);
+    expect(action.filter).to.equal(filter);
+  });
 });

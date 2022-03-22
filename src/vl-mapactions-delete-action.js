@@ -2,7 +2,7 @@ import {Fill, Stroke, Style, Circle} from 'ol/style';
 import {VlBoxSelectAction} from './vl-mapactions-box-select-action';
 
 export class VlDeleteAction extends VlBoxSelectAction {
-  constructor(layer, onDelete, options) {
+  constructor(layer, onDelete, options = {}) {
     const defaultStyle = new Style({
       fill: new Fill({
         color: 'rgba(241, 174, 174, 0.26)',
@@ -22,8 +22,6 @@ export class VlDeleteAction extends VlBoxSelectAction {
         }),
       }),
     });
-
-    const style = options ? options.style || defaultStyle : defaultStyle;
 
     const removeFeature = (feature) => {
       if (feature && (feature.getId() == null || layer.getSource().getFeatureById(feature.getId()) === feature)) {
@@ -51,7 +49,8 @@ export class VlDeleteAction extends VlBoxSelectAction {
         clearAndRender();
       }
     }, {
-      style: style,
+      style: options.style || defaultStyle,
+      filter: options.filter
     });
   }
 }
