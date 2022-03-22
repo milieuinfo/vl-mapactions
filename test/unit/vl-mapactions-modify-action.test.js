@@ -88,4 +88,31 @@ describe('modify action', () => {
     expect(snapInteraction.source_).to.equal(snappingSource);
     expect(snapInteraction.pixelTolerance_).to.equal(1000);
   });
+
+  it('als er een snapping layer is wordt die toegevoegd en verwijderd bij het aan- en afzetten van de actie', () => {
+    const snappingSource = new SourceVector({features: []});
+    const snappingLayer = new Vector({source: snappingSource});
+    const options = {
+      snapping: {
+        layer: snappingLayer,
+        pixelTolerance: 1000,
+      },
+    };
+    const modifyAction = createModifyActionWithMap(options);
+    sinon.stub(modifyAction.map, 'addLayer');
+    modifyAction.activate();
+    expect(modifyAction.map.addLayer.calledWith(snappingLayer)).to.be.true;
+    sinon.stub(modifyAction.map, 'removeLayer');
+    modifyAction.deactivate();
+    expect(modifyAction.map.removeLayer.calledWith(snappingLayer)).to.be.true;
+  });
+
+  const createModifyActionWithMap = (options) => {
+    const modifyAction = new VlModifyAction(layer, callback, options);
+    modifyAction.map = {
+      addLayer: () => {},
+      removeLayer: () => {},
+    };
+    return modifyAction;
+  };
 });
