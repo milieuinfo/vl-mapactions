@@ -42,11 +42,6 @@ describe('custom map with actions', () => {
     return map;
   };
 
-  it('bij het construeren van een map, wordt de overview map control toegevoegd', () => {
-    const map = createVlCustomMapWithActions();
-    expect(map.getControls().getArray().some((el) => el === map.overviewMapControl)).to.be.true;
-  });
-
   it('standaard bevat de kaart een view met als default zoom niveau 2', () => {
     const map = createVlCustomMapWithActions();
     expect(map.getView().getZoom()).to.equal(2);

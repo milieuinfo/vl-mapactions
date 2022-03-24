@@ -96,10 +96,6 @@ export class VlCustomMap extends VlMapWithActions {
 
     this.overviewMapControl.element.addEventListener('click', () => toggleBaseLayer(), false);
 
-    if (this.view) {
-      this.addControl(this.overviewMapControl);
-    }
-
     this.custom.toggleBaseLayer = toggleBaseLayer;
   }
 
