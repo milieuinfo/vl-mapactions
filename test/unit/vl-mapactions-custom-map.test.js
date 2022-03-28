@@ -159,11 +159,6 @@ describe('custom map', () => {
     expect(overlay.getElement().outerHTML).to.equal(element);
   });
 
-  it('wanneer er kaartlagen aanwezig zijn zal de de overview map control toegevoegd worden aan de map bij het initializeren', () => {
-    map = createMap();
-    expect(map.getControls().getArray().some((el) => el === map.overviewMapControl)).to.be.true;
-  });
-
   it('Als er geen overviewMapLayers zijn, zal er geen overviewMapControl aangemaakt worden.', () => {
     const map = createMapZonderLayers();
     expect(map.overviewMapControl).to.be.undefined;

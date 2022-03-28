@@ -50,7 +50,7 @@ export class VlDeleteAction extends VlBoxSelectAction {
       }
     }, {
       style: options.style || defaultStyle,
-      filter: options.filter
+      filter: options.filter,
     });
   }
 }
