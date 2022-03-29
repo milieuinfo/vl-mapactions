@@ -5,10 +5,11 @@ import Feature from 'ol/Feature';
 import {expect} from 'chai';
 
 describe('box select action', () => {
-  let intersectingFeature;
+  const feature1 = new Feature({id: 1});
+  const feature2 = new Feature({id: 2});
   let callback;
 
-  const createVlBoxSelectAction = () => {
+  const createVlBoxSelectAction = (filter) => {
     callback = sinon.spy();
     const action = new VlBoxSelectAction({
       getSource: () => {
@@ -17,12 +18,12 @@ describe('box select action', () => {
             return [];
           },
           forEachFeatureIntersectingExtent: (extent, fn) => {
-            intersectingFeature = new Feature();
-            fn(intersectingFeature);
+            fn(feature1);
+            fn(feature2);
           },
         };
       },
-    }, callback);
+    }, callback, {filter});
     sinon.stub(action.dragBoxInteraction, 'getGeometry').returns({getExtent: () => {}});
     action.map = new Map();
     return action;
@@ -58,7 +59,13 @@ describe('box select action', () => {
   it('zal bij het slepen van de box selectie, de features van de layer toevoegen aan de hover interactie', () => {
     const VlboxSelectAction = createVlBoxSelectAction();
     VlboxSelectAction.dragBoxInteraction.dispatchEvent('boxdrag');
-    expect(VlboxSelectAction.hoverInteraction.getFeatures().getArray()).contain(intersectingFeature);
+    expect(VlboxSelectAction.hoverInteraction.getFeatures().getArray()).to.have.members([feature1, feature2]);
+  });
+
+  it('zal bij het slepen van de box selectie, enkel de features van de layer toevoegen aan de hover interactie die voldoen aan de geconfigureerde filter', () => {
+    const VlboxSelectAction = createVlBoxSelectAction((feature) => feature.getId() === feature1.getId());
+    VlboxSelectAction.dragBoxInteraction.dispatchEvent('boxdrag');
+    expect(VlboxSelectAction.hoverInteraction.getFeatures().getArray()).to.have.members([feature1]);
   });
 
   it('zal bij het einde van de box selectie als er geen features intersecten, geen callbcak functie oproepen', () => {
@@ -71,8 +78,8 @@ describe('box select action', () => {
     const VlboxSelectAction = createVlBoxSelectAction();
     VlboxSelectAction.dragBoxInteraction.dispatchEvent('boxdrag');
     VlboxSelectAction.dragBoxInteraction.dispatchEvent('boxend');
-    expect(VlboxSelectAction.hoverInteraction.getFeatures().getArray()).contain(intersectingFeature);
-    expect(callback.calledWith([intersectingFeature])).to.be.true;
+    expect(VlboxSelectAction.hoverInteraction.getFeatures().getArray()).to.have.members([feature1, feature2]);
+    expect(callback.calledWith([feature1])).to.be.true;
   });
 
   it('zal bij het maken van een selectie door een klik, de callback functie aanroepen van de interactie', () => {

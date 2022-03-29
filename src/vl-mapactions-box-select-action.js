@@ -2,7 +2,7 @@ import DragBox from 'ol/interaction/DragBox';
 import {VlSelectAction} from './vl-mapactions-select-action';
 
 export class VlBoxSelectAction extends VlSelectAction {
-  constructor(layer, onSelect, options) {
+  constructor(layer, onSelect, options = {}) {
     super(layer, (feature) => {
       if (feature) {
         onSelect([feature]);
@@ -16,7 +16,9 @@ export class VlBoxSelectAction extends VlSelectAction {
       const boxExtent = this.dragBoxInteraction.getGeometry().getExtent();
       this.hoverInteraction.getFeatures().clear();
       layer.getSource().forEachFeatureIntersectingExtent(boxExtent, (feature) => {
-        this.hoverInteraction.getFeatures().push(feature);
+        if (this.filter(feature, layer)) {
+          this.hoverInteraction.getFeatures().push(feature);
+        }
       });
     });
 
