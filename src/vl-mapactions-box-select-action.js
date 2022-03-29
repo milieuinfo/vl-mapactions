@@ -2,7 +2,7 @@ import DragBox from 'ol/interaction/DragBox';
 import {VlSelectAction} from './vl-mapactions-select-action';
 
 export class VlBoxSelectAction extends VlSelectAction {
-  constructor(layer, onSelect, options = {}) {
+  constructor(layer, onSelect, options) {
     super(layer, (feature) => {
       if (feature) {
         onSelect([feature]);
