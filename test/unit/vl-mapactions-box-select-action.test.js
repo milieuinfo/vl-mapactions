@@ -7,6 +7,7 @@ import {expect} from 'chai';
 describe('box select action', () => {
   const feature1 = new Feature({id: 1});
   const feature2 = new Feature({id: 2});
+  const intersectingFeatures = [feature1, feature2];
   let callback;
 
   const createVlBoxSelectAction = (filter) => {
@@ -18,8 +19,7 @@ describe('box select action', () => {
             return [];
           },
           forEachFeatureIntersectingExtent: (extent, fn) => {
-            fn(feature1);
-            fn(feature2);
+            intersectingFeatures.forEach(fn);
           },
         };
       },
@@ -63,7 +63,7 @@ describe('box select action', () => {
   });
 
   it('zal bij het slepen van de box selectie, enkel de features van de layer toevoegen aan de hover interactie die voldoen aan de geconfigureerde filter', () => {
-    const VlboxSelectAction = createVlBoxSelectAction((feature) => feature.getId() === feature1.getId());
+    const VlboxSelectAction = createVlBoxSelectAction((feature) => feature === feature1);
     VlboxSelectAction.dragBoxInteraction.dispatchEvent('boxdrag');
     expect(VlboxSelectAction.hoverInteraction.getFeatures().getArray()).to.have.members([feature1]);
   });
@@ -79,7 +79,7 @@ describe('box select action', () => {
     VlboxSelectAction.dragBoxInteraction.dispatchEvent('boxdrag');
     VlboxSelectAction.dragBoxInteraction.dispatchEvent('boxend');
     expect(VlboxSelectAction.hoverInteraction.getFeatures().getArray()).to.have.members([feature1, feature2]);
-    expect(callback.calledWith([feature1])).to.be.true;
+    expect(callback.calledWith([feature1, feature2])).to.be.true;
   });
 
   it('zal bij het maken van een selectie door een klik, de callback functie aanroepen van de interactie', () => {
