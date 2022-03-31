@@ -16,7 +16,9 @@ export class VlBoxSelectAction extends VlSelectAction {
       const boxExtent = this.dragBoxInteraction.getGeometry().getExtent();
       this.hoverInteraction.getFeatures().clear();
       layer.getSource().forEachFeatureIntersectingExtent(boxExtent, (feature) => {
-        this.hoverInteraction.getFeatures().push(feature);
+        if (this.filter(feature, layer)) {
+          this.hoverInteraction.getFeatures().push(feature);
+        }
       });
     });
 
